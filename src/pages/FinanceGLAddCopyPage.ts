@@ -47,7 +47,7 @@ export default class FinanceGLAddCopyPage {
     SaveRN:"//li[@id='Save']",
     OkRN: "//input[@id='BTN_OK']",
     unauthormsg: "//input[@id='BLK_GLTMS_GLMASTER__AUTHSTATI']",
-    //
+        //
   };
   //Addition
 
@@ -333,7 +333,7 @@ async enterGLCodeauthorize() {
 }
 
 async clickSearchbutton(){
-const frame = await this.handleAMFrame();
+const frame = await this.handleAMFrame()
 await frame.waitForSelector(this.Elements.Search,{state: 'visible', timeout : 15000});
 await frame.click(this.Elements.Search);
 }

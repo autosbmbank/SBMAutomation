@@ -2,7 +2,7 @@
   module.exports = {
      default: {
 
-        tags:"@CORE1",
+        tags:"@Login1",
         
  
           formatOptions: {

@@ -66,9 +66,9 @@ When(`click on signin button`, async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
-    await loginPageloc.loginBtn(process.env.MAKPassword);
+    await loginPageloc.loginUsers(process.env.MAKPassword);
     console.log("Clicked on login button")
-   await loginPageloc.handleFrame();
+  // await loginPageloc.handleFrame();
     
 
 });
@@ -78,7 +78,7 @@ When(`CHE click on signin button`, async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
-    await loginPageloc.loginBtn(process.env.CHEPassword);
+    await loginPageloc.loginUsers(process.env.CHEPassword);
    await loginPageloc.handleFrame();
     
 
@@ -107,7 +107,7 @@ When('CHE user login in the application', async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
-    await loginPageloc.chkLoginBtn(process.env.CHEPassword);
+    await loginPageloc.loginUsers(process.env.CHEPassword);
   await loginPageloc.handleFrame();
 });
 
@@ -115,9 +115,9 @@ When('MAK user login in the application', async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
-    await loginPageloc.loginBtn1(process.env.MAKPassword);
+    await loginPageloc.loginUsers(process.env.MAKPassword);
     console.log("Clicked on login button veeru")
-   await loginPageloc.handleFrame();
+   
 });
 
 When("user SignOff the application", async function () {
@@ -125,3 +125,9 @@ When("user SignOff the application", async function () {
     fixture.logger.info("Clicking on Signoff Button");
     await loginPageloc.Signoff();
 })
+
+When(`user enters the function name as {string} and click search button`, async function(funname) {
+   loginPageloc = new loginPage(fixture.page);
+    fixture.logger.info("Clicking on Search Button");
+    await loginPageloc.enterFunName(funname);
+});

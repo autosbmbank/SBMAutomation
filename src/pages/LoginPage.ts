@@ -18,7 +18,7 @@ export default class LoginPage {
     private Elements = {
         userName: "//input[@name='USERID']",
         password: "//input[@name='user_pwd']",
-        loginBtn: "//input[@name='submit']",
+        loginBtn: "//oj-button[@name='submit']",
         okBtn: "(//input[@id='BTN_OK'])[1]",
         newPassword: "//input[@id='newpwd']",
         exitBtn: "//input[@name='BTN_EXIT']",
@@ -26,33 +26,40 @@ export default class LoginPage {
        //signoffBtn:"//ul[@class='listPop']//li[contains(text(),'Sign Off')]",
       outerFrame: '//iframe[contains(@title, "User Creation")]',
         outerFrame1: '//iframe[contains(@title, "User Maintenance")]',
+        enterfunNmae:"//input[@placeholder='E.g.ABCD123']"
     }
 
     async enterUserName(user: string) {
         await this.base.enterValue(this.Elements.userName, user);
-        let title = await this.page.title();
-        console.log("Title is " + title)
+        
     }
 
     async enterPassword(Password: string) {
         await this.base.enterValue(this.Elements.password, Password);
     }
 
-    async loginBtn(password: string) {
-        try {
-            await this.page.locator(this.Elements.loginBtn).click();
-            await this.page.waitForTimeout(1000);
-            const frame = await this.page.frame({ name: 'ifr_AlertWin' });
-            await frame.click("//table//tr//td//input[@id='BTN_OK']");
-            await frame.fill(this.Elements.newPassword, password);
-            await frame.click("//input[@id='BTN_SAVE']");
-            console.log("Password reset successfully");
-        } catch (message) {
-           // console.log("An error occurred during login and password reset flow:", message);
-           console.log("No password reset required");
+    async loginUsers(password){
+    await this.page.locator(this.Elements.loginBtn).click();
+    await this.page.waitForTimeout(1000);
+    console.log("Alert frame detected");
+    const frame = this.page.frameLocator('#ifr_AlertWin');
+    await frame.locator('button:has-text("OK")').click();
+    await this.page.waitForTimeout(2000)
+    const header = await this.page.frameLocator('#ifr_AlertWin').
+        locator("//h1[contains(text(),'Clear User')]");
 
-        }
+    if (await header.isVisible()) {
+        const text = await header.textContent();
+        console.log("Header Text:", text);
+        await this.page.waitForTimeout(1000)
+        await frame.locator("//input[@name='newpwd']").fill('Oracle@12');
+        await this.page.waitForTimeout(1000)
+        await frame.locator('button:has-text("OK")').click();
+        await this.page.waitForTimeout(1000)
+        await frame.locator('button:has-text("OK")').click();
+
     }
+}
 
      async handleFrame() {
         try {
@@ -134,14 +141,14 @@ async Msignoff(){
 
     
 
-async loginBtn1(password: string) {
+async loginBtn1(password) {
         try {
             await this.page.locator(this.Elements.loginBtn).click();
             await this.page.waitForTimeout(1000);
-            // const frame = await this.page.frame({ name: 'ifr_AlertWin' });
-            // await frame.click("//table//tr//td//input[@id='BTN_OK']");
-             //await frame.fill(this.Elements.newPassword, password);
-            // await frame.click("//input[@id='BTN_SAVE']");
+            const frame = this.page.locator('#ifr_AlertWin');
+           await frame.locator('button:has-text("OK")').click();
+             await frame.fill(this.Elements.newPassword, password);
+           // await frame.click("//input[@id='BTN_SAVE']");
              console.log("Password reset successfully");
         } catch (message) {
            // console.log("An error occurred during login and password reset flow:", message);
@@ -176,6 +183,14 @@ async loginBtn1(password: string) {
         } catch (message) {
             console.log("No password entering required");
         }
+    }
+
+    async enterFunName(funname){
+        await this.base.enterValue(this.Elements.enterfunNmae,funname);
+        await this.page.waitForTimeout(500)
+        await this.base.keyBoardActions("Enter");
+        await this.page.waitForTimeout(2000)
+
     }
 
 }

@@ -22,7 +22,7 @@ export default class LoginPage {
         okBtn: "(//input[@id='BTN_OK'])[1]",
         newPassword: "//input[@id='newpwd']",
         exitBtn: "//input[@name='BTN_EXIT']",
-        selectBtn:"(//label[@class='LBLmenustd'])[6]",
+        selectBtn:"//span[@id='ui-id-14']",
        //signoffBtn:"//ul[@class='listPop']//li[contains(text(),'Sign Off')]",
       outerFrame: '//iframe[contains(@title, "User Creation")]',
         outerFrame1: '//iframe[contains(@title, "User Maintenance")]',
@@ -112,9 +112,9 @@ export default class LoginPage {
                   await this.page.waitForTimeout(10000)
                  await this.page.getByText('Sign Off').click();
        // await this.page.click(this.Elements.signoffBtn)
-         const frameElementHandle1 = await this.page.waitForSelector('#ifr_AlertWin', { timeout: 50000 });
+         const frameElementHandle1 = await this.page.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 50000 });
             const frame = await frameElementHandle1.contentFrame();
-            await frame.click("//table//tr//td//input[@id='BTN_OK']");
+            await frame.click("//span[@id='BTN_OK_oj1|text']");
         }catch(message){
     console.log("Signoff not done"+message)
 }

@@ -37,33 +37,34 @@ export default class CreateTellerPage {
         authorizationStatus : "//select[@id='authStatus']",
    searchButton :"//oj-button[@id='summary-search-btn']//button[@class='oj-button-button']",
   firstRecord : "//span[@class='oj-fwk-icon-dots-vertical oj-fwk-icon summary-action-btn']",
-   threeDotMenu : "(//div[@class='header tileheaderbg']//div[@id='menuButton'])[1]",
-   authorizeOption : "//span[@class='action Authorize']",
-   unlockOption: "//span[@class='action Unlock']",
-   selectCheckbox: "(//input[@type='checkbox'])[2]",
-   approveButton: "//oj-button[@id='bookmarkAuth']//button[@class='oj-button-button']",
+   threeDotMenu : "(//*[@id='menuButton']/button/div/span[1]/span)[1]",
+   authorizeOption : "//a[@id='authorize']",
+   unlockOption: "//a[@id='unlock']",
+   selectCheckbox: "//*[@class='oj-radiocheckbox-icon oj-component-icon']//input",
+   approveButton: "//*[@id='bookmark29']/button",
    okButton : "//button[text()='Ok' or text()='OK']",
-   addbranchUser:".summary-add-btn-content",
+   addbranchUser:'//*[@id="containerDiv"]/div[1]/div/oj-button[2]/button',
    search:"//input[@id='searchHeaderMenuItem|input']",
    BranchUserLimit:"Teller-->Branch Maintenance-->Branch User Limits",
-    maintab:"//span[normalize-space()='Teller']",
+    maintab:'//*[@id="ui-id-100"]/span',
     screenBtn:"//span[normalize-space()='Branch User Limits']",
    Searchfirst:"(//div[@id='oj-listbox-result-label-390'])[1]",
-       lovBranch: "//input[@aria-label='undefined Branch Code']",
-    lovUser: "//input[@aria-label='Please select the value for User ID']",
+   
+   lovBranch: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[43]",
+    lovUser: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[45]",
     tillDropdown: "//div[@id='oj-select-choice-custCat']//a[@role='presentation']",
 
     toggleCarryForward: "(//div[@role='switch'])[2]",
     toggleInterBranch: "(//div[@role='switch'])[3]",
     currency:"(//input[@aria-label='Please select the value for Currency Code'])[1]",
-    MinBal: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[18]",
-    MaxBal:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[19]",
+    MinBal: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[52]",
+    MaxBal:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[53]",
     currency1:"(//input[@aria-label='Please select the value for Currency Code'])[2]",
-    MaxTransamnt: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[22]",
-    AuthTransamnt:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[23]"
+    MaxTransamnt: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[56]",
+    AuthTransamnt:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[57]"
   };
   async NextGenFun() {
-    await this.base.jsClick("//a[@id='DBoardNextGenUI']");
+    await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
     console.log("Clicked on NextGen UI Dashboard");
     
        
@@ -108,31 +109,7 @@ export default class CreateTellerPage {
      
    const currentURL = newPage.url();
    await newPage.goto(currentURL, { waitUntil: 'networkidle' });
-   await newPage.waitForTimeout(20000);
-                
-    await newPage.locator("//div[@class='branch-container']//span[@id='branch-name']").click({ timeout: 150000 });
-    console.log("Clicked on branch name in new page");
-    await newPage.fill("(//input[@id='_oj34-lov-dialog-body-filter-label-branchCode|input'])[1]","100");
-    console.log("Entered Branch code")
-    await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-     await newPage.waitForTimeout(1000);
-        await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-    console.log("clicked on Fetch Button")
-   // await newPage.locator("(//table[@role='application']//tr[@class='oj-table-body-row']//td)[1]").click();
-    await newPage.getByText("100").click()
-    console.log("clicked on Branch Code")
-     try {
-        await newPage.waitForSelector("#alertDialogId_oj11", { timeout: 5000 });
-        console.log("Alert dialog detected");
-        const proceedButton = newPage.locator("oj-button[on-click='[[confirmBtn]]']");
-        console.log("Button detected")
-        await proceedButton.click();
-        console.log("Clicked on Proceed button in alert dialog");
-        await newPage.waitForSelector("#alertDialogId_oj11", { state: 'hidden', timeout: 5000 });
-        console.log("Alert dialog closed");
-    } catch (error) {
-        console.log("No alert dialog found or already dismissed");
-    }
+   await newPage.waitForTimeout(5000);
 
     
 }
@@ -222,7 +199,7 @@ export default class CreateTellerPage {
            await newPage.locator(this.ele.saveBtn).click();
         console.log("clicked on save Button")
        try {
-        await newPage.locator("#alertDialogId_oj76", { timeout: 5000 });
+        await newPage.locator("##alertDialogId_oj355", { timeout: 5000 });
         console.log("Alert dialog detected");
         await newPage.getByRole('button', { name: 'Confirm' }).click();
         console.log("Clicked on Confirm button");
@@ -266,7 +243,7 @@ export default class CreateTellerPage {
     console.log("Validated successfully")
   }
 async NewGenexit(){
-await newPage.click("//div[@class='oj-flex-item']//span[@id='user-info-name']");
+await newPage.click("//*[@id='user-info-tile-source']/div/div[2]/a/span");
 //await newPage.click("//div[@id='user-info-menu-logout']//span");
 await newPage.getByText("Log Out").click()
 }
@@ -291,12 +268,18 @@ await newPage.getByText("Log Out").click()
     
   }
    async selectVaultAuthorizationStatus(status: string,value:string) {
-  await newPage.locator(".oj-fwk-icon.oj-inputsearch-search-button.oj-inputsearch-search-icon").click()
-     await newPage.click("//div[@id='oj-select-choice-summary-search-form-container-fields-authStatus']//a[@role='presentation']")
-    await newPage.getByText(status)
+  await newPage.locator("//*[@id='containerDiv']/div[1]/div/oj-button[1]/button/div/span[1]/span").click()
+     await newPage.click("//*[@id='summary-search-form-container-fields-authStatus']/div[2]/span/span")
+    await newPage.getByText(status, { exact: true }).first().click();
+  //  const locator = newPage.locator("//div[@role='presentation'][@class='oj-text-field-container oj-searchselect-main-field oj-text-field-has-end-slot']").first();
+
+  //   await locator.fill(status);
+  //     await locator.press('Enter');
+    await newPage.waitForTimeout(2000);
    // await newPage.locator("//input[@id='summary-search-form-container-fields-userLoginId|input']").fill(loginId)
   //await newPage.locator("//input[@name='userId']").fill(value)
-  await newPage.locator("//input[@name='userId']").fill(loginId)
+  await newPage.locator("//input[@name='userId']").fill(value)
+  await newPage.waitForTimeout(2000);
    
   }
 
@@ -348,7 +331,7 @@ await newPage.getByText("Log Out").click()
 // await newPage.getByText(this.ele.BranchUserLimit).click()
 await newPage.click(this.ele.maintab);
 await newPage.locator(this.ele.screenBtn).click()
-await newPage.waitForTimeout(10000)
+await newPage.waitForTimeout(2000)
   }
   async clickAddButton(){
    await newPage.waitForSelector(this.ele.addbranchUser,{ timeout: 70000 })
@@ -358,15 +341,16 @@ await newPage.waitForTimeout(10000)
     
   }
     async selectBranchLov(branch: string) {
-      await newPage.locator(this.ele.lovBranch).clear();
-    await newPage.locator(this.ele.lovBranch).fill(branch);
-     await newPage.waitForTimeout(2000)
+ 
+       await newPage.locator("(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[43]").clear();
+     await newPage.locator("(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[43]").fill(branch);
+      await newPage.waitForTimeout(2000)
     
   }
 
   async selectUserLov(user: string) {
     await newPage.locator(this.ele.lovUser).clear();
-    await newPage.locator(this.ele.lovUser).fill(loginId);
+    await newPage.locator(this.ele.lovUser).fill(user);
     await newPage.waitForTimeout(2000)
   }
 

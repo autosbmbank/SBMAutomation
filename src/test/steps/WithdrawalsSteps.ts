@@ -10,10 +10,10 @@ When("User selects the NextGen tab", async function () {
   await WDPage.clickNextGentab();
 });
 
-When("Clicks on Retail Operations", async function () {
-  const WDPage = new WithdrawalsPage(fixture.page);
-  await WDPage.clickRetailOpstab();
-});
+// When("Clicks on Retail Operations", async function () {
+//   const WDPage = new WithdrawalsPage(fixture.page);
+//   await WDPage.clickRetailOpstab();
+// });
 
 When("changes the branch code as {string}", async function(brcode : string)
 {
@@ -53,9 +53,9 @@ When("enters the Transaction Amount {string}", async function(txnamt : string){
   await WDPage.enterTxnAmt(txnamt);
 });
 
-When("enters the Customer Information {string}", async function (custinfo : string) {
+When("enters the Customer Information {string} {string}", async function (denomination : string,qty:string) {
   const WDPage = new WithdrawalsPage(fixture.page);
-    await WDPage.enterCustinfo(custinfo);
+    await WDPage.wdfillDenominationQty(denomination,qty);
 });
         When("saves the transaction", async function () {
   const WDPage = new WithdrawalsPage(fixture.page);

@@ -17,7 +17,8 @@ export default class ReatailDepositPage {
     NextGenFrame: '//iframe[contains(@title, "Next Gen UI Dashboard")]',
     fetch:"//button[@class='oj-button-button']//span[@id='_oj34-lov-dialog-body-filter-fetch_oj47|text']",
     maintab: "//span[normalize-space()='Teller']",
-   screenBtn: "//span[normalize-space()='Cash Deposit']",
+   screenBtn: "//span[normalize-space()='1401-Cash Deposit']",
+   WdscreenBtn: "//span[normalize-space()='1001-Cash Withdrawal']",
    // screenBtn: "//span[normalize-space()='Cash Withdrawal']",
     AcclosureBtn:"//span[normalize-space()='Close Out Withdrawal']",
     screenBtn2:"//span[normalize-space()='Electronic Journal']",
@@ -30,8 +31,10 @@ export default class ReatailDepositPage {
     closeacno:"//input[@id='accNo|input']",
     icLiqBtn:"//span[@data-bind='text : labelsCommon.liquidate']",
     //transactionAmount: "(//input[@id='_oj105-input-text|input'])[1]",
-    transactionAmount: "(//div[@class='oj-text-field-middle']//input)[23]",
-    InformationBtn: "(//a[contains(@role,'button')])[23]",
+    // transactionAmount: "(//div[@class='oj-text-field-middle']//input)[93]",
+    transactionAmount: '//*[@id="_oj214-input-text|input"]',
+    AccountAmount:"//*[@id='_oj369-input-text|input']",
+   InformationBtn: "(//a[contains(@role,'button')])[23]",
     customerInformation: "//input[@name='UDF_Customer']",
     submitButton: "(//span[normalize-space()='Submit'])[1]",
     successmsg: "(//div[@class='oj-message-summary oj-message-title'])[1]",
@@ -54,46 +57,52 @@ export default class ReatailDepositPage {
   };
 
   async NextGenFun() {
-    await this.base.jsClick("//a[@id='DBoardNextGenUI']");
+     await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
     console.log("Clicked on NextGen UI Dashboard");
-
+    
+       
     try {
-      const frameElementHandle = await this.page.waitForSelector(this.elements.NextGenFrame, { timeout: 40000 });
-      const nextgenframe = await frameElementHandle.contentFrame();
-      console.log("Switched to NextGen UI Dashboard Frame");
-      pagePromise = this.page.context().waitForEvent('page');
-      await nextgenframe.getByText("Retail Operations").click();
-      console.log("Clicked on Retail Operations");
+        const frameElementHandle = await this.page.waitForSelector(this.elements.NextGenFrame, { timeout: 40000 });
+       const nextgenframe = await frameElementHandle.contentFrame();
+        console.log("Switched to NextGen UI Dashboard Frame");
+        
+        
+        pagePromise = this.page.context().waitForEvent('page');
+        
+        await nextgenframe.getByText("Retail Operations").click();
+        console.log("Clicked on Retail Operations");
+        
     } catch (error) {
-      console.log("Frame not found:", error.message);
-      throw error;
+        console.log("Frame not found:", error.message);
+        throw error; // Re-throw if you want to stop execution
     }
     
- try {
-    newPage = await pagePromise;
-  
-  } catch {
-    newPage = this.page;
-  }
-  await newPage.bringToFront().catch(() => {});
-  await newPage.waitForFunction(() => document.body && document.body.innerText.length > 50);
- const proceed = newPage.locator(this.elements.proceedBtn).first();
-  if (await proceed.count()) {
-     try {
-      await proceed.click({ timeout: 4000 });
-    } catch {
-      console.log("using JS click");
-      await proceed.evaluate(el => el.click());
-    }
-  } else {
-    console.log("Proceed not found");
-  }
-  await newPage.waitForLoadState('networkidle').catch(() => {});
-  await newPage.waitForTimeout(600);
-  
-const currentURL = newPage.url();
-await newPage.goto(currentURL, { waitUntil: 'networkidle' });
-await newPage.waitForTimeout(20000);
+    // Wait for the new page to open
+    try {
+       newPage = await pagePromise;
+     
+     } catch {
+       newPage = this.page;
+     }
+     await newPage.bringToFront().catch(() => {});
+     await newPage.waitForFunction(() => document.body && document.body.innerText.length > 50);
+    const proceed = newPage.locator(this.elements.proceedBtn).first();
+     if (await proceed.count()) {
+        try {
+         await proceed.click({ timeout: 4000 });
+       } catch {
+         console.log("using JS click");
+         await proceed.evaluate(el => el.click());
+       }
+     } else {
+       console.log("Proceed not found");
+     }
+     await newPage.waitForLoadState('networkidle').catch(() => {});
+     await newPage.waitForTimeout(600);
+     
+   const currentURL = newPage.url();
+   await newPage.goto(currentURL, { waitUntil: 'networkidle' });
+   await newPage.waitForTimeout(5000);
 
    
   }
@@ -282,16 +291,73 @@ async closeScreen(){
   async enterTransactionAmount(amount: string) {
     await newPage.locator(this.elements.transactionAmount).fill(amount);
     console.log("Entered Transaction Amount:", amount);
+    await newPage.locator(this.elements.accountNumber).click()
   }
 
-  async enterCustomerInterview(interview: string) {
+  // async enterCustomerInterview(interview: string) {
    
-    await newPage.locator(this.elements.InformationBtn).click();
-     const udfno=await this.base.generateRandomNumber(4)
-   // await newPage.locator(this.elements.customerInformation).fill(interview);
-   await newPage.locator(this.elements.customerInformation).fill(udfno);
-    console.log("Entered Customer Interview:", interview);
-  }
+    //  await newPage.locator(this.elements.InformationBtn).click();
+    //  await newPage.locator("(//*[@id='_oj283-unitbills']/div/div/div/div)[1]").dblclick()
+      
+    //  await newPage.locator("(//div[1]/table[@class='oj-table-element oj-component-initnode']/tbody/tr[1]/td[2]/*[@class='obb_table_input_field oj-sm-padding-2x-end oj-inputtext oj-form-control oj-component oj-text-field oj-read-only oj-complete'])[1]").dblclick()
+    //   await newPage.waitForTimeout(2000)
+    //   console.log("clicked on denomination:");
+    // Double-click the specific cell to activate edit mode
+// Double-click the quantity cell (column index 1 = second column)
+// Debug: log all td ids in the denomination table
+// Step 1: Debug log (keep this for now)
+async fillDenominationQty(denomination: string, qty: string) {
+await newPage.getByText("Denomination",{exact:true}).click()
+  // Step 1: Find _1 cell by matching title attribute on oj-input-text in _0 cell
+  const qtyCellId = await newPage.evaluate((denom) => {
+    const cells = Array.from(
+      document.querySelectorAll("td[id*='tablegrid-table'][id$='_0']")
+    );
+
+    for (const cell of cells) {
+      const ojInput = cell.querySelector("oj-input-text");
+      const title = ojInput?.getAttribute("title")?.trim();
+      console.log(`Cell ${cell.id} title: "${title}"`);
+
+      if (title === denom) {
+        return cell.id.replace(/_0$/, '_1');
+      }
+    }
+    return null;
+  }, denomination);
+
+  if (!qtyCellId) throw new Error(`Denomination row "${denomination}" not found`);
+  console.log("Target qty cell:", qtyCellId);
+
+  // Step 2: Click + dblclick to activate edit mode
+  await newPage.evaluate((cellId) => {
+    const cell = document.getElementById(cellId!);
+    if (!cell) throw new Error(`Cell not found: ${cellId}`);
+    cell.dispatchEvent(new MouseEvent('click',   { bubbles: true, cancelable: true }));
+    cell.dispatchEvent(new MouseEvent('dblclick',{ bubbles: true, cancelable: true }));
+  }, qtyCellId);
+
+  await newPage.waitForTimeout(1500);
+
+  // Step 3: Fill the input inside the qty cell
+  await newPage.evaluate(({ cellId, value }) => {
+    const cell = document.getElementById(cellId!);
+    const input = (cell?.querySelector("input[id*='unitbills']")
+                || cell?.querySelector("input")) as HTMLInputElement;
+
+    if (!input) throw new Error(`No input found in cell ${cellId}`);
+
+    input.removeAttribute('readonly');
+    input.focus();
+    input.value = value;
+    input.dispatchEvent(new Event('input',  { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }, { cellId: qtyCellId, value: qty });
+
+  await newPage.keyboard.press('Tab');
+}
+
+  
 
   async clickOnSave() {
     await newPage.locator(this.elements.submitButton).click();
@@ -332,19 +398,19 @@ console.log('sent for Approval')
     console.log('Successfully Saved')
     await newPage.locator(this.elements.okButton).click()
     await newPage.locator(this.elements.adviceconf).click()
-    try {
-      await newPage.locator("#closeScreenDialog_oj65", { timeout: 5000 });
-      console.log("close dialog detected");
+    // try {
+    //   await newPage.locator("#closeScreenDialog_oj65", { timeout: 5000 });
+    //   console.log("close dialog detected");
 
-      await newPage.locator(this.elements.NoBtn).click()
-      console.log("Clicked on No button");
-      await newPage.waitForTimeout(5000)
-      console.log("close dialog closed");
-    } catch (error) {
-      console.log("close dialog not found");
+    //   await newPage.locator(this.elements.NoBtn).click()
+    //   console.log("Clicked on No button");
+    //   await newPage.waitForTimeout(5000)
+    //   console.log("close dialog closed");
+    // } catch (error) {
+    //   console.log("close dialog not found");
 
-      //await newPage.locator(this.elements.NoBtn).click()
-    }
+    //   //await newPage.locator(this.elements.NoBtn).click()
+    // }
   }
   async NewGenDepositexit() {
     await newPage.click("//div[@class='oj-flex-item']//span[@id='user-info-name']");

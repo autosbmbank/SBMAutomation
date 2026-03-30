@@ -16,7 +16,7 @@ export default class BranchOperationsPage {
      NextGenFrame: '//iframe[contains(@title, "Next Gen UI Dashboard")]',
       proceedBtn:'//span[normalize-space()="Proceed"]/ancestor::*[self::button or self::a or @role="button" or self::input]',
     NextGenUItab: "//a[@id='DBoardNextGenUI']",
-    Tellertab: "//span[normalize-space(text())='Teller']",
+    Tellertab: '//*[@id="ui-id-100"]/span',
     ChangeBrCode: "//div[@class='branch-container']//span[@id='branch-name']",
     BranchFilterInput: "//div[@class='oj-text-field-middle'] //input[@id='_oj34-lov-dialog-body-filter-label-branchCode|input']",
     Fetchbtn: "//button[@class='oj-button-button']//span[@id='_oj34-lov-dialog-body-filter-fetch_oj47|text']",
@@ -31,7 +31,7 @@ export default class BranchOperationsPage {
   };
 
  async NextGenFun() {
-    await this.base.jsClick("//a[@id='DBoardNextGenUI']");
+    await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
     console.log("Clicked on NextGen UI Dashboard");
     
        
@@ -78,30 +78,31 @@ export default class BranchOperationsPage {
    await newPage.goto(currentURL, { waitUntil: 'networkidle' });
    await newPage.waitForTimeout(20000);
                 
-    await newPage.locator("//div[@class='branch-container']//span[@id='branch-name']").click({ timeout: 50000 });
-    console.log("Clicked on branch name in new page");
-    await newPage.fill("(//input[@id='_oj34-lov-dialog-body-filter-label-branchCode|input'])[1]","100");
-    console.log("Entered Branch code")
-     await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-     await newPage.waitForTimeout(1000);
-   // await newPage.click("//button[@class='oj-button-button']//span[@id='_oj34-lov-dialog-body-filter-fetch_oj47|text']");
-     await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-    console.log("clicked on Fetch Button")
-   // await newPage.locator("(//table[@role='application']//tr[@class='oj-table-body-row']//td)[1]").click();
-    await newPage.getByText("100").click()
-    console.log("clicked on Branch Code")
-     try {
-        await newPage.waitForSelector("#alertDialogId_oj11", { timeout: 5000 });
-        console.log("Alert dialog detected");
-        const proceedButton = newPage.locator("oj-button[on-click='[[confirmBtn]]']");
-        console.log("Button detected")
-        await proceedButton.click();
-        console.log("Clicked on Proceed button in alert dialog");
-        await newPage.waitForSelector("#alertDialogId_oj11", { state: 'hidden', timeout: 5000 });
-        console.log("Alert dialog closed");
-    } catch (error) {
-        console.log("No alert dialog found or already dismissed");
-    }}
+  //   await newPage.locator("//div[@class='branch-container']//span[@id='branch-name']").click({ timeout: 50000 });
+  //   console.log("Clicked on branch name in new page");
+  //   await newPage.fill("(//input[@id='_oj34-lov-dialog-body-filter-label-branchCode|input'])[1]","100");
+  //   console.log("Entered Branch code")
+  //    await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
+  //    await newPage.waitForTimeout(1000);
+  //  // await newPage.click("//button[@class='oj-button-button']//span[@id='_oj34-lov-dialog-body-filter-fetch_oj47|text']");
+  //    await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
+  //   console.log("clicked on Fetch Button")
+  //  // await newPage.locator("(//table[@role='application']//tr[@class='oj-table-body-row']//td)[1]").click();
+  //   await newPage.getByText("100").click()
+  //   console.log("clicked on Branch Code")
+  //    try {
+  //       await newPage.waitForSelector("#alertDialogId_oj11", { timeout: 5000 });
+  //       console.log("Alert dialog detected");
+  //       const proceedButton = newPage.locator("oj-button[on-click='[[confirmBtn]]']");
+  //       console.log("Button detected")
+  //       await proceedButton.click();
+  //       console.log("Clicked on Proceed button in alert dialog");
+  //       await newPage.waitForSelector("#alertDialogId_oj11", { state: 'hidden', timeout: 5000 });
+  //       console.log("Alert dialog closed");
+  //   } catch (error) {
+  //       console.log("No alert dialog found or already dismissed");
+  //   }
+  }
 
 async clickopenbranchbatch() {
 await newPage.waitForSelector(this.Elements.Tellertab, {state : 'visible', timeout : 5000});

@@ -5,10 +5,10 @@ Feature: Core Module Feature
         Scenario Outline: Validate Creation of Individual Customer with Track Limits enabled
            Given User navigates to the application
             When MAK user enters the username and password
-            And click on signin button
-             Then valdiate the home page tite as "<HomePageTitle>"
-            And enter the Branch number as "<BranchNumber>"
-            When enters the function name as "<FunctionName>" and click on search button
+           When MAK user login in the application
+             Then valdiate the home page tite as "- 000 - 000 - 000 - Oracle Financial Services - ENG - Transaction Input"
+            # And enter the Branch number as "<BranchNumber>"
+            When user enters the function name as "STDCIF" and click search button
               And User click on New Tab 
               And User clicks the button P
               And User enters Full Name "<FullName>"

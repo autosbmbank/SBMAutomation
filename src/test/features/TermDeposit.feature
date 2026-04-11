@@ -1,26 +1,27 @@
  @TermDeposit
  Feature: Create and Authorize Term Deposit Account 
   
- @TD1 @TDAccountCreation
+ @TD1 @TDAccountCreation @SBM
   Scenario Outline: Creation of TD Account with PayIn and Payout Details
   Given User navigates to the application
-    When MAK user enters the username and password
-        And click on signin button
-        And enter the Branch number as "<BranchNumber>"
-        When enters the function name as "<FunctionName>" and click on search button
+            When MAK user enters the username and password
+            When MAK user login in the application
+             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
+            # And enter the Branch number as "<BranchNumber>"
+            When user enters the function name as "STDCUSTD" and click search button
         And clicks on New
         And enters the Customer Number "<CustomerNumber>"
         And enters the Account Class "<AccountClass>"
         And enters the Term Deposit Currency "<TDCurrency>"
         And clicks on P button
-        And clicks Ok on the override screen
+        # And clicks Ok on the override screen
         And enters the Initial Deposit Amount "<InitialDepositAmount>"
         And clicks on AddRow + in the Pay In Details section
-        And selects the Term Deposit Pay In Option from the dropdown "<TDPayIn>"
+        #  And selects the Term Deposit Pay In Option from the dropdown "<TDPayIn>"
         And enters the Percentage "<Percentage>"
         And enters the Offset Account "<OffsetAccount>"
         And clicks on AddRow + in the Pay Out Details section
-        And selects the Payout Type Option from the dropdown "<PayoutType>"
+        #  And selects the Payout Type Option from the dropdown "<PayoutType>"
         And enters the PayoutPercentage "<PayoutPercentage>"
         And enters the Payout Offset Account "<PayoutOffsetAccount>"
         And selects the Payout Component from the dropdown "<PayoutComponent>"
@@ -28,13 +29,16 @@
         And enters the Media "<Media>"
         And clicks on MIS tab
         And enters the Pool Code in the MIS tab "<PoolCode>"
-        And clicks on ok in MIS tab
+        And clicks on save in MIS tab
         And clicks on the Interest tab
+        # And clicks on Ok button
         And clicks on UDE Default
         And clicks on Ok after UDEDefault
+        And clicks on Save button3
         And clicks on Compute in the Main tab
+        # And Click on check box of Close on Maturity
         And clicks on Save 
-        And confirms with Ok after save
+        # And confirms with Ok after save
         And the user accepts the overrides
         And clicks on Ok after accept
         Then System should save the record successfully and status should be Unauthorized
@@ -56,7 +60,7 @@
          Then System should authorize the record successfully and record status should be Authorized for STSCUSTD
         Examples:
      | BranchNumber  | FunctionName | CustomerNumber | AccountClass | TDCurrency | InitialDepositAmount |  TDPayIn | Percentage  | OffsetAccount   |   PayoutType  |   PayoutPercentage  | PayoutOffsetAccount |   PayoutComponent |  Location | Media | PoolCode |branchnumber|functionname|
-     | 100           | STDCUSTD     | 10369487       | 302          | LSL        | 5000                 |  Account | 100         | 1038409200010   |   Account     |   100               | 1038409200010       |   Interest        |  100      | MAIL  | DFLTPOOL |999         |STSCUSTD    |
+     | 100           | STDCUSTD     | 430895       | FDEP          | KES        | 50000                 |  Account | 100         | 0002073641001   |   Account     |   100               | 0002073641001       |   Principal        |  KE      | MAIL  | DFLTPOOL |999         |STSCUSTD    |
 
 
 

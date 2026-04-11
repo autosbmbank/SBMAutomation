@@ -15,8 +15,8 @@ export default class cifCreationPage {
 
     private Elements = {
          
-              newTab:"//li[@class='BTNIconNew']//a",
-              btnP: "//div[@class='hrfDivTxt']//button",
+              newTab:'//*[@id="New_oj0|text"]',
+              btnP: '//*[@id="BLK_CUSTOMER__BTN_P_oj127|text"]',
               fullName: "//input[@id='BLK_CUSTOMER__FULLNAME']",
               shortName: "//label[normalize-space()='Short Name']",
               customerCategory: "//label[normalize-space()='Customer Category']",
@@ -45,8 +45,7 @@ accepttbtn:"#BTN_OK",
    // okbtn:"//input[@id='BTN_OK'][@title='Ok']",
     successMsg: "//span[@title='Record Successfully Authorized']"
 
-
-
+    
     }
 
     

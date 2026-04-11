@@ -22,12 +22,13 @@ export default class LoginPage {
         okBtn: "(//input[@id='BTN_OK'])[1]",
         newPassword: "//input[@id='newpwd']",
         exitBtn: "//input[@name='BTN_EXIT']",
-        selectBtn:"(//label[@class='LBLmenustd'])[6]",
-       //signoffBtn:"//ul[@class='listPop']//li[contains(text(),'Sign Off')]",
+        selectBtn:"//span[@id='ui-id-14']",
+    //    signoffBtn:"//ul[@class='listPop']//li[contains(text(),'Sign Off')]",
       outerFrame: '//iframe[contains(@title, "User Creation")]',
         outerFrame1: '//iframe[contains(@title, "User Maintenance")]',
         enterfunNmae:"//input[@placeholder='E.g.ABCD123']"
     }
+    
 
     async enterUserName(user: string) {
         await this.base.enterValue(this.Elements.userName, user);
@@ -37,8 +38,7 @@ export default class LoginPage {
     async enterPassword(Password: string) {
         await this.base.enterValue(this.Elements.password, Password);
     }
-
-    async loginUsers(password){
+async loginUsers(password){
     await this.page.locator(this.Elements.loginBtn).click();
     await this.page.waitForTimeout(1000);
     console.log("Alert frame detected");
@@ -47,17 +47,17 @@ export default class LoginPage {
     await this.page.waitForTimeout(2000)
     const header = await this.page.frameLocator('#ifr_AlertWin').
         locator("//h1[contains(text(),'Clear User')]");
-
+ 
     if (await header.isVisible()) {
         const text = await header.textContent();
         console.log("Header Text:", text);
         await this.page.waitForTimeout(1000)
-        await frame.locator("//input[@name='newpwd']").fill('Oracle@12');
+        await frame.locator("//input[@name='newpwd']").fill(password);
         await this.page.waitForTimeout(1000)
         await frame.locator('button:has-text("OK")').click();
         await this.page.waitForTimeout(1000)
         await frame.locator('button:has-text("OK")').click();
-
+ 
     }
 }
 
@@ -104,7 +104,24 @@ export default class LoginPage {
 
     }
 
-     async Signoff(){
+//      async Signoff(){
+//         try{
+//         await this.page.waitForTimeout(2000)
+//                   await this.page.click(this.Elements.selectBtn)
+//                   console.log("Clicked on select button")
+//                   await this.page.waitForTimeout(10000)
+//                  await this.page.getByText('Sign Off').click();
+//        // await this.page.click(this.Elements.signoffBtn)
+//          const frameElementHandle1 = await this.page.waitForSelector('#ifr_AlertWin', { timeout: 50000 });
+//             const frame = await frameElementHandle1.contentFrame();
+//             await frame.click("//table//tr//td//input[@id='BTN_OK']");
+//         }catch(message){
+//     console.log("Signoff not done"+message)
+// }
+      
+//     }
+
+async Signoff(){
         try{
         await this.page.waitForTimeout(2000)
                   await this.page.click(this.Elements.selectBtn)
@@ -112,14 +129,14 @@ export default class LoginPage {
                   await this.page.waitForTimeout(10000)
                  await this.page.getByText('Sign Off').click();
        // await this.page.click(this.Elements.signoffBtn)
-         const frameElementHandle1 = await this.page.waitForSelector('#ifr_AlertWin', { timeout: 50000 });
+         const frameElementHandle1 = await this.page.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 50000 });
             const frame = await frameElementHandle1.contentFrame();
-            await frame.click("//table//tr//td//input[@id='BTN_OK']");
+            await frame.click("//span[@id='BTN_OK_oj1|text']");
         }catch(message){
     console.log("Signoff not done"+message)
 }
-      
-    }
+}
+
 async Msignoff(){
         try {
             // Wait for the iframe to appear in the DOM

@@ -21,16 +21,17 @@ export default class HomePage {
     private Elements = {
         functionID: "//input[@id='fastpath']",
         searchId: "//button[@id='btnGo']",
-        clickOnBranch: "//li[@id='Branch_Menu']",
-        clickOnSelectBranch: "//li[@id='select_branch']",
+        clickOnBranch: "//oj-menu-button[@id='Branch_Menu']//button",
+        clickOnSelectBranch: "//oj-option[@id='select_branch']",
         moveToBranchFrame: "//iframe[@id='ifrSubScreen']",
-        enterBranchId:"//input[@id='1']",
-        clickOnFetchBtn:"//button[contains(text(),'Fetch')]",
-        selectBranchNum:"//table[@id='TableLov']//tr//td//a[1]",
-        validateBranchNum:"//li[@id='Branch_Menu']//label[1]",
+        enterBranchId:"(//input[@name='1'])[1]",
+        clickOnFetchBtn:"//span[contains(text(),'Fetch')]",
+        selectBranchNum:"//tr[@class='oj-table-body-row']//td[1]",
+        validateBranchNum:"//span[@id='ui-id-12']",
         msgframe: "//iframe[@id='ifr_AlertWin']",
-        okbtn:"//table//tr//td//input[@id='BTN_OK']",
+        okbtn:"//span[@id='BTN_OK_oj1|text']",
         NextGenFrame: '//iframe[contains(@title, "Next Gen UI Dashboard")]',
+        enterbranchname:"(//input[@name='1'])[1]"
     }
 
     async enterFunctionName(funname: string) {
@@ -41,9 +42,13 @@ export default class HomePage {
 
 
     async changeBranchNumber(branchId: string){
-        await this.base.ClickWait(this.Elements.clickOnBranch);
+        console.log("ChNGE branch number")
+        await this.base.jsClick(this.Elements.clickOnBranch);
         await this.page.waitForTimeout(1000);
         await this.base.jsClick(this.Elements.clickOnSelectBranch);
+        await this.page.waitForTimeout(1000);
+        console.log("Branch name ")
+       
         await this.handleBranchFrame(branchId);
     }
  

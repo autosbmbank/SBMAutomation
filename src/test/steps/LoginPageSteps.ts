@@ -103,12 +103,20 @@ When("User Maintenance signoff the application", async function () {
 
 
 
+// When('CHE user login in the application', async function () {
+//     loginPageloc = new loginPage(fixture.page);
+//     fixture.logger.info("Click on Login Button");
+//     await fixture.page.waitForTimeout(1000)
+//     await loginPageloc.loginUsers(process.env.CHEPassword);
+//   await loginPageloc.handleFrame();
+// });
+
 When('CHE user login in the application', async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
     await loginPageloc.loginUsers(process.env.CHEPassword);
-  await loginPageloc.handleFrame();
+   
 });
 
 When('MAK user login in the application', async function () {
@@ -124,7 +132,7 @@ When("user SignOff the application", async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Clicking on Signoff Button");
     await loginPageloc.Signoff();
-})
+});
 
 When(`user enters the function name as {string} and click search button`, async function(funname) {
    loginPageloc = new loginPage(fixture.page);

@@ -127,15 +127,21 @@ When("enters the Pool Code in the MIS tab {string}", async function(plcode : str
     await WSPage.enterPoolCode(plcode);
 });
 
-When("clicks on ok in MIS tab", async function(){
+When("clicks on save in MIS tab", async function(){
    WSPage = await new WholesalePage(fixture.page);
-   await WSPage.clickonokinMIStab();    
+   await WSPage.clickonsaveinMIStab();    
 });
 
 When("clicks on the Interest tab", async function(){
    WSPage = await new WholesalePage(fixture.page);
    await WSPage.clickonInteresttab();
 });
+
+// When("clicks on Ok button",async function(){
+//     WSPage = await new WholesalePage(fixture.page);
+//     await WSPage.clickonokbutton()
+
+// });
 When("user changes the rate change to Current Date",async function(){
     await WSPage.DateChange()
 })
@@ -149,7 +155,10 @@ When("clicks on Ok after UDEDefault", async function(){
     WSPage = await new WholesalePage(fixture.page);
     await WSPage.clickokafterUDEDefault();   
 });
-
+When("clicks on Save button3", async function(){
+    WSPage = await new WholesalePage(fixture.page);
+    await WSPage.clickonSavebutton();
+});
 When("check Cascade Month-End Maturity Date", async function(){
 WSPage = await new WholesalePage(fixture.page);
     await WSPage.checkCascade();   
@@ -157,6 +166,10 @@ WSPage = await new WholesalePage(fixture.page);
 When("clicks on Compute in the Main tab", async function(){
     WSPage = await new WholesalePage(fixture.page);
     await WSPage.clickoncompute();
+});
+When("Click on check box of Close on Maturity", async function(){
+    WSPage = await new WholesalePage(fixture.page);
+    await WSPage.closeonmaturity();
 });
 
 When("clicks on Save", async function(){

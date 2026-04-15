@@ -31,9 +31,9 @@ When("Click on NewGLDE", async function () {
   await finance.clickNewDE();
 });
 
-When("Enter the GLDEBatch Number", async function () {
+When("Enter the GLDEBatch Number as {string}", async function (batch : string) {
   const finance = new FinanceGLDEPage(fixture.page);
-  await finance.enterGLDEBatchNumber();
+  await finance.enterGLDEBatchNumber(batch);
 });
 
 When("Enter the GLDEDescription {string}", async function (desc) {
@@ -76,9 +76,9 @@ const finance = new FinanceGLDEPage(fixture.page);
   await finance.EnterBranchCode1(brcode1);
 });
 
-When("Enter the Account Number1", async function(){
+When("Enter the Account Number1 as {string}", async function(account : string){
 const finance = new FinanceGLDEPage(fixture.page);
-  await finance.EnterAccNumber1();
+  await finance.EnterAccNumber1(account);
 });
 
 When("Enter the Currency1 as {string}", async function(Currency1 : string){

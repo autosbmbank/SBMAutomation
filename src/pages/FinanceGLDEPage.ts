@@ -12,29 +12,29 @@ export default class FinanceGLDEPage {
   }
 
  private Elements = {
-    NewButton: "//li[@id='New']",
-    BatchNumber: "//input[@id='BLK_DEVWS_BATCH_MASTER__BATCH_NO' and @title='Batch Number']",
-    Description: "//input[@id='BLK_DEVWS_BATCH_MASTER__DESCRIPTION']",
-    Debit: "//input[@id='BLK_DEVWS_BATCH_MASTER__DR_CHK_TOTALI']",
-    Credit: "//input[@id='BLK_DEVWS_BATCH_MASTER__CR_CHK_TOTALI']",
-    OkButton: "//div[@id='DIVFooter']//input[@id='BTN_OK']",
-    PopupOk: "//iframe[contains(@title,'Information Message')]//input[@id='BTN_OK']",
-    AddRowBtn: "//button[@id='cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL']",
-    DrCr1: "//select[@id='BLK_DETBS_JRNL_TXN_DETAIL__DR_CR']",
-    BranchCode1:"//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__BRANCH_CODE']",
-    Acnnumber1: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__UI_AC_GL_NO']",
-    Currency1: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__CCY']",
-    Amount1: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__AMOUNTI']",
-    TxnCode1: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__TXN_CODE']",
-    DrCr2:"//select[@id='BLK_DETBS_JRNL_TXN_DETAIL__DR_CRRC1']",
-    BranchCode2:"//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__BRANCH_CODERC1']",
-    Acnnumber2: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__UI_AC_GL_NORC1']",
-    Currency2: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__CCYRC1']",
-    Amount2: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__AMOUNTIRC1']",
-    TxnCode2: "//input[@id='BLK_DETBS_JRNL_TXN_DETAIL__TXN_CODERC1']",
-    ComputeBtn: "//button[@id='BLK_DETBS_BATCH_MASTER__BTN_COMPUTE']",
-    oKafterCompute:"//input[@id='BTN_OK']",
-    Savetab:"//li[@id='Save']",
+    NewButton: '//*[@id="New_oj0|text"]',
+    BatchNumber: '//*[@id="BLK_DEVWS_BATCH_MASTER__BATCH_NO|input"]',
+    Description: '//*[@id="BLK_DEVWS_BATCH_MASTER__DESCRIPTION|input"]',
+    Debit: '//*[@id="BLK_DEVWS_BATCH_MASTER__DR_CHK_TOTAL|input"]',
+    Credit: '//*[@id="BLK_DEVWS_BATCH_MASTER__CR_CHK_TOTAL|input"]',
+    OkButton: '//*[@id="BTN_OK_oj17|text"]',
+    PopupOk: '//*[@id="BTN_OK_oj0|text"]',
+    AddRowBtn: '//*[@id="cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL"]',
+    DrCr1: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__DR_CRRC0|input"]',
+    BranchCode1:'//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__BRANCH_CODERC0|input"]',
+    Acnnumber1: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__UI_AC_GL_NORC0|input"]',
+    Currency1: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__CCYRC0|input"]',
+    Amount1: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__AMOUNTRC0|input"]',
+    TxnCode1: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__TXN_CODERC0|input"]',
+    DrCr2:'//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__DR_CRRC1|input"]',
+    BranchCode2 : '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__BRANCH_CODERC1|input"]',
+    Acnnumber2 : '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__UI_AC_GL_NORC1|input"]',
+    Currency2: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__CCYRC1|input"]',
+    Amount2: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__AMOUNTRC1|input"]',
+    TxnCode2: '//*[@id="BLK_DETBS_JRNL_TXN_DETAIL__TXN_CODERC1|input"]',
+    ComputeBtn: '//*[@id="BLK_DETBS_BATCH_MASTER__BTN_COMPUTE_oj59|text"]',
+    oKafterCompute: '//*[@id="BTN_OK_oj0|text"]',
+    Savetab : '//*[@id="Save_oj7|text"]',
     Okaftersave:"//input[@id='BTN_OK']",
     BatchClose:"//button[@id='BLK_DETBS_JRNL_TXN_MASTER__BTN_CLOSE_BATCH']",
     OKafterbatchclose:"//input[@id='BTN_OK']",
@@ -167,7 +167,7 @@ async handleJLFrame() {
 
       // Now find the inner frame (Batch Open) inside the outer frame
       const innerFrameHandle = await outerFrame.waitForSelector(
-        '//iframe[contains(@title, "Batch Open")]',
+        'iframe[id="ifrSubScreen"]',
         { timeout: 50000 }
       );
       const innerFrame = await innerFrameHandle.contentFrame();
@@ -178,13 +178,13 @@ async handleJLFrame() {
   }
 
   // batch header fields
-  async enterGLDEBatchNumber() {
+  async enterGLDEBatchNumber(batch) {
   const frame = await this.handleBOFrame();
   await frame.waitForSelector(this.Elements.BatchNumber, { state: 'visible', timeout: 30000 });
-  const batchid = await this.base.generateAlphanumericValue(5);
+  // const batchid = await this.base.generateAlphanumericValue(5);
    await frame.locator(this.Elements.BatchNumber).clear;
-  await frame.locator(this.Elements.BatchNumber).fill(batchid);
-  bnvar = batchid;
+  await frame.locator(this.Elements.BatchNumber).fill(batch);
+  // bnvar = batchid;
   return frame;
   }
 
@@ -231,7 +231,7 @@ async handleJLFrame() {
 
       // Now find the inner frame (Batch Open) inside the outer frame
       const innerFrameHandle = await outerFrame.waitForSelector(
-        '//iframe[contains(@title, "Information Message")]',
+        'iframe[id="ifr_AlertWin"]',
         { timeout: 50000 }
       );
       const innerFrame = await innerFrameHandle.contentFrame();
@@ -244,15 +244,15 @@ async handleJLFrame() {
       // popup OK (common)
   async clickPopupOk() {
     const frame = await this.handleIMFrame();
-    await frame.waitForSelector("//input[@id='BTN_OK']", { state: 'visible', timeout: 60000 }); 
-    await frame.locator("//input[@id='BTN_OK']").click(); 
+    await frame.waitForSelector('//*[@id="BTN_OK_oj0|text"]', { state: 'visible', timeout: 20000 }); 
+    await frame.locator('//*[@id="BTN_OK_oj0|text"]').click(); 
     return frame;
   }
 
 async clickGLDEAddRow1() {
   const f = await this.handleJLFrame();
-  await f.click('#cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL');
-  await f.waitForTimeout(12000);
+  await f.click('//*[@id="cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL"]');
+  await f.waitForTimeout(15000);
   // await f.locator("//table[@id='BLK_DETBS_JRNL_TXN_DETAIL']//tr").last().waitFor({ state: 'attached', timeout: 10000 });
 }
 
@@ -270,11 +270,11 @@ async SelectDrCr1(DrCr1 : string){
     await frame.locator(this.Elements.BranchCode1).fill(BranchCode1);
   }
 
-  async EnterAccNumber1(){
+  async EnterAccNumber1(account){
     const frame = await this.handleJLFrame();
     await frame.waitForSelector(this.Elements.Acnnumber1, { state: 'visible', timeout: 30000 });
     await frame.locator(this.Elements.Acnnumber1).clear;
-    await frame.locator(this.Elements.Acnnumber1).fill(globalacno);
+    await frame.locator(this.Elements.Acnnumber1).fill(account);
   }
 
   async EnterCurrency1(Currency1 : string){
@@ -300,7 +300,7 @@ async SelectDrCr1(DrCr1 : string){
   //Adding Row2
   async clickGLDEAddRow2() {
   const f = await this.handleJLFrame();
-  await f.click('#cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL');
+  await f.click('//*[@id="cmdAddRow_BLK_DETBS_JRNL_TXN_DETAIL"]');
   await f.waitForTimeout(32000);
   // await f.locator("//table[@id='BLK_DETBS_JRNL_TXN_DETAIL']//tr").last().waitFor({ state: 'attached', timeout: 10000 });
 }

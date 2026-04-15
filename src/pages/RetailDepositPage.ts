@@ -239,13 +239,7 @@ async closeScreen(){
     await newPage.locator(this.elements.expandBtn).click()
     await newPage.locator(this.elements.bycashmode).click()
     await newPage.waitForTimeout(10000)
-    // try{
-    //  await expect(await newPage.locator(this.elements.successmsg).textContent()).toContain('500')
-    // console.log('Server error')
-    // await newPage.locator(this.elements.okButton).click()
-    // }catch(error){
-    //   console.log('No server error')
-    // }
+   
      await newPage.locator(this.elements.submitButton).click()
      console.log("clicked on submit Button")
   }
@@ -294,18 +288,7 @@ async closeScreen(){
     await newPage.locator(this.elements.accountNumber).click()
   }
 
-  // async enterCustomerInterview(interview: string) {
-   
-    //  await newPage.locator(this.elements.InformationBtn).click();
-    //  await newPage.locator("(//*[@id='_oj283-unitbills']/div/div/div/div)[1]").dblclick()
-      
-    //  await newPage.locator("(//div[1]/table[@class='oj-table-element oj-component-initnode']/tbody/tr[1]/td[2]/*[@class='obb_table_input_field oj-sm-padding-2x-end oj-inputtext oj-form-control oj-component oj-text-field oj-read-only oj-complete'])[1]").dblclick()
-    //   await newPage.waitForTimeout(2000)
-    //   console.log("clicked on denomination:");
-    // Double-click the specific cell to activate edit mode
-// Double-click the quantity cell (column index 1 = second column)
-// Debug: log all td ids in the denomination table
-// Step 1: Debug log (keep this for now)
+  
 async fillDenominationQty(denomination: string, qty: string) {
 await newPage.getByText("Denomination",{exact:true}).click()
   // Step 1: Find _1 cell by matching title attribute on oj-input-text in _0 cell

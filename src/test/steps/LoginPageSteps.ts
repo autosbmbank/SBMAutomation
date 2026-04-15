@@ -37,8 +37,6 @@ When(`MAK user enters the username and password`, async function () {
     await loginPageloc.enterPassword(process.env.MAKPassword);
 });
 
-
-
 When(`CHE user enters the username and password`, async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Enter the user name and Password");
@@ -46,6 +44,8 @@ When(`CHE user enters the username and password`, async function () {
     await fixture.page.waitForTimeout(2000)
     await loginPageloc.enterPassword(process.env.CHEPassword);
 });
+
+
 
 When(`CHE second user enters the username and password`, async function () {
     loginPageloc = new loginPage(fixture.page);
@@ -101,15 +101,21 @@ When("User Maintenance signoff the application", async function () {
     await loginPageloc.Msignoff();
 })
 
-
-
 When('CHE user login in the application', async function () {
     loginPageloc = new loginPage(fixture.page);
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
     await loginPageloc.loginUsers(process.env.CHEPassword);
-  await loginPageloc.handleFrame();
+   
 });
+
+// When('CHE user login in the application', async function () {
+//     loginPageloc = new loginPage(fixture.page);
+//     fixture.logger.info("Click on Login Button");
+//     await fixture.page.waitForTimeout(1000)
+//     await loginPageloc.loginUsers(process.env.CHEPassword);
+//   await loginPageloc.handleFrame();
+// });
 
 When('MAK user login in the application', async function () {
     loginPageloc = new loginPage(fixture.page);

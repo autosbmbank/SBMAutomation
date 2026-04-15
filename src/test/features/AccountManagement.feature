@@ -1,7 +1,7 @@
  @AccManagement
 Feature:Account Management Feature
  
-@AmountBLK1 @SBM @AmountBlockAndAuth 
+@AmountBLK1 @SBM @AmountBlockAndAuth @tdAccountchange
      Scenario Outline: Verify Block Customer - Death/ KYC Expiry - CADAMBLK
     Given User navigates to the application
     When MAK user enters the username and password

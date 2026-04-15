@@ -37,7 +37,6 @@ export default class LoginPage {
     async enterPassword(Password: string) {
         await this.base.enterValue(this.Elements.password, Password);
     }
-
     async loginUsers(password){
     await this.page.locator(this.Elements.loginBtn).click();
     await this.page.waitForTimeout(1000);
@@ -47,19 +46,42 @@ export default class LoginPage {
     await this.page.waitForTimeout(2000)
     const header = await this.page.frameLocator('#ifr_AlertWin').
         locator("//h1[contains(text(),'Clear User')]");
-
+ 
     if (await header.isVisible()) {
         const text = await header.textContent();
         console.log("Header Text:", text);
         await this.page.waitForTimeout(1000)
-        await frame.locator("//input[@name='newpwd']").fill('Oracle@12');
+        await frame.locator("//input[@name='newpwd']").fill(password);
         await this.page.waitForTimeout(1000)
         await frame.locator('button:has-text("OK")').click();
         await this.page.waitForTimeout(1000)
         await frame.locator('button:has-text("OK")').click();
-
+ 
     }
 }
+
+//     async loginUsers(password){
+//     await this.page.locator(this.Elements.loginBtn).click();
+//     await this.page.waitForTimeout(1000);
+//     console.log("Alert frame detected");
+//     const frame = this.page.frameLocator('#ifr_AlertWin');
+//     await frame.locator('button:has-text("OK")').click();
+//     await this.page.waitForTimeout(2000)
+//     const header = await this.page.frameLocator('#ifr_AlertWin').
+//         locator("//h1[contains(text(),'Clear User')]");
+
+//     if (await header.isVisible()) {
+//         const text = await header.textContent();
+//         console.log("Header Text:", text);
+//         await this.page.waitForTimeout(1000)
+//         await frame.locator("//input[@name='newpwd']").fill('Oracle@12');
+//         await this.page.waitForTimeout(1000)
+//         await frame.locator('button:has-text("OK")').click();
+//         await this.page.waitForTimeout(1000)
+//         await frame.locator('button:has-text("OK")').click();
+
+//     }
+// }
 
      async handleFrame() {
         try {

@@ -10,16 +10,16 @@ Feature: Open And Close Branch and Teller Batch
    And user selects BrOPs NextGen UI Dashboard
          And selects Open Branch Batch Option
         And selects Open Teller Batch Option
-       And user exits from NextGen BrOPs
+      #  And user exits from NextGen BrOPs
        
         
  Examples:
          | HomePageTitle                                       | BranchNumber |
-         | Oracle Financial Services                           | 999       |
+         | Oracle Financial Services                           | 000     |
 
 
-@BranchOps2 @SBM @OpenVaultandTill
-  Scenario Outline: Perform Transfer Funds from Till to Vault and Vault to Till
+@BranchOps2 @SBM @OpenVaultandTill @tdUserIdchangeandTillType
+  Scenario Outline: Perform Open Till or Vault
   Given User navigates to the application
    When MAK user enters the username and password
    When MAK user login in the application
@@ -53,7 +53,7 @@ Feature: Open And Close Branch and Teller Batch
       | HomePageTitle                                       |   Status    |SearchName      |    status1        |TillType1| BranchCode | UserId   | TillType | CH_Currency | MinBal | MaxBal           | CL_Currency | MaxTxnAmt | AuthLimit     |Status1    |BranchName|
     |  Oracle Financial Services                              | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | DINESH1    | Till    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
 
-    @BranchOps3 @SBM @TillToVaultandVaultToTill @UserIdchange
+    @BranchOps3 @SBM @TillToVaultandVaultToTill @tdUserIdandTillTypeandTillTypechange
   Scenario Outline: Perform vault to teller and teller to vault change successfully
   Given User navigates to the application
     When MAK user enters the username and password

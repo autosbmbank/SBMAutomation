@@ -23,7 +23,7 @@ export default class BranchOperationsPage {
     selectbranchrow: "//td[@id='_oj34-lov-dialog-body-table:50_0']",
     confirmbrcodebtn: "//span[@id='confirmBtn']",
     OpenBrBtch: "//span[normalize-space()='Open Branch Batch']/ancestor::a[1]",
-    branchbtchokbtn:"//oj-dialog[.//div[contains(@class,'oj-dialog-content')]//*[normalize-space(.)='Branch batch is already open for the current date']]//button[.//span[contains(@class,'oj-button-text') and normalize-space(.)='OK']]",
+    branchbtchokbtn:'//*[@id="okBtn _oj23|text"]',
     OpenTellerBtch: "//div[@class='oj-flex-item oj-sm-padding-2x-horizontal']//a//span[normalize-space(text())='Open Teller Batch']",
     TellerBatchError: "//div[@class='oj-button-label']//span[@id='okBtn _oj56|text']",
     closeTellerBtch: "//div[@class='oj-flex-item oj-sm-padding-2x-horizontal']//a//span[normalize-space(text())='Close Teller Batch']"
@@ -78,30 +78,7 @@ export default class BranchOperationsPage {
    await newPage.goto(currentURL, { waitUntil: 'networkidle' });
    await newPage.waitForTimeout(20000);
                 
-  //   await newPage.locator("//div[@class='branch-container']//span[@id='branch-name']").click({ timeout: 50000 });
-  //   console.log("Clicked on branch name in new page");
-  //   await newPage.fill("(//input[@id='_oj34-lov-dialog-body-filter-label-branchCode|input'])[1]","100");
-  //   console.log("Entered Branch code")
-  //    await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-  //    await newPage.waitForTimeout(1000);
-  //  // await newPage.click("//button[@class='oj-button-button']//span[@id='_oj34-lov-dialog-body-filter-fetch_oj47|text']");
-  //    await newPage.click("(//span[@data-bind='text: labels.fsgbuobcmnfdlov.fetchBtnLbl'][normalize-space()='Fetch'])[1]");
-  //   console.log("clicked on Fetch Button")
-  //  // await newPage.locator("(//table[@role='application']//tr[@class='oj-table-body-row']//td)[1]").click();
-  //   await newPage.getByText("100").click()
-  //   console.log("clicked on Branch Code")
-  //    try {
-  //       await newPage.waitForSelector("#alertDialogId_oj11", { timeout: 5000 });
-  //       console.log("Alert dialog detected");
-  //       const proceedButton = newPage.locator("oj-button[on-click='[[confirmBtn]]']");
-  //       console.log("Button detected")
-  //       await proceedButton.click();
-  //       console.log("Clicked on Proceed button in alert dialog");
-  //       await newPage.waitForSelector("#alertDialogId_oj11", { state: 'hidden', timeout: 5000 });
-  //       console.log("Alert dialog closed");
-  //   } catch (error) {
-  //       console.log("No alert dialog found or already dismissed");
-  //   }
+ 
   }
 
 async clickopenbranchbatch() {

@@ -105,6 +105,21 @@ When("User enters Corporate Language {string}", async function (language: string
 When("User enters Language {string}", async function (language: string) {
     await CifPageloc.enterLanguage(language);
 });
+When("user clicks on MIS TAB",async function () {
+    
+    await CifPageloc.clickMIS()
+    await CifPageloc.handleMISframe()
+    await CifPageloc.checkIndustry()
+    await CifPageloc.checksegment()
+})
+When("user clicks on Fields TAB",async function () {
+    
+    await CifPageloc.clickFields()
+    await CifPageloc.handleMISframe()
+    await CifPageloc.entersnacode()
+    
+})
+
 When("User checks Staff checkbox",async function(){
     await CifPageloc.checkstaff();
 })
@@ -186,7 +201,7 @@ When("User clicks on Joint Tab and enter details {string}",async function(dob:st
 When("User clicks enter query Tab",async function(){
     CifPageloc = new cifCreationPage(fixture.page);
        fixture.logger.info("clicks on New Query Tab");
-    await CifPageloc.handleClFAFrame();
+    await CifPageloc.handleClFFrame();
     await CifPageloc.clickNewquery();
 })
 When("User in QuickCustomer frame clicks enter query Tab",async function(){
@@ -231,5 +246,5 @@ When("User accepts Autherize Alert",async function(){
 
 When("User validates success msg",async function(){
     await CifPageloc.verifySuccesssMessage();
-    await CifPageloc.exitFrame()
+    // await CifPageloc.exitFrame()
 })  

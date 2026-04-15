@@ -3,7 +3,7 @@ import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { exit } from "node:process";
 import { timeout } from "../hooks/hooks";
 import { verify } from "node:crypto";
-let AccountClassFrame,informationFrame,ManagementFrame,ListFrame,AccountClassFrame1,AuthFrame,TDFrame,RefNumber,authFrame,StartDate,AmountBlkSumFrame,Msgframe,statusFrame,manualstatusFrame;
+let AccountClassFrame,informationFrame,ManagementFrame,ListFrame,frame,AccountClassFrame1,AuthFrame,TDFrame,RefNumber,authFrame,StartDate,AmountBlkSumFrame,Msgframe,statusFrame,manualstatusFrame;
 
 
 export default class RetailAccountClassTransferPage {
@@ -17,7 +17,7 @@ export default class RetailAccountClassTransferPage {
     // Iframe
     outerFrame: '//iframe[contains(@title, "Account Class Transfer")]',
     ManualstatuschFrame:"//iframe[contains(@title, 'Manual Status Change Summary')]",
-    TDOuterFrame: '//iframe[contains(@title, "TD Amount Block Input")]',
+    TDOuterFrame: '//iframe[contains(@title, "Amount Block Summary")]',
     AmountFrame:'//iframe[contains(@title, "Amount Block Input")]',
     AmountBlocksumFrame:'//iframe[contains(@title, "Amount Block Summary")]',
     AcStateFrame:'//iframe[contains(@title, "Account Statement Report")]',
@@ -28,18 +28,19 @@ export default class RetailAccountClassTransferPage {
     statuschangeframe:"//iframe[contains(@title,'Manual Status Change Input')]",
     verifyFrame:"//iframe[contains(@title,'Verify')]",
     // Buttons
-    newBtn: "//li[@id='New']//a",
+    newBtn: "//span[@id='New_oj0|text']",
     defaultBtn: "//button[@id='BLK_MAIN__BTN_POPULATE']",
-    saveBtn: "//li[@id='Save']//a",
-    newQuryBtn:"//li[@id='EnterQuery']//a",
+    saveBtn: "//span[@id='Save_oj7|text']",
+    newQuryBtn:"//span[@id='EnterQuery_oj17|text']",
     exeQueryBtn:"//li[@id='ExecuteQuery']//a",
-    authBtn: "//li[@id='Authorize']//a",
+    authBtn: "Authorize_oj8|text",
     // Input fields
     account: "//input[@id='BLK_MAIN__CUST_AC_NO']",
     accountClass: "//input[@id='BLK_MAIN__ACCOUNT_CLASS']",
-    Account: "//input[@id='BLK_AMOUNT_BLOCKS__ACCOUNT']",
-    Amount: "//input[@id='BLK_AMOUNT_BLOCKS__AMOUNTI']",
-    EffectiveDate: "//input[@id='BLK_AMOUNT_BLOCKS__EFFECTIVE_DATEI']",//YYYY-MM-DD
+    Account: "//input[@id='BLK_AMOUNT_BLOCKS__ACCOUNT|input']",
+    Amount: "//input[@id='BLK_AMOUNT_BLOCKS__AMOUNT|input']",
+    AmntBlktype: "//ul[@id='ui-id-24']//li//span[contains(text(),'FLEXCUBE')]",
+    EffectiveDate: "//input[@id='BLK_AMOUNT_BLOCKS__EFFECTIVE_DATE|input']",//YYYY-MM-DD
     ExpiryDate: "//input[@id='BLK_AMOUNT_BLOCKS__EXPIRY_DATEI']",
     FromDate:"//input[@id='BLK_ACTBS_ACCOUNT_REPORT__FROMDTI']",
     ToDate:"//input[@id='BLK_ACTBS_ACCOUNT_REPORT__TODTI']",
@@ -48,21 +49,21 @@ export default class RetailAccountClassTransferPage {
     dormantchkbox:"//input[@type='checkbox'][@name='DORMANT']",
     AcNo:"//input[@id='BLK_STTMS_AC_STAT_CHANGE__CUST_AC_NO']",
   
-    RefNo:"//input[@id='BLK_AMOUNT_BLOCKS__AMOUNT_BLOCK_NO']",
-    AmountBLKNo:"//input[@id='BLK_CADAMBLK_SUMMARY__AMOUNT_BLOCK_NO']",
-    Acceptbtn:"//input[@value='Accept']",
+    RefNo:"//input[@id='BLK_AMOUNT_BLOCKS__AMOUNT_BLOCK_NO|input']",
+    AmountBLKNo:"//input[@id='BLK_AMOUNT_BLOCKS__AMOUNT_BLOCK_NO|input']",
+    Acceptbtn:"//oj-button[@id='BTN_OK'][@title='Accept']",
     keyid:"//span[@class='ICOlov']",
     checkbox:"(//div[@class='DIVChkRadSel'])[2]",
     messagestatementfee:"//textarea[@id='BLK_MESSAGE__MESSAGE']",
 
     // Success message
     errorMessage: "//table//tr//td//span[contains(text(),'Error Description')]",
-    successMessage:"//table//tr//td//span[contains(text(),'Success')]",
+    successMessage:"//table//tr//td[contains(text(),'Success')]",
     //successMessage:"//body[1]/div[1]/div[2]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]",
-    okBtn: "//input[@id='BTN_OK']",
-    exitBtn: "//input[@id='BTN_EXIT_IMG']",
+    okBtn: "//span[@id='BTN_OK_oj0|text']",
+    exitBtn: "//span[@id='BTN_EXIT_IMG_oj53|text']",
     exitBtn1:"//input[@id='BTN_EXIT']",
-    acceptBtn: "//input[@id='BTN_ACCEPT']",
+    acceptBtn: "//span[@id='BTN_ACCEPT_oj2|text']",
     MISBtn: "//li[@id='CVS_MIS']",
     poolcode: "//input[@id='BLK_MIS__POOL_CODE']",  
     firstrow:"//body[1]/div[1]/div[2]/div[3]/div[3]/table[1]/tbody[1]/tr[1]/td[1]//div//a",
@@ -72,7 +73,7 @@ export default class RetailAccountClassTransferPage {
     searchBtn:"//li[@id='Search']//a",
     dblclick:"//table[@id='TBL_QryRslts']//tr[1]/td[2]/div/a",
      AuthBtn:"//li[@id='Authorize']//a",
-    authframe:"//iframe[contains(@title,'Authorize')]"
+    authframe:"//iframe[@id='ifrSubScreen']"
   };
 
   /** Handle Retail iframe */
@@ -129,7 +130,7 @@ async handleAmountFrame() {
   }
   async handleAmountBlockSumFrame() {
     const frameHandle = await this.page.waitForSelector(this.Elements.AmountBlocksumFrame, { timeout: 30000 });
-    AmountBlkSumFrame = await frameHandle.contentFrame();
+      frame = await frameHandle.contentFrame();
     console.log("Switched to Amount Block Summary Frame");
   }
   async handleAcStateFrame(){
@@ -285,15 +286,16 @@ if (await dormantCheckbox.isChecked()) {
     await TDFrame.locator(this.Elements.okBtn).last().click();
   }
   async selectUnauthstatus(status: string) {
-    await AmountBlkSumFrame.selectOption(this.Elements.AuthDropdown1,status)
+    await AmountBlkSumFrame.getByText('Unauthorized',{exact: true }).click()
   }
   
   async clickEnterQuery() {
     await TDFrame.locator(this.Elements.newQuryBtn).click();
   }
    async enterRefNo() {
-   await AmountBlkSumFrame.locator(this.Elements.AmountBLKNo).clear()
-    await AmountBlkSumFrame.locator(this.Elements.AmountBLKNo).fill(RefNumber);
+   await TDFrame.locator(this.Elements.AmountBLKNo).clear()
+    await TDFrame.locator(this.Elements.AmountBLKNo).fill(RefNumber);
+    await TDFrame.locator("//span[@id='ExecuteQuery_oj18|text']").click()
   }
   async clickonSearch(){
     await AmountBlkSumFrame.click(this.Elements.searchBtn)
@@ -305,14 +307,14 @@ if (await dormantCheckbox.isChecked()) {
     await TDFrame.locator(this.Elements.exeQueryBtn).click();
   }
   async clickauthTab(){
-    await TDFrame.locator(this.Elements.authBtn).click()
+    await TDFrame.locator("//span[@id='Authorize_oj8|text']").click()
   }
 
   async clickAcceptBtn(){
     const FrameHandle1=await TDFrame.locator(this.Elements.authframe)
 authFrame = await FrameHandle1.contentFrame();
    console.log("Switched to Auth Frame")
-       await authFrame.locator(this.Elements.Acceptbtn).click()
+       await authFrame.locator("//span[@id='BTN_OK_oj16|text']").click()
   }
   async ValidateSuccessFun(SuccessMsg:string){
        const frameElementHandle = await authFrame.locator(this.Elements.informFrame,{timeout:5000});
@@ -388,6 +390,7 @@ authFrame = await FrameHandle1.contentFrame();
      }catch{
       console.log('Alert not found')
      }
+     
     const emessage = informationFrame.locator(this.Elements.successMessage);
     console.log("Success message: " + (await emessage.textContent()));
     expect(await emessage.textContent()).toContain(SuccessMsg);

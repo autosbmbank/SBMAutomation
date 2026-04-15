@@ -76,7 +76,7 @@ When("System display success message", async function () {
 When("system capture account number",async function() {
     await bookLoan.captureinputvalue();
     
-})
+});
  
 When("click on Enter Query", async function (){
     bookLoan = new BookingLoanPage(fixture.page);

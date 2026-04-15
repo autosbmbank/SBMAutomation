@@ -4,11 +4,11 @@ Feature: Processing Feature
   @Processing01 @Voucher101
   Scenario Outline: Verify Voucher entry DR GL and CR Customer Account 101 functionality
     Given User navigates to the application
-    When MAK user enters the username and password
-    And click on signin button
-    Then valdiate the home page tite as "<HomePageTitle>"
+            When MAK user enters the username and password
+            When MAK user login in the application
+             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
     And enter the Branch number as "<BranchNumber>"
-    When enters the function name as "<FunctionName>" and click on search button
+    When user enters the function name as "<FunctionName>" and click search button
     When user Click on New
     And user Enter the Batch Number "<BatchNumber>"
     And user Enter the Description "<Description>"
@@ -41,7 +41,7 @@ Feature: Processing Feature
     And CHE user login in the application
     And valdiate the home page tite as "<HomePageTitle>"
     And enter the Branch number as "<BranchNumber>"
-    And enters the function name as "<functionname>" and click on search button
+    When user enters the function name as "<FunctionName>" and click search button
     And select "<AuthorizationStatus>" from the drop down list 
     And user enter Batch number
     And click on Search Button
@@ -53,7 +53,7 @@ Feature: Processing Feature
 
   Examples:
      | HomePageTitle                                       | BranchNumber | FunctionName  | BatchNumber | Description | Debit | Credit | DebitBranch | DebitAccount | CreditBranch | CreditAccount  | Currency | Amount | TransactionCode |functionname|AuthorizationStatus |branchnumber|
-    | Oracle Financial Services - ENG - Transaction Input | 100        | DEDJNLON        |     785D43        | 101DE       | 2000 | 2000   | 100         | 110010101    | 100          | 1015367000012 | LSL      | 2000   | AAT             |DESJNLON   |    U                   |999|
+    | Oracle Financial Services - ENG - Transaction Input | 001        | DEDJNLON        |     2004        | TEST       | 2000 | 2000   | 001         | 0010007176007    | 001          | 0011000135002 | KES      | 2000   | ACD             |DESJNLON   |    U                   |001|
 
 
     @Processing02 @Voucher102

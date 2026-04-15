@@ -1,15 +1,14 @@
-
   module.exports = {
      default: {
-
-        tags:"@AmendRetailAccountscreen",
-        
+ 
+        tags:"@GUARANTEE1",
+       
  
           formatOptions: {
  
           snippetInterface: "async-await",
       },
-
+ 
       paths: ["src/test/features/"],
      // publishQuiet: true,
       dryRun: false,
@@ -17,11 +16,11 @@
       requireModule: ["ts-node/register"],  
  
       format: [
-        "progress-bar", 
+        "progress-bar",
         "html:test-results/cucumber-report.html",
         "json:test-results/cucumber-report.json",
         "rerun:@rerun.txt",
-
+ 
       ],
     parallel:1,
     },

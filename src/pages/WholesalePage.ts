@@ -10,48 +10,51 @@ export default class WholesalePage {
   }
 
  private Elements = {
-     Newtab: "//li[@id='New']",
-     Custnum: "//input[@id='BLK_CUST_ACCOUNT__CUSTNO']",
-     Accclass: "//input[@id='BLK_CUST_ACCOUNT__ACCLS']",
-     TDCurrency:"//input[@id='BLK_CUST_ACCOUNT__CCY']",
-     Pbutton: "//button[@id='BLK_CUST_ACCOUNT__BTN_ACCPKP']",
+     Newtab: '//*[@id="New_oj0|text"]',
+     Custnum: '//*[@id="BLK_CUST_ACCOUNT__CUSTNO|input"]',
+     Accclass: '//*[@id="BLK_CUST_ACCOUNT__ACCLS|input"]',
+     TDCurrency:'//*[@id="BLK_CUST_ACCOUNT__CCY|input"]',
+     Pbutton: '//*[@id="BLK_CUST_ACCOUNT__BTN_ACCPKP_oj143|text"]',
+     initdeposit: '//*[@id="BLK_TDDETAILS__TDAMT|input"]',
      TDACNo: "//input[@id='BLK_CUST_ACCOUNT__ACC']",
      RedempTDACNo:"//input[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__ACC_NO']",
      ProdCode:"//input[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__PRODUCT_CODE']",
      RedempMode:"//select[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__REDEMPTION_MODE']",
      RedempAmnt:"//input[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__REDEMPTION_AMTI']",
      RedempAmnt1:"(//input[@id='BLK_ICTMS_TDREDMPAYOUT_DETAILS__REDMAMTI'])[1]",
-     Okbutton: "//input[@id='BTN_OK']",
-     InitDeposit: "//input[@id='BLK_TDDETAILS__TDAMTI']",
-     PayinaddRowbutton: "//button[@id='cmdAddRow_BLK_TDPAYINDETAILS']",
+     Savebutton: '//*[@id="BTN_OK_oj51|text"]',
+          PayinaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYINDETAILS"]',
      RedempPayOutRow:"//button[@id='cmdAddRow_BLK_ICTMS_TDREDMPAYOUT_DETAILS']",
-     TDPayIn: "//select[@id='BLK_TDPAYINDETAILS__MMPAYOPT']",
-     Percentage:"//input[@id='BLK_TDPAYINDETAILS__MMPERCENTAGEI']", 
-     offsetaccount: "//input[@id='BLK_TDPAYINDETAILS__MMOFFSETACC']",
-     PayoutaddRowbutton: "//button[@id='cmdAddRow_BLK_TDPAYOUTDETAILS']",
+     TDPayIn: '//*[@id="BLK_TDPAYINDETAILS__MMPAYOPTRC0|input"]',
+     Percentage:'//*[@id="BLK_TDPAYINDETAILS__MMPERCENTAGERC0|input"]', 
+     offsetaccount: '//*[@id="BLK_TDPAYINDETAILS__MMOFFSETACCRC0|input"]',
+     PayoutaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYOUTDETAILS"]',
      PayoutType: "//select[@id='BLK_TDPAYOUTDETAILS__PAYOUTTYPE']",
      RedempPayoutType:"//select[@title='Payout Type']",
-     PayoutPercentage: "//input[@id='BLK_TDPAYOUTDETAILS__PERCENTAGEI']",
+     PayoutPercentage: '//*[@id="BLK_TDPAYOUTDETAILS__PERCENTAGERC0|input"]',
      RedempPayoutPercentage:"//input[@title='Percentage']",
-     Payoutoffsetaccount: "//input[@id='BLK_TDPAYOUTDETAILS__OFFACC']",
+     Payoutoffsetaccount:'//*[@id="BLK_TDPAYOUTDETAILS__OFFACCRC0|input"]',
       RedempPayoutoffsetaccount:"//input[@title='Offset Account']",
-     PayoutCmpt: "//select[@id='BLK_TDPAYOUTDETAILS__PAYOUTCOMP']",
-     Location: "//input[@id='BLK_CUST_ACCOUNT__LOC']",
-     Media:"//input[@id='BLK_CUST_ACCOUNT__MEDIA']",
-     MIStab: "//li[@id='MICACCTM']",
-     PoolCode: "//input[@id='BLK_MISDETAILS__POOLCD']",
-     Subsysbtn: "//button[@id='BtnSubSysNav']",    
-     Interesttab: "//li[@id='CVS_INTEREST']",
-     UDEDefault: "//button[@id='BLK_INTPRODMAP__BTN_UDE_POPULATE']",
+     payoutcmp: '//*[@id="BLK_TDPAYOUTDETAILS__PAYOUTCOMPRC0|input"]',
+     Location: '//*[@id="BLK_CUST_ACCOUNT__LOC|input"]',
+     Media:'//*[@id="BLK_CUST_ACCOUNT__MEDIA|input"]',
+     MIStab: '//*[@id="MICACCTM_oj170|text"]',
+     PoolCode: '//*[@id="BLK_MISDETAILS__POOLCD|input"]',
+     Savebtn: '//*[@id="BTN_OK_oj102|text"]',    
+     Interesttab: '//*[@id="CVS_INTEREST_oj166|text"]',
+     okbtn:'//*[@id="BTN_OK_oj0|text"]',
+     UDEDefault: '//*[@id="BLK_INTPRODMAP__BTN_UDE_POPULATE_oj38|text"]',
+     okbtn1:'//*[@id="BTN_OK_oj0|text"]',
      computebtn: "//button[@id='BLK_TDDETAILS__BTNTDCOMPUTE']",
-     compute:"//button[@TITLE='Compute']",
+     compute:'//*[@id="BLK_TDDETAILS__BTNTDCOMPUTE_oj147|text"]',
+     Closeonmaturity:'//*[@id="BLK_TDDETAILS__CLONMAT"]/div/div/div',
      AuthStatus:"//select[@id='BLK_SUMMARY__AUTH_STATUS']",
      parentAcc:"//input[@id='BLK_SUMMARY__ACC_NO']",
      authorizefirstrow : "//table[@id='TBL_QryRslts']//tr[contains(@class,'TBLoneTR')][1]",
      search:"//li[@id='Search']",
      authTab:"//li[@id='Authorize']/a",
-     savebtn: "//li[@id='Save']",
-     Acceptbtn: "//input[@id='BTN_ACCEPT']",
+     savebtn: '//*[@id="Save_oj7|text"]',
+     Acceptbtn: '//*[@id="BTN_ACCEPT_oj2|text"]',
      unauthormsg:"//input[@id='BLK_CUST_ACCOUNT__AUTHSTATI']",
      okafterAccept: "",
      WSAuthorizationStatus: "//select[@id='BLK_ICVW_TD_CUST__AUTHSTAT']",
@@ -129,38 +132,44 @@ async handleANGFrame() {
 
 //Management Information System 
 async handleMISFrame() {
-  try {
-        const outerFrameHandle = await this.page.waitForSelector(
-  "iframe[title*='Deposit Account Booking']:not([title*='Summary'])",
-  { timeout: 30000 }
-);
-    const outerFrame = await outerFrameHandle.contentFrame();
-    const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="Management Information System"]', { timeout: 50000 }
-    );
-    const innerFrame = await innerFrameHandle.contentFrame();
-    return innerFrame;
-  } catch (err) {
-    console.log("handleANGFrame failed:", err);
-    throw err;
-  }
-}
+   const frame = await this.handleDABFrame();
+    // try {
+    //     // Find the main Deposit Account Booking frame first
+    //     const outerFrameHandle = await frame.waitForSelector(
+    //         'iframe[title*="Deposit Account Booking"]', 
+    //         { timeout: 30000 }
+    //     );
+    //     const outerFrame = await outerFrameHandle.contentFrame();
+
+        // Use *= to match a PARTIAL title, which is more reliable
+        const innerFrameHandle = await frame.waitForSelector(
+            'iframe[id="ifrSubScreen"]', 
+            { state: 'visible', timeout: 30000 }
+        );
+        
+        return await innerFrameHandle.contentFrame();
+    } catch (err) {
+        console.log("Failed to switch to MIS Frame:", err);
+        throw err;
+    }
+
 
 //Information Message Frame
 async handleIMFrame() {
+  const frame = await this.handleDABFrame();
   try {
-        const outerFrameHandle1 = await this.page.waitForSelector(
-          "iframe[title*='Deposit Account Booking']", {timeout : 30000}
-        );
+        // const outerFrameHandle1 = await this.page.waitForSelector(
+        //   "iframe[title*='Deposit Account Booking']", {timeout : 30000}
+        // );
         
-        const outerFrame1 = await outerFrameHandle1.contentFrame();
-        const outerFrameHandle = await outerFrame1.waitForSelector(
-  "iframe[title*='IC Special Conditions Maintenance']",
+        // const outerFrame1 = await outerFrameHandle1.contentFrame();
+        const outerFrameHandle = await frame.waitForSelector(
+  "iframe[id='ifrSubScreen']",
   { timeout: 30000 }
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="Information Message"]', { timeout: 50000 }
+      'iframe[id="ifr_AlertWin"]', { timeout: 50000 }
     );
     const innerFrame = await innerFrameHandle.contentFrame();
     return innerFrame;
@@ -178,7 +187,7 @@ async handleICSCMFrame() {
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="IC Special Conditions Maintenance"]', { timeout: 50000 }
+      'iframe[id="ifrSubScreen"]', { timeout: 50000 }
     );
     const innerFrame = await innerFrameHandle.contentFrame();
     return innerFrame;
@@ -250,7 +259,7 @@ async handleInformationMessageFrame() {
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="Information Message"]', { timeout: 50000 }
+      'iframe[id="ifr_AlertWin"]', { timeout: 50000 }
     );
     const innerFrame = await innerFrameHandle.contentFrame();
     return innerFrame;
@@ -348,7 +357,7 @@ async clickokInformationMessage(){
                 await expect(message).toContain('Successfully');
             
        await this.page.waitForTimeout(2000);      
-    await informframe.click(this.Elements.Okbutton);
+    await informframe.click(this.Elements.okbtn);
 }
 async clickRedempPayoutaddRowbutton(){
     await frame.click(this.Elements.RedempPayOutRow);
@@ -424,7 +433,7 @@ async clickAuthRedemp(){
                  successframe= await frameElementHandle2.contentFrame();
           const message= await successframe.locator("//span[contains(@title,'Successfully')]").textContent()
                 await expect(message).toContain(successmsg);
-        await successframe.locator(this.Elements.Okbutton).click()
+        await successframe.locator(this.Elements.okbtn).click()
     
            
         }
@@ -463,41 +472,41 @@ async clickAuthRedemp(){
 
     async clickonOkbutton(){
     const frame = await this.handleANGFrame();
-    await frame.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame.locator(this.Elements.Okbutton).click();
+    await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+    await frame.locator(this.Elements.okbtn).click();
 }
 
     async enterInitialDeposit(initdeposit){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.TDACNo,{state:'visible',timeout:15000});
-    WSTDACNumvar = await frame.locator(this.Elements.TDACNo).inputValue(); 
-    await frame.waitForSelector(this.Elements.InitDeposit,{state:'visible',timeout:15000});
-    await frame.locator(this.Elements.InitDeposit).clear();
-    await frame.locator(this.Elements.InitDeposit).fill(initdeposit);
+    await frame.waitForSelector(this.Elements.initdeposit,{state:'visible',timeout:15000});
+    WSTDACNumvar = await frame.locator(this.Elements.initdeposit).inputValue(); 
+    await frame.waitForSelector(this.Elements.initdeposit,{state:'visible',timeout:15000});
+    await frame.locator(this.Elements.initdeposit).clear();
+    await frame.locator(this.Elements.initdeposit).fill(initdeposit);
 }
 
     async clickPayinaddRowbutton(){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.PayinaddRowbutton, { state: 'visible', timeout: 15000 });
+    await frame.waitForSelector(this.Elements.PayinaddRowbutton, { state: 'visible', timeout: 20000 });
     await frame.locator(this.Elements.PayinaddRowbutton).click();      
 }
 
     async SelectTDPayInDropdown(tdpayin){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.TDPayIn, { state: 'visible', timeout: 15000 });
+    await frame.waitForSelector(this.Elements.TDPayIn, { state: 'visible', timeout: 20000 });
     await frame.selectOption(this.Elements.TDPayIn, { label: tdpayin });
 }
 
     async enterPercentage(percent){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.Percentage, { state: 'visible', timeout: 35000 });
+    await frame.waitForSelector(this.Elements.Percentage, { state: 'visible', timeout: 30000 });
     await frame.locator(this.Elements.Percentage).clear();
     await frame.locator(this.Elements.Percentage).fill(percent);
 }
 
     async enterOffsetAccount(offsetac){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.offsetaccount, { state: 'visible', timeout: 35000 });
+    await frame.waitForSelector(this.Elements.offsetaccount, { state: 'visible', timeout: 30000 });
     await frame.locator(this.Elements.offsetaccount).clear();
     await frame.locator(this.Elements.offsetaccount).fill(offsetac);
 }
@@ -558,13 +567,20 @@ async enterInstallmentamount(instAmt: string) {
     }
 }
 
-    async clickPayoutaddRowbutton(){
+    // async clickPayoutaddRowbutton(){
+    // const frame = await this.handleDABFrame();
+    // await frame.waitForSelector(this.Elements.PayoutaddRowbutton,{state:'visible',timeout:15000});
+    // WSTDACNumvar = await frame.locator(this.Elements.PayoutaddRowbutton).inputValue(); 
+    // await frame.waitForSelector(this.Elements.PayoutaddRowbutton, { state: 'visible', timeout: 15000 });
+    // await frame.locator(this.Elements.PayoutaddRowbutton).click();
+
+async clickPayoutaddRowbutton(){
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.TDACNo,{state:'visible',timeout:15000});
-    WSTDACNumvar = await frame.locator(this.Elements.TDACNo).inputValue(); 
-    await frame.waitForSelector(this.Elements.PayoutaddRowbutton, { state: 'visible', timeout: 15000 });
+    await frame.waitForSelector(this.Elements.PayoutaddRowbutton, { state: 'visible', timeout: 20000 });
     await frame.locator(this.Elements.PayoutaddRowbutton).click();
+    
 }
+    
 
     async SelectPayoutTypeDropdown(payouttype){
     const frame = await this.handleDABFrame();
@@ -586,12 +602,22 @@ async enterInstallmentamount(instAmt: string) {
     await frame.locator(this.Elements.Payoutoffsetaccount).fill(payoutoffsetac);
 }
 
-    async SelectPayoutcmptDropdown(payoutcmp){
+    async SelectPayoutcmptDropdown(payoutcmp) {
     const frame = await this.handleDABFrame();
-    await frame.waitForSelector(this.Elements.PayoutCmpt, { state: 'visible', timeout: 15000 });
-    await frame.selectOption(this.Elements.PayoutCmpt, { label: payoutcmp });
-}
+    
+    // Step 1: Click the dropdown trigger
+    const dropdown = frame.locator(this.Elements.payoutcmp);
+    await dropdown.click();
 
+    // Step 2: Use a more flexible locator for the list item
+    // We search for a list item (li) that has the text, ignoring case.
+    const option = frame.locator('li', { hasText: new RegExp(`^${payoutcmp}$`, 'i') });
+
+    // Step 3: Wait for visibility and click
+    await option.waitFor({ state: 'visible', timeout: 15000 });
+    await option.click();
+}
+    
     async enterLocation(Loc){
     const frame = await this.handleDABFrame();
     await frame.waitForSelector(this.Elements.Location, { state: 'visible', timeout: 15000 });
@@ -610,19 +636,19 @@ async enterInstallmentamount(instAmt: string) {
     const frame = await this.handleDABFrame();
     await frame.waitForSelector(this.Elements.MIStab, { state: 'visible', timeout: 15000 });
     await frame.click(this.Elements.MIStab);
-}
+    }
 
-    async enterPoolCode(plcode){
+    async enterPoolCode(PoolCode){
     const frame = await this.handleMISFrame();
     await frame.waitForSelector(this.Elements.PoolCode, { state: 'visible', timeout: 15000 });
     await frame.locator(this.Elements.PoolCode).clear();
-    await frame.locator(this.Elements.PoolCode).fill(plcode);
+    await frame.locator(this.Elements.PoolCode).fill(PoolCode);
 }
 
-    async clickonokinMIStab(){
+    async clickonsaveinMIStab(){
     const frame = await this.handleMISFrame();
-    await frame.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame.locator(this.Elements.Okbutton).click();    
+    await frame.waitForSelector(this.Elements.Savebtn, { state: 'visible', timeout: 15000 });
+    await frame.locator(this.Elements.Savebtn).click();    
 }
 
     async clickonInteresttab(){
@@ -630,9 +656,20 @@ async enterInstallmentamount(instAmt: string) {
     await frame.waitForSelector(this.Elements.Interesttab, { state: 'visible', timeout: 15000 });
     await frame.locator(this.Elements.Interesttab).click();
     const frame1 = await this.handleIMFrame();
-    await frame1.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame1.locator(this.Elements.Okbutton).click();
+    await frame1.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+    await frame1.locator(this.Elements.okbtn).click();
 }
+
+    // async clickonokbutton(){
+    //  frame = await this.handleIMFrame();
+    // await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+    // await frame.locator(this.Elements.okbtn).click(); 
+    // const frame1 = await this.handleICSCMFrame();
+    // await frame1.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+    // await frame1.locator(this.Elements.okbtn).click(); 
+
+
+    // }
 async DateChange(){
   const frame1 = await this.handleICSCMFrame();
    const Date=await this.base.currentDate()
@@ -648,13 +685,20 @@ async DateChange(){
 }
 
     async clickokafterUDEDefault(){
-    frame = await this.handleIMFrame();
-    await frame.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame.locator(this.Elements.Okbutton).click(); 
-    const frame1 = await this.handleICSCMFrame();
-    await frame1.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame1.locator(this.Elements.Okbutton).click(); 
+    // frame = await this.handleIMFrame();
+    // await frame.waitForSelector(this.Elements.okbtn1, { state: 'visible', timeout: 20000 });
+    // await frame.locator(this.Elements.okbtn1).click(); 
+    const frame1 = await this.handleIMFrame();
+    await frame1.waitForSelector(this.Elements.okbtn1, { state: 'visible', timeout: 20000 });
+    await frame1.locator(this.Elements.okbtn1).click(); 
 }
+
+
+  async clickonSavebutton(){
+     const frame1 = await this.handleICSCMFrame();
+    await frame1.waitForSelector(this.Elements.Savebutton, { state: 'visible', timeout: 15000 });
+    await frame1.locator(this.Elements.Savebutton).click(); 
+  }
 
   async checkCascade() {
   const frame = await this.handleDABFrame();
@@ -668,10 +712,16 @@ async DateChange(){
 
   async clickoncompute() {
   const frame = await this.handleDABFrame();   // re-enter correct frame
-  await frame.waitForSelector(this.Elements.computebtn, { state: 'visible', timeout: 15000 });
-  await frame.click(this.Elements.computebtn);
+  await frame.waitForSelector(this.Elements.compute, { state: 'visible', timeout: 15000 });
+  await frame.click(this.Elements.compute);
 }
 
+   async closeonmaturity(){
+    const frame = await this.handleDABFrame();
+    await frame.waitForSelector(this.Elements.Closeonmaturity, { state: 'visible', timeout: 15000 });
+    await frame.click(this.Elements.Closeonmaturity)
+   }
+   
     async clickonsave(){
     const frame = await this.handleDABFrame();
     await frame.waitForSelector(this.Elements.savebtn, { state: 'visible', timeout: 15000 });
@@ -680,8 +730,8 @@ async DateChange(){
 
   async clickokaftersave(){
   const frame = await this.handleIFR1Frame();
-  await frame.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-  await frame.click(this.Elements.Okbutton);
+  await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+  await frame.click(this.Elements.okbtn);
 }
 
     async clickaccept(){
@@ -691,8 +741,8 @@ async DateChange(){
 
     async clickokafteraccept(){
     const frame = await this.handleInformationMessageFrame();
-    await frame.waitForSelector(this.Elements.Okbutton, { state: 'visible', timeout: 15000 });
-    await frame.click(this.Elements.Okbutton);
+    await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
+    await frame.click(this.Elements.okbtn);
 }
 
   async verifyAuthorizationStatusforwholesale(){
@@ -761,13 +811,13 @@ async TDRolloverDetails(Rollover:string,Rolloveramount:string){
             await this.page.waitForTimeout(2000);
             await addframe.locator("//input[@id='BLK_TDDETAILS__ROLLAMTI']").fill(Rolloveramount);
             await this.page.waitForTimeout(2000);
-            await addframe.locator(this.Elements.Okbutton).click();
+            await addframe.locator(this.Elements.okbtn).click();
 }
 
 async clickAcceptforwholesale(){
 const frame = await this.handleAuthorizeFrame();
-await frame.waitForSelector(this.Elements.Okbutton,{state: 'visible', timeout : 85000});
-await frame.locator(this.Elements.Okbutton).click();
+await frame.waitForSelector(this.Elements.okbtn,{state: 'visible', timeout : 85000});
+await frame.locator(this.Elements.okbtn).click();
 }
 
   async clickokafterAcceptforwholesale() {

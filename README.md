@@ -1,4 +1,4 @@
-# LPB Automation - Step-by-Step Implementation Guide
+# SBM Automation - Step-by-Step Implementation Guide
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -20,13 +20,13 @@
 
 ## Project Overview
 
-**LPBAutomation** is a comprehensive automated testing framework built using:
+**SBMAutomation** is a comprehensive automated testing framework built using:
 - **Playwright** for browser automation
 - **Cucumber** for BDD (Behavior Driven Development)
 - **TypeScript** for type-safe implementation
 
 ### Purpose
-The framework automates testing of the LPB application, covering various modules including:
+The framework automates testing of the SBM application, covering various modules including:
 - Core module (CIF - Customer Information File creation)
 - Account Management
 - Withdrawals
@@ -104,7 +104,7 @@ Report Generation
 ### Directory Layout
 
 ```
-LPBAutomation/
+SBMAutomation/
 │
 ├── src/
 │   ├── helper/                    # Helper utilities and configurations
@@ -217,8 +217,8 @@ LPBAutomation/
 
 #### Step 1: Clone the Repository
 ```bash
-git clone --branch "branch-name" "https://github.com/your-org/LPBAutomation.git"
-cd LPBAutomation
+git clone --branch "branch-name" "https://github.com/your-org/SBMAutomation.git"
+cd SBMAutomation
 ```
 
 #### Step 2: Install Dependencies
@@ -1402,4 +1402,4 @@ PWDEBUG=1 npm test               # Interactive debugging
 
 **Last Updated**: January 28, 2026
 **Framework Version**: 1.0.0
-**Project**: LPB Automation Testing
+**Project**: SBM Automation Testing

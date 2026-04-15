@@ -16,7 +16,7 @@ export default class LoginPage {
     }
 
     private Elements = {
-        userName: "//input[@name='USERID']",
+         userName: "//input[@name='USERID']",
         password: "//input[@name='user_pwd']",
         loginBtn: "//oj-button[@name='submit']",
         okBtn: "(//input[@id='BTN_OK'])[1]",
@@ -140,8 +140,7 @@ export default class LoginPage {
         }catch(message){
     console.log("Signoff not done"+message)
 }
-      
-    }
+     }
 async Msignoff(){
         try {
             // Wait for the iframe to appear in the DOM

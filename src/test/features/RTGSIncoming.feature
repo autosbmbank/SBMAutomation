@@ -18,9 +18,9 @@ Feature: Transaction booking Customer Incoming
              And enter Creditor Agent Details "<CreditBICFI>"
              And enter Debitor Agent Details "<DebitBICFI>"
              And enter Instructed Agent Details "<BICFI>"
+             And get the transaction reference number
              And selects the charge bearer
              And Click on Enrich
-          #  And system capture account number1 
              And enter Debitor Details "<DebitorName>"
              And Click on Save option
              And Click on ok
@@ -33,12 +33,12 @@ Feature: Transaction booking Customer Incoming
              And enter the Branch number as "001"
              When user enters the function name as "PSDIT2CT" and click search button
              And click on enter Query tab
-             And enter Transaction Reference No "<TransactionReferenceNo>"
+             And enter Transaction Reference No
              And Click on Execute Query tab
              And Click on Authorize tab
              And Click on Authorize button1
-          #    And click on ok button1
+              And click on ok button1
 
              Examples:
-    | HomePageTitle             | SourceCode | NetworkCode | TransferCurrecy | TransferAmount | CreditAccountNo | CreditBICFI  | DebitBICFI | BICFI     |ChargeBearer| DebitorName | TransactionReferenceNo |
-    | Oracle Financial Services | MANL       | RTGSMX       |      KES       |     3000      | 0002000001003  | AAAARSBGXXX | AAAARSBGXXX | KCBLKENX002 |    DEBT   |   Amanuel    |   2610001354451000   |
+    | HomePageTitle             | SourceCode | NetworkCode | TransferCurrecy | TransferAmount | CreditAccountNo | CreditBICFI  | DebitBICFI | BICFI     |ChargeBearer| DebitorName |
+    | Oracle Financial Services | MANL       | RTGSMX       |      KES       |     3000      | 0002000001003  | AAAARSBGXXX | AAAARSBGXXX | KCBLKENX002 |    DEBT   |   Amanuel    |  

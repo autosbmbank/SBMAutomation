@@ -48,19 +48,16 @@ When("enter Instructed Agent Details {string}",async function(BICFI : string){
      await RTGSINPage.enterBICFI(BICFI);
 });
 
+;
 When("selects the charge bearer",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.selectchargebearer();
-});
-
+})
 When("Click on Enrich",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.clicksEnrich();
 });
-When("system capture account number1",async function() {
-    await RTGSINPage.captureinputvalue();
-    
-});
+
 When("enter Debitor Details {string}",async function(name : string){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.enterName(name);
@@ -86,9 +83,9 @@ When("click on enter Query tab",async function(){
      await RTGSINPage.clickenterquerytab();
 });
 
-When("enter Transaction Reference No {string}",async function(referenceno : string){
+When("enter Transaction Reference No",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
-     await RTGSINPage.enterreferencenumber(referenceno);
+     await RTGSINPage.enterreferencenumber();
 });
 
 When("Click on Execute Query tab",async function(){
@@ -111,3 +108,7 @@ When("click on ok button1",async function(){
      await RTGSINPage.clickokbtn();
 })
 
+When("get the transaction reference number", async function () {
+    RTGSINPage = await new RTGSIncomingPage(fixture.page);
+     await RTGSINPage.getTransrefNumber();
+ });

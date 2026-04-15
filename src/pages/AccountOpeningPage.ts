@@ -2,7 +2,7 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { timeout } from "../hooks/hooks";
-let frame;
+let frame,accNumber;
 export default class AccountOpeningPage {
     private base: ReusableMethods;
 
@@ -44,6 +44,7 @@ export default class AccountOpeningPage {
         unlock : '//*[@id="Unlock_oj4|text"]',
         undebit : '//*[@id="BLK_CUST_ACCOUNT__ACSTATNODR"]/div/div/div',
         uncredit : '//*[@id="BLK_CUST_ACCOUNT__ACSTATNOCR"]/div/div/div',
+        getAccNo:"//label[@for='BLK_CUST_ACCOUNT__ACC|input']//following::div[5]"
      }
 
 // customer account 
@@ -148,43 +149,7 @@ async getauthorizeFrame() {
 
     return await iframe.contentFrame();
 }
-// autorizeok
-async clickauthorizeok() {
-    try {
-        // Step 1: Wait for the top-level main window frame
-        const outerFrameHandle = await this.page.waitForSelector(
-            'iframe[id="ifr_LaunchWin5812596958125969"]', // Using wildcard for dynamic IDs
-            { state: 'visible', timeout: 30000 }
-        );
-        const outerFrame = await outerFrameHandle.contentFrame();
-
-        // Step 2: Access the SubScreen iframe (where the authorization message lives)
-        const innerFrameHandle = await outerFrame.waitForSelector(
-            'iframe[id="ifrSubScreen"]', 
-            { state: 'visible', timeout: 20000 }
-        );
-        const subFrame = await innerFrameHandle.contentFrame();
-
-        // Step 3: Wait for the Alert/Information frame inside the SubScreen
-        // This is where the 'Successfully Authorized' text and OK button reside
-        const alertFrameHandle = await subFrame.waitForSelector(
-            'iframe[id="ifr_AlertWin"]', 
-            { state: 'visible', timeout: 15000 }
-        );
-        const finalFrame = await alertFrameHandle.contentFrame();
-
-        // Final Step: Click the 'Ok' button using its ID
-        const OKbutton = finalFrame.locator('#BTN_OK_OI');
-        await OKbutton.waitFor({ state: 'visible', timeout: 20000 });
-        await OKbutton.click();
-
-        console.log("Authorization confirmed successfully.");
-    } catch (err) {
-        console.error("Failed to navigate authorization frames:", err);
-        throw err;
-    }
-}
-
+ 
      async clicknewtab(){
         const frame = await this.handleAOFrame()
         await frame.waitForSelector(this.Elements.New, { state: 'visible', timeout: 15000 });
@@ -319,11 +284,11 @@ async Clickexit(){
     await frame.click(this.Elements.enterquery);
     }
    
-    async enteraccntmuber(accntnumber){
+    async enteraccntmuber(){
        const frame = await this.handleAOFrame()
        await frame.waitForSelector(this.Elements.accountnum, { state: 'visible', timeout: 30000 });
            await frame.locator(this.Elements.accountnum).clear()
-       await frame.locator(this.Elements.accountnum).fill(accntnumber)
+       await frame.locator(this.Elements.accountnum).fill(accNumber)
     }
 
     async ClickexecuteQuery(){
@@ -344,11 +309,25 @@ async Clickexit(){
     await frame.click(this.Elements.acceptbtn);
     }
 
-    async Clickokbutton1(){
-        const frame = await this.handleInformationMessageFrame()
-        await frame.waitForSelector(this.Elements.OKbutton, { state: 'visible', timeout: 30000 });
-    await frame.click(this.Elements.OKbutton);
-    }
+    async clickOkbtn() {
+  try {
+    const okButton = this.page
+      .frameLocator('iframe[id*="ifr_LaunchWin"]')
+      .frameLocator('#ifrSubScreen')
+      .frameLocator('#ifr_AlertWin')
+      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
+ 
+    await okButton.waitFor({ state: 'visible', timeout: 20000 });
+    await okButton.click({ force: true }); // force if masked
+ 
+    console.log("Successfully clicked OK button in ALERTWIN");
+ 
+  } catch (error) {
+    console.error("Failed to click OK button in ALERTWIN frame", error);
+    throw error;
+  }
+ 
+}
 
     async Clickunlock(){
          const frame = await this.handleAOFrame()
@@ -366,5 +345,11 @@ async Clickexit(){
          const frame = await this.handleAOFrame()
          await frame.waitForSelector(this.Elements.uncredit, { state: 'visible', timeout: 30000 });
     await frame.click(this.Elements.uncredit);
+    }
+
+    async getAccNumber(){
+         const frame = await this.handleAOFrame()
+         accNumber=await frame.innerText(this.Elements.getAccNo)
+        console.log("Account number "+accNumber)
     }
 }

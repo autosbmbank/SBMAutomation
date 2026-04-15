@@ -18,24 +18,25 @@ Feature: Process FinanceGL for a customer
                   | BranchNumber | FunctionName | AccountNumber |
                   | 100          | ACDTRNQY     | 110010753     |
  
-        @set7
+        @Journal1
         Scenario Outline: Login with Maker Credential and create journal in DEDJNLON
-            Given User navigates to the application
-             When MAK user enters the username and password
-              And click on signin button
-              And enter the Branch number as "<BranchNumber>"
-             When enters the function name as "<FunctionName>" and click on search button
+             Given User navigates to the application
+            When MAK user enters the username and password
+            When MAK user login in the application
+             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
+    And enter the Branch number as "<BranchNumber>"
+    When user enters the function name as "<FunctionName>" and click search button
               And Click on NewGLDE
-              And Enter the GLDEBatch Number
+              And Enter the GLDEBatch Number as "2004"
               And Enter the GLDEDescription "<Description>"
               And Enter the GLDEDebit "<Debit>"
               And Enter the GLDECredit "<Credit>"
               And Click on GLDEOk button
               And Click on Ok on the populated Pop Window
               And Click on AddRow1 button
-              And Select DrCr1 from given drop down list as "<DrCr1>"
+            #   And Select DrCr1 from given drop down list as "<DrCr1>"
               And Enter the Branch Code1 as "<BranchCode1>"
-              And Enter the Account Number1
+              And Enter the Account Number1 as "<AccountNumber1>"
               And Enter the Currency1 as "<Currency1>"
               And Enter the Amount1 as "<Amount1>"
               And Enter the TransactionCode1 as "<TxnCode1>"
@@ -58,8 +59,8 @@ Feature: Process FinanceGL for a customer
     # And Confirm with Ok1 button
  
         Examples:
-                  | BranchNumber | FunctionName | Description    | Debit | Credit | DrCr1 | BranchCode1 | Currency1 | Amount1 | TxnCode1 | DrCr2  | BranchCode2 | AccountNumber2 | Currency2 | Amount2 | TxnCode2 | HomeBranchNumber |
-                  | 100          | DEDJNLON     | DE Transaction | 1000  | 1000   | Debit | 100         | LSL       | 1000    | ANC      | Credit | 100         | 1015367000012  | LSL       | 1000    | ANC      | 999              |
+                  | BranchNumber | FunctionName | Description    | Debit | Credit | BranchCode1 | AccountNumber1 | Currency1 | Amount1 | TxnCode1 | DrCr2  | BranchCode2 | AccountNumber2 | Currency2 | Amount2 | TxnCode2 | HomeBranchNumber |
+                  | 001          | DEDJNLON     | TEST2 | 1000  | 1000   | Debit |  001       |                   |      KES    | 1000      | ACD |    Credit   | 001  | 0011000135002       |  KES   | 1000      | ACD    |
  
         @set7
         Scenario Outline: Login with Checker Credential and authorize

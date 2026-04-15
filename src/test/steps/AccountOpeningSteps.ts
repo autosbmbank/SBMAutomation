@@ -117,9 +117,9 @@ When("Click on Accept button", async function () {
      await AOPage.ClickenterQuery();
  });
 
- When("enter Account number {string}", async function(accntnumber : string){
+ When("enter Account number", async function(){
    AOPage = await new AccountOpeningPage(fixture.page);
-     await AOPage.enteraccntmuber(accntnumber);
+     await AOPage.enteraccntmuber();
 });
 
 When("Click on Execute Query in STDCUSAC", async function () {
@@ -139,7 +139,7 @@ When("Click on Execute Query in STDCUSAC", async function () {
 
  When("Click on OKButton", async function () {
     AOPage = await new AccountOpeningPage(fixture.page);
-     await AOPage.Clickokbutton1();
+     await AOPage.clickOkbtn();
  });
 
  When("click on unlock", async function () {
@@ -155,4 +155,9 @@ When("Click on Execute Query in STDCUSAC", async function () {
  When("uncheck on no credit check box", async function () {
     AOPage = await new AccountOpeningPage(fixture.page);
      await AOPage.Clickuncheckcredit();
+ });
+
+ When("get the account number", async function () {
+    AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.getAccNumber();
  });

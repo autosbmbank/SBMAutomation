@@ -2,7 +2,7 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { timeout } from "../hooks/hooks";
-let frame,account;
+let frame,transrefnum;
 export default class RTGSIncomingPage {
     private base: ReusableMethods;
 
@@ -33,6 +33,7 @@ export default class RTGSIncomingPage {
         authorize : '//*[@id="Authorize_oj8|text"]',
         authorizebtn : '//*[@id="BLK_BRN_RTGS_IN_ISO_DRIVER__BTN_AUTH_oj20|text"]',
         ok : '//*[@id="BTN_OK_oj0|text"]',
+        getrefNo : '//*[@id="BLK_BRN_RTGS_IN_ISO_DRIVER__TXN_REF_NO"]/div[1]/div/div/div',
      }
 
     // Incoming Transaction 
@@ -86,42 +87,7 @@ async getauthorizeFrame() {
 
     return await iframe.contentFrame();
 }
-// autorizeok
-async clickauthorizeok() {
-    try {
-        // Step 1: Wait for the top-level main window frame
-        const outerFrameHandle = await this.page.waitForSelector(
-            'iframe[id="ifr_LaunchWin5812596958125969"]', // Using wildcard for dynamic IDs
-            { state: 'visible', timeout: 30000 }
-        );
-        const outerFrame = await outerFrameHandle.contentFrame();
 
-        // Step 2: Access the SubScreen iframe (where the authorization message lives)
-        const innerFrameHandle = await outerFrame.waitForSelector(
-            'iframe[id="ifrSubScreen"]', 
-            { state: 'visible', timeout: 20000 }
-        );
-        const subFrame = await innerFrameHandle.contentFrame();
-
-        // Step 3: Wait for the Alert/Information frame inside the SubScreen
-        // This is where the 'Successfully Authorized' text and OK button reside
-        const alertFrameHandle = await subFrame.waitForSelector(
-            'iframe[id="ifr_AlertWin"]', 
-            { state: 'visible', timeout: 20000 }
-        );
-        const finalFrame = await alertFrameHandle.contentFrame();
-
-        // Final Step: Click the 'Ok' button using its ID
-        const ok = finalFrame.locator('#BTN_OK_OI');
-        await ok.waitFor({ state: 'visible', timeout: 20000 });
-        await ok.click();
-
-        console.log("Authorization confirmed successfully.");
-    } catch (err) {
-        console.error("Failed to navigate authorization frames:", err);
-        throw err;
-    }
-}
 
 async clicksnewtab(){
     const frame = await this.handleRTGSINFrame()
@@ -199,11 +165,6 @@ async clicksEnrich(){
       await frame.click(this.Elements.Enrich);
 }
 
-async captureinputvalue(){
-    account=await frame.locator('//*[@id="BLK_BRN_RTGS_IN_ISO_DRIVER__TXN_REF_NO|input"]').inputValue()
-    console.log("inputValue"+account)
-
-}
 async enterName(name){
     const frame = await this.handleRTGSINFrame()
     await frame.waitForSelector(this.Elements.DebitorName, { state: 'visible', timeout: 15000 });
@@ -230,11 +191,11 @@ async clickenterquerytab(){
         await frame.waitForSelector(this.Elements.enterquery, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.enterquery);
 }
-async enterreferencenumber(referenceno){
+async enterreferencenumber(){
   const frame = await this.handleRTGSINFrame()
     await frame.waitForSelector(this.Elements.TransactionReferenceNo, { state: 'visible', timeout: 15000 });
        await frame.locator(this.Elements.TransactionReferenceNo).clear()
-       await frame.locator(this.Elements.TransactionReferenceNo).fill(referenceno)
+       await frame.locator(this.Elements.TransactionReferenceNo).fill(transrefnum)
 }
 async clickexecutequerytab(){
   const frame = await this.handleRTGSINFrame()
@@ -251,10 +212,29 @@ async clickauthorizebutton(){
   await frame.waitForSelector(this.Elements.authorizebtn, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.authorizebtn);
 }
-async clickokbtn(){
-  const frame = await this.getSubScreenFrame()
-  await frame.waitForSelector(this.Elements.ok, { state: 'visible', timeout: 15000 });
-      await frame.click(this.Elements.ok);
+async clickokbtn() {
+  try {
+    const okButton = this.page
+      .frameLocator('iframe[id*="ifr_LaunchWin"]')
+      .frameLocator('#ifrSubScreen')
+      .frameLocator('#ifr_AlertWin')
+      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
+ 
+    await okButton.waitFor({ state: 'visible', timeout: 20000 });
+    await okButton.click({ force: true }); // force if masked
+ 
+    console.log("Successfully clicked OK button in ALERTWIN");
+ 
+  } catch (error) {
+    console.error("Failed to click OK button in ALERTWIN frame", error);
+    throw error;
+  }
+ 
 }
+async getTransrefNumber(){
+         const frame = await this.handleRTGSINFrame()
+         transrefnum=await frame.innerText(this.Elements.getrefNo)
+        console.log("Account number "+transrefnum)
+    }
 
 }

@@ -2,7 +2,7 @@
   module.exports = {
      default: {
 
-        tags:"@Login1",
+        tags:"@AmendRetailAccountscreen",
         
  
           formatOptions: {

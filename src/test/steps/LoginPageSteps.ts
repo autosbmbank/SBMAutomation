@@ -108,7 +108,7 @@ When('CHE user login in the application', async function () {
     fixture.logger.info("Click on Login Button");
     await fixture.page.waitForTimeout(1000)
     await loginPageloc.loginUsers(process.env.CHEPassword);
-  await loginPageloc.handleFrame();
+ // await loginPageloc.handleFrame();
 });
 
 When('MAK user login in the application', async function () {

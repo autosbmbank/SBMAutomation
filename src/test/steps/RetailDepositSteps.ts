@@ -60,8 +60,9 @@ When("user provides Transaction Amount {string}", async function (amount: string
     await DepositPage.enterTransactionAmount(amount);
   });
 
-When( "user provides Customer Interview {string}",async function (interview: string) {
-    await DepositPage.enterCustomerInterview(interview);
+When( "user provides Customer Interview {string} {string}",async function (denomination: string, qty: string) {
+
+    await DepositPage.fillDenominationQty(denomination, qty);
   });
 
 When("user clicks on Save", async function () {

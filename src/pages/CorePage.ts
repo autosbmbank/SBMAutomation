@@ -2,7 +2,7 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { get } from "node:http";
-let frame,customerno,authframe,Jointframe,custno;
+let frame,customerno,authframe,Jointframe,custno,MISframe;
 let popupframe;
 let overrideframe;
 let successframe;
@@ -15,37 +15,46 @@ export default class cifCreationPage {
 
     private Elements = {
          
-              newTab:'//*[@id="New_oj0|text"]',
-              btnP: '//*[@id="BLK_CUSTOMER__BTN_P_oj127|text"]',
-              fullName: "//input[@id='BLK_CUSTOMER__FULLNAME']",
-              shortName: "//label[normalize-space()='Short Name']",
-              customerCategory: "//label[normalize-space()='Customer Category']",
+              newTab:"//span[@id='New_oj0|text']",
+              btnP: "//div[@class='hfieldset-max-width oj-sm-margin-1x-end']//button",
+              fullName: "//textarea[@id='BLK_CUSTOMER__FULLNAME|input']",
+              shortName: "//input[@id='BLK_CUSTOMER__SNAME|input']",
+              customerCategory: "//input[@id='BLK_CUSTOMER__CCATEG|input']",
               gender: "Male",
-              dob: "//input[@title='Date of Birth']",
-             nationality: "//input[@id='BLK_CUSTOMER__NLTY']",
-            address: "//input[@id='BLK_CUSTOMER__ADDRLN1']",
-            corpaddress:"//textarea[@title='Address 1']",
-        country: "//input[@id='BLK_CUSTOMER__COUNTRY']",
-        corpcountry:"//input[@id='BLK_CUSTCORP__CNTRY']",
-        language: "//input[@id='BLK_CUSTPERSONAL__LANG']",
-        corplanguage:"//input[@id='BLK_CUSTCORP__LANGUAGE']",
+              dob: "//input[@id='BLK_CUSTPERSONAL__DOB|input']",
+             nationality: "//input[@name='NLTY']",
+            address: "//input[@id='BLK_CUSTOMER__ADDRLN1|input']",
+            corpaddress:"//textarea[@id='BLK_CUSTCORP__CADDR1|input']",
+        country: "//input[@id='BLK_CUSTOMER__COUNTRY|input']",
+        corpcountry:"//input[@id='BLK_CUSTCORP__CNTRY|input']",
+        language: "//input[@id='BLK_CUSTPERSONAL__LANG|input']",
+        corplanguage:"//input[@id='BLK_CUSTCORP__LANGUAGE|input']",
+        MIS:"//span[@id='MICCUSTM_oj150|text']",
+        Fields:"//*[@id='CSCFNUDF_oj155|text']",
+        SNA:"//*[@id='BLK_UDF_DETAILS_VIEW__FLDVAL68|input']",
+        industrychk: "//input[@id='BLK_CUSTOMERMIS__MISCLSRC3|input']",
+        miscodeindustry:"//input[@id='BLK_CUSTOMERMIS__MISCDRC3|input']",
+        segmentchk:"//input[@id='BLK_CUSTOMERMIS__MISCLSRC7|input']",
+         miscodesegment:"//input[@id='BLK_CUSTOMERMIS__MISCDRC7|input']",
+         savemis:"//span[@id='BTN_OK_oj19|text']",
         additionalTab: "//a[@id='TAB_ADDITIONAL']",
-        location: "//input[@id='BLK_CUSTOMER__LOC']",
-        media: "//input[@id='BLK_CUSTOMER__MEDIA']",
-      saveButton: "//li[@id='Save']//a[@class='TBitem']",
-      okbtn:"//input[@id='BTN_OK'][@title='Ok']",
-    successMessage: "//span[@title='Record Successfully Saved']",
+        location: "//input[@id='BLK_CUSTOMER__LOC|input']",
+        media: "//input[@id='BLK_CUSTOMER__MEDIA|input']",
+      saveButton: "//span[@id='Save_oj7|text']",
+      okbtn:"//*[@id='BTN_OK_oj0|text']",
+    successMessage: "//*[@id='ERRTBL:48_0']",
     acceptbtn:"#BTN_ACCEPT",
-     exitButton:"//input[@id='BTN_EXIT_IMG']",
-     newquerytab:"//li[@id='EnterQuery']",
-   cusno:"//input[@id='BLK_CUSTOMER__CUSTNO']",
-    executequerytab:"//li[@id='ExecuteQuery']",
+     exitButton:"//*[@id='BTN_EXIT_IMG_oj171|text']",
+     newquerytab:"//span[@id='EnterQuery_oj17|text']",
+   cusno:"//input[@id='BLK_CUSTOMER__CUSTNO|input']",
+    executequerytab:"//span[@id='ExecuteQuery_oj18|text']",
     authTab:"//li[@id='Authorize']/a",
 accepttbtn:"#BTN_OK",
    // okbtn:"//input[@id='BTN_OK'][@title='Ok']",
     successMsg: "//span[@title='Record Successfully Authorized']"
 
-    
+
+
     }
 
     
@@ -59,6 +68,17 @@ accepttbtn:"#BTN_OK",
         } catch (message) {
            // console.log("Frame not found");
         }
+    }
+    async handleMISframe(){
+       try {
+            // Wait for the iframe to appear in the DOM
+            const frameElementHandle1 = await frame.waitForSelector("//iframe[@id='ifrSubScreen']", { timeout: 50000 });
+             MISframe = await frameElementHandle1.contentFrame();
+           // await frame.click(this.Elements.newTab)  
+                   console.log("in MISFrame")
+        } catch (message) {
+           // console.log("Frame not found");
+        } 
     }
   async handleQuickCustFrame() {
         try {
@@ -83,7 +103,7 @@ accepttbtn:"#BTN_OK",
             
                await frame.click(this.Elements.btnP);     
        await frame.waitForTimeout(2000)
-      customerno= await frame.locator("//input[@id='BLK_CUSTOMER__CUSTNO']").inputValue()
+      customerno= await frame.locator("//input[@id='BLK_CUSTOMER__CUSTNO|input']").inputValue()
        await console.log("customer number:"+customerno)
        
     }
@@ -149,6 +169,36 @@ accepttbtn:"#BTN_OK",
     async corporatelanguage(language: string) {
         await frame.locator(this.Elements.corplanguage).fill(language);
     }
+
+    async clickMIS(){
+         await frame.locator(this.Elements.MIS).click();
+    }
+    async clickFields(){
+         await frame.locator(this.Elements.Fields).click();
+    }
+    async entersnacode(){
+        await MISframe.locator(this.Elements.SNA).fill("NA");
+         await MISframe.locator('//*[@id="BTN_OK_oj181|text"]').click();
+    }
+    async checkIndustry(){
+      
+       await MISframe.locator(this.Elements.industrychk).dblclick(); 
+       await this.page.waitForTimeout(2000)
+       await MISframe.locator(this.Elements.miscodeindustry).fill("A0112");
+         await this.page.waitForTimeout(2000)
+    }
+     async checksegment(){
+       await MISframe.locator(this.Elements.segmentchk).dblclick(); 
+       await this.page.waitForTimeout(2000)
+       await MISframe.locator(this.Elements.miscodesegment).fill("INDV");
+       await this.page.waitForTimeout(2000)
+       await MISframe.locator(this.Elements.industrychk).dblclick(); 
+       await this.page.waitForTimeout(2000)
+       await MISframe.locator(this.Elements.segmentchk).dblclick(); 
+       await this.page.waitForTimeout(2000)
+         await MISframe.locator(this.Elements.savemis).click();
+    }
+
 
         async clickAdditionalTab() {
         await frame.locator(this.Elements.additionalTab).click();
@@ -269,8 +319,8 @@ async checkAutoAccCreation(){
             const frameElementHandle1 = await frame.waitForSelector("//iframe[@id='ifrSubScreen']", { timeout: 3000 });
              popupframe= await frameElementHandle1.contentFrame();
              
-            await popupframe.click(this.Elements.okbtn)  
-                   
+            await popupframe.click('//*[@id="BTN_OK_oj2|text"]')  
+                  await this.page.waitForTimeout(2000)  
         } catch (message) {
            // console.log("Frame not found");
         }
@@ -281,10 +331,12 @@ async checkAutoAccCreation(){
       
        try {  
             // Wait for the iframe to appear in the DOM
-            const frameElementHandle2 = await frame.waitForSelector("//iframe[contains(@title, 'Override Message')]", { timeout: 3000 });
+            const frameElementHandle2 = await frame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 3000 });
              overrideframe= await frameElementHandle2.contentFrame();
            
             await overrideframe.click(this.Elements.acceptbtn)  
+         
+            await this.page.waitForTimeout(2000)
                    
         } catch (message) {
            // console.log("Frame not found");
@@ -389,7 +441,7 @@ async checkAutoAccCreation(){
         await frame.waitForTimeout(4000)
     }
     async authTabclick(){
-        await frame.click(this.Elements.authTab) 
+        await frame.click('//*[@id="Authorize_oj8|text"]')
     }
 
      async AutherizeFrame(){
@@ -399,19 +451,21 @@ async checkAutoAccCreation(){
             const frameElementHandle1 = await frame.waitForSelector("//iframe[@id='ifrSubScreen']", { timeout: 3000 });
              authframe= await frameElementHandle1.contentFrame();
              
-            await authframe.click(this.Elements.accepttbtn)  
+            await authframe.click(this.Elements.accepttbtn) 
+          
                    
         } catch (message) {
            // console.log("Frame not found");
         }
     }
     async verifySuccesssMessage() {
-        const frameElementHandle2 = await authframe.waitForSelector("//iframe[contains(@title, 'Information Message')]", { timeout: 10000 });
-                 successframe= await frameElementHandle2.contentFrame();
-          const message= successframe.locator(this.Elements.successMsg)
-        await expect(message).toHaveText('Record Successfully Authorized');
-        await successframe.click(this.Elements.okbtn)
-    
+         const frameElementHandle2 = await authframe.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 3000 });
+             successframe= await frameElementHandle2.contentFrame();
+             
+      const message= successframe.locator(this.Elements.successMessage)
+    await expect(message).toHaveText('Record Successfully Authorized');
+    await successframe.click(this.Elements.okbtn)
+
            
         }
     

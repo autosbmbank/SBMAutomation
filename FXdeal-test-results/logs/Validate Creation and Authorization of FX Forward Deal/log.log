@@ -1,0 +1,56 @@
+info: Mar-31-2026 12:34:57: 	Navigated to the application
+info: Mar-31-2026 12:34:58: 	Enter the user name and Password
+info: Mar-31-2026 12:35:03: 	Click on Login Button
+info: Mar-31-2026 12:35:08: 	Clicking on Search Button
+info: Mar-31-2026 12:35:16: 	clicks on FX New Tab
+info: Mar-31-2026 12:35:16: 	searches FX Product Code: FXFD
+info: Mar-31-2026 12:35:18: 	searches FX Counterparty: 000005
+info: Mar-31-2026 12:35:19: 	searches FX Bought Currency: EUR
+info: Mar-31-2026 12:35:20: 	enters FX Bought Amount: 1000
+info: Mar-31-2026 12:35:20: 	selects FX Bought Value Date: 03/11/2026
+info: Mar-31-2026 12:35:21: 	searches FX Sold Currency: KES
+info: Mar-31-2026 12:35:22: 	enters FX Sold Amount: 150840.00
+info: Mar-31-2026 12:35:22: 	selects FX Sold Value Date: 03/20/2026
+info: Mar-31-2026 12:35:23: 	clicks FX Calculate/Recalculate
+info: Mar-31-2026 12:35:26: 	clicks on FX Fields Tab
+info: Mar-31-2026 12:35:29: 	enters Square Off Rate: 10
+info: Mar-31-2026 12:35:31: 	clicks FX Save button
+info: Mar-31-2026 12:35:34: 	validates FX Success Message
+info: Mar-31-2026 12:35:36: 	Clicking on Signoff Button
+info: Mar-31-2026 12:35:49: 	Enter the user name and Password
+info: Mar-31-2026 12:35:54: 	Clicking on Search Button
+info: Mar-31-2026 12:36:14: 	clicks FX Enter Query Tab
+info: Mar-31-2026 12:36:14: 	enters FX Contract Reference Number
+info: Mar-31-2026 12:36:14: 	clicks FX Execute Query Tab
+info: Mar-31-2026 12:36:19: 	clicks FX Authorize Tab
+info: Mar-31-2026 12:36:21: 	clicks FX Confirm Radio Button
+info: Mar-31-2026 12:36:22: 	clicks FX Authorize on popup
+info: Mar-31-2026 12:36:25: 	validates FX auth success message
+info: Mar-31-2026 12:36:26: 	Navigated to the application
+info: Mar-31-2026 12:36:27: 	Enter the user name and Password
+info: Mar-31-2026 12:36:32: 	Click on Login Button
+info: Mar-31-2026 12:36:37: 	Clicking on Search Button
+info: Mar-31-2026 12:36:45: 	clicks on FX New Tab
+info: Mar-31-2026 12:36:45: 	searches FX Product Code: FXSD
+info: Mar-31-2026 12:36:46: 	searches FX Counterparty: 000005
+info: Mar-31-2026 12:36:47: 	searches FX Bought Currency: EUR
+info: Mar-31-2026 12:36:48: 	enters FX Bought Amount: 1000
+info: Mar-31-2026 12:36:49: 	selects FX Bought Value Date: 03/04/2026
+info: Mar-31-2026 12:36:50: 	searches FX Sold Currency: KES
+info: Mar-31-2026 12:36:51: 	enters FX Sold Amount: 150840.00
+info: Mar-31-2026 12:36:51: 	selects FX Sold Value Date: 03/05/2026
+info: Mar-31-2026 12:36:52: 	clicks FX Calculate/Recalculate
+info: Mar-31-2026 12:36:54: 	clicks on FX Fields Tab
+info: Mar-31-2026 12:36:57: 	enters Square Off Rate: 10
+info: Mar-31-2026 12:36:59: 	clicks FX Save button
+info: Mar-31-2026 12:37:02: 	validates FX Success Message
+info: Mar-31-2026 12:37:04: 	Clicking on Signoff Button
+info: Mar-31-2026 12:37:17: 	Enter the user name and Password
+info: Mar-31-2026 12:37:23: 	Clicking on Search Button
+info: Mar-31-2026 12:37:34: 	clicks FX Enter Query Tab
+info: Mar-31-2026 12:37:34: 	enters FX Contract Reference Number
+info: Mar-31-2026 12:37:34: 	clicks FX Execute Query Tab
+info: Mar-31-2026 12:37:38: 	clicks FX Authorize Tab
+info: Mar-31-2026 12:37:41: 	clicks FX Confirm Radio Button
+info: Mar-31-2026 12:37:42: 	clicks FX Authorize on popup
+info: Mar-31-2026 12:37:45: 	validates FX auth success message

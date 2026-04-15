@@ -64,7 +64,7 @@ Then('user Validates Function to contain {string}',async function(SuccMsg:string
 })
 When('user clicks on Enter Query Tab',async function(){
      retailPage = new RetailAccountClassTransferPage(fixture.page);
-  await retailPage.handleTDFrame();
+  await retailPage.handleAmountFrame();
   await retailPage.clickEnterQuery()
 })
 When('user in Amount Frame clicks on Enter Query Tab',async function(){
@@ -89,7 +89,7 @@ When('user clicks on Execute Query Tab',async function(){
 })
 When('user clicks on Authorize Tab',async function(){
    retailPage = new RetailAccountClassTransferPage(fixture.page);
-  await retailPage.handleAmountFrame();
+  // await retailPage.handleAmountFrame();
   await retailPage.clickauthTab();
 })
 When('user clicks on Accept Button',async function(){

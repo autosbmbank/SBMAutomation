@@ -1,6 +1,6 @@
 import { expect, Page, Keyboard } from "@playwright/test";
 import ReusableMethods from "../helper/wrapper/reusableMethods";
-let frame,informframe,redempFrame,authframe,successframe;
+let frame,informframe,redempFrame,authframe,successframe,AccNumber
 let WSTDACNumvar,WSCustNumvar;
 export default class WholesalePage {
   private base: ReusableMethods;
@@ -15,6 +15,7 @@ export default class WholesalePage {
      Accclass: '//*[@id="BLK_CUST_ACCOUNT__ACCLS|input"]',
      TDCurrency:'//*[@id="BLK_CUST_ACCOUNT__CCY|input"]',
      Pbutton: '//*[@id="BLK_CUST_ACCOUNT__BTN_ACCPKP_oj143|text"]',
+     savebtn3 : '//*[@id="BTN_OK_oj17|text"]',
      initdeposit: '//*[@id="BLK_TDDETAILS__TDAMT|input"]',
      TDACNo: "//input[@id='BLK_CUST_ACCOUNT__ACC']",
      RedempTDACNo:"//input[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__ACC_NO']",
@@ -23,12 +24,12 @@ export default class WholesalePage {
      RedempAmnt:"//input[@id='BLK_ICTMS_TDREDMPAYOUT_MASTER__REDEMPTION_AMTI']",
      RedempAmnt1:"(//input[@id='BLK_ICTMS_TDREDMPAYOUT_DETAILS__REDMAMTI'])[1]",
      Savebutton: '//*[@id="BTN_OK_oj51|text"]',
-          PayinaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYINDETAILS"]',
+          PayinaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYINDETAILS"]/button/div',
      RedempPayOutRow:"//button[@id='cmdAddRow_BLK_ICTMS_TDREDMPAYOUT_DETAILS']",
      TDPayIn: '//*[@id="BLK_TDPAYINDETAILS__MMPAYOPTRC0|input"]',
      Percentage:'//*[@id="BLK_TDPAYINDETAILS__MMPERCENTAGERC0|input"]', 
      offsetaccount: '//*[@id="BLK_TDPAYINDETAILS__MMOFFSETACCRC0|input"]',
-     PayoutaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYOUTDETAILS"]',
+     PayoutaddRowbutton: '//*[@id="cmdAddRow_BLK_TDPAYOUTDETAILS"]/button',
      PayoutType: "//select[@id='BLK_TDPAYOUTDETAILS__PAYOUTTYPE']",
      RedempPayoutType:"//select[@title='Payout Type']",
      PayoutPercentage: '//*[@id="BLK_TDPAYOUTDETAILS__PERCENTAGERC0|input"]',
@@ -56,24 +57,24 @@ export default class WholesalePage {
      savebtn: '//*[@id="Save_oj7|text"]',
      Acceptbtn: '//*[@id="BTN_ACCEPT_oj2|text"]',
      unauthormsg:"//input[@id='BLK_CUST_ACCOUNT__AUTHSTATI']",
-     okafterAccept: "",
-     WSAuthorizationStatus: "//select[@id='BLK_ICVW_TD_CUST__AUTHSTAT']",
-     WSAuthorizeTDACnum:"//input[@id='BLK_ICVW_TD_CUST__ACC']",
-     WSAuthorizeCustnum:"//input[@id='BLK_ICVW_TD_CUST__CUST_NO']",
-     WSSearch:"//li[@id='Search']",
-     WSauthorizefirstrow:  "//table[@id='TBL_QryRslts']//tr[contains(@class,'TBLoneTR')][1]",
-     WSauthorizebutton:"//div[@id='toolbar' and not(contains(@style,'display:none'))]//li[@id='Authorize']",
+     Accept: '//*[@id="BTN_OK_oj16|text"]',
+     WSAuthorizationStatus: '//*[@id="BLK_ICVW_TD_CUST__AUTHSTAT|input"]',
+     WSAuthorizeTDACnum:'//*[@id="BLK_ICVW_TD_CUST__ACC|input"]',
+     WSAuthorizeCustnum:'//*[@id="BLK_ICVW_TD_CUST__CUST_NO|input"]',
+     WSSearch:'//*[@id="Search_oj42|text"]',
+     WSauthorizefirstrow:  '//*[@id="TBL_QryRslts"]/div[1]/table/tbody/tr[1]',
+     WSauthorizebutton:'//*[@id="Authorize_oj8|text"]',
      WSauthormsg: "//input[@id='BLK_CUST_ACCOUNT__AUTHSTATI']",
      Cascade:"//input[@id='BLK_TDDETAILS__CASCADE_MONTH']",
      Autopayment: "//input[@id='BLK_TDDETAILS__AUTOPAY']",
      // 1) add this in Elements (right under Autopayment)
     AutopayLabel: 'label[for="BLK_TDDETAILS__AUTOPAY"]',
-
+     GetAccNo : '',
      PaymentBrnch:"//input[@id='BLK_TDDETAILS__PAYBRN']",
      RecurPaymentAc:"//input[@id='BLK_TDDETAILS__PAYACC']",
      Installment:"//input[@id='BLK_TDDETAILS__RDAMTI']",
      RecurringDeposit:"//input[@id='BLK_TDDETAILS__RDACC']",
-     exitButton:"//input[@id='BTN_EXIT_IMG']",
+     exitButton:'//*[@id="BTN_EXIT_IMG_oj189|text"]',
 }
 
 
@@ -115,20 +116,20 @@ async handleDABFrame() {
 async handleANGFrame() {
   try {
         const outerFrameHandle = await this.page.waitForSelector(
-  "iframe[title*='Deposit Account Booking']:not([title*='Summary'])",
-  { timeout: 30000 }
+  'iframe[title*="Deposit Account Booking"]', { timeout: 30000 }
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="Account Number Generation"]', { timeout: 50000 }
+      'iframe[id="ifrSubScreen"]', { timeout: 50000 }
     );
     const innerFrame = await innerFrameHandle.contentFrame();
     return innerFrame;
   } catch (err) {
-    console.log("handleANGFrame failed:", err);
+    console.log("handleICSMFFrame failed:", err);
     throw err;
   }
 }
+        
 
 //Management Information System 
 async handleMISFrame() {
@@ -292,7 +293,7 @@ async handleDASFrame() {
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
-      'iframe[title*="Authorize"]', { timeout: 50000 }
+      'iframe[id="ifrSubScreen"]', { timeout: 50000 }
     );
     const innerFrame = await innerFrameHandle.contentFrame();
     return innerFrame;
@@ -470,10 +471,10 @@ async clickAuthRedemp(){
     await frame.locator(this.Elements.Pbutton).click();
 }
 
-    async clickonOkbutton(){
+    async clickonsavebutton(){
     const frame = await this.handleANGFrame();
-    await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
-    await frame.locator(this.Elements.okbtn).click();
+    await frame.waitForSelector(this.Elements.savebtn3, { state: 'visible', timeout: 15000 });
+    await frame.locator(this.Elements.savebtn3).click();
 }
 
     async enterInitialDeposit(initdeposit){
@@ -744,7 +745,11 @@ async DateChange(){
     await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
     await frame.click(this.Elements.okbtn);
 }
-
+async clickexit(){
+  const frame = await this.handleDABFrame();
+    await frame.waitForSelector(this.Elements.exitButton, { state: 'visible', timeout: 15000 });
+    await frame.click(this.Elements.exitButton);
+}
   async verifyAuthorizationStatusforwholesale(){
   const frame = await this.handleDABFrame();
   const status = await frame.inputValue(this.Elements.unauthormsg);
@@ -753,12 +758,24 @@ async DateChange(){
 
 //Authorize
 
+// async selectAuthorizationStatusforwholesale() {
+//    const frame = await this.handleDASFrame();
+//    await frame.waitForSelector(this.Elements.WSAuthorizationStatus), { state: 'visible', timeout: 15000 };
+//    await frame.selectOption(this.Elements.WSAuthorizationStatus, { label: 'Unauthorized'});
+//   }
 async selectAuthorizationStatusforwholesale() {
-   const frame = await this.handleDASFrame();
-   await frame.waitForSelector(this.Elements.WSAuthorizationStatus), { state: 'visible', timeout: 15000 };
-   await frame.selectOption(this.Elements.WSAuthorizationStatus, { label: 'Unauthorized'});
-  }
+    const frame = await this.handleDASFrame();
 
+    const chargeField = frame.locator(this.Elements.WSAuthorizationStatus);
+
+    await chargeField.click();
+    await this.page.waitForTimeout(1000);
+
+    const unauthorizedOption = frame.locator("//li[normalize-space()='Unauthorized']");
+
+    await unauthorizedOption.waitFor({ state: 'visible' });
+    await unauthorizedOption.click();
+}
   async enterTDAccNumberforwholesale() {
   const frame = await this.handleDASFrame();
   await frame.waitForSelector(this.Elements.WSAuthorizeTDACnum, { state: 'visible', timeout: 15000 });
@@ -816,20 +833,24 @@ async TDRolloverDetails(Rollover:string,Rolloveramount:string){
 
 async clickAcceptforwholesale(){
 const frame = await this.handleAuthorizeFrame();
-await frame.waitForSelector(this.Elements.okbtn,{state: 'visible', timeout : 85000});
-await frame.locator(this.Elements.okbtn).click();
+await frame.waitForSelector(this.Elements.Accept,{state: 'visible', timeout : 85000});
+await frame.locator(this.Elements.Accept).click();
 }
 
   async clickokafterAcceptforwholesale() {
   const outer1 = await this.page.waitForSelector("iframe[title*='Deposit Account Booking']", { timeout: 30000 });
   const frame1 = await outer1.contentFrame();
-  const outer2 = await frame1.waitForSelector("iframe[title*='Authorize']", { timeout: 30000 });
+  const outer2 = await frame1.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 30000 });
   const frame2 = await outer2.contentFrame();
   const alertHandle = await frame2.waitForSelector("iframe[id='ifr_AlertWin']", { timeout: 50000 });
   const alertFrame = await alertHandle.contentFrame();
   await alertFrame.locator("input[id='BTN_OK']").click();
 }
-
+async getAccNumber(){
+         const frame = await this.handleDABFrame()
+         AccNumber=await frame.innerText(this.Elements.GetAccNo)
+        console.log("Account number "+AccNumber)
+    }
 async verifyAuthorizationStatusforwholesale1() {
 const frame = await this.handleDABFrame();
 const status = await frame.inputValue(this.Elements.unauthormsg);

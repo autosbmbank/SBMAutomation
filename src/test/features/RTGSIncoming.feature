@@ -41,4 +41,4 @@ Feature: Transaction booking Customer Incoming
 
              Examples:
     | HomePageTitle             | SourceCode | NetworkCode | TransferCurrecy | TransferAmount | CreditAccountNo | CreditBICFI  | DebitBICFI | BICFI     |ChargeBearer| DebitorName |
-    | Oracle Financial Services | MANL       | RTGSMX       |      KES       |     3000      | 0002000001003  | AAAARSBGXXX | AAAARSBGXXX | KCBLKENX002 |    DEBT   |   Amanuel    |  
+    | Oracle Financial Services | MANL       | RTGSMX       |      KES       |     3000      | 0002000001003  | AAAARSBGXXX | AAAARSBGXXX | KCBLKENX002 |    DEBT   |   Imanuel    |  

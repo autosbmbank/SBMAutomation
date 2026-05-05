@@ -16,12 +16,14 @@ export default class InterbankFundPage {
            Screen : '//*[@id="searchHeaderMenuItem|input"]',
            downtab : '//*[@id="oj-listbox-results-searchHeaderMenuItem"]/li',
            debitacc : '//*[@id="txnAcc|input"]',
-           Amount : '//*[@id="_oj210-input-text|input"]',
+           debtAmount : "fsgbu-ob-cmn-fd-amount input[aria-required='true']:not([disabled]):not([readonly])",
+          //  debtAmount: '//fsgbu-ob-cmn-fd-amount//input',
            creditacc : '//*[@id="toAccountNumber|input"]',
-           submit : '//*[@id="wiz-custom-footer-next_oj167|text"]',
-           ok : '//*[@id="_oj221|text"]',
-           No : '//*[@id="_oj186|text"]',
-           noOptn : '//*[@id="_oj188|text"]',
+          //  creditacc: "//oj-label-value[.//label[normalize-space()='Credit Account']]//input",
+           submit : "(//span[normalize-space()='Submit'])[1]",
+           ok : "(//span[text()='Ok'])[1]",
+           No : "(//span[@data-bind='text: labels.no'][normalize-space()='No'])[1]",
+           noOptn : "//button[normalize-space()='No']",
      }
 
      async NextgenFrame() {
@@ -81,21 +83,42 @@ export default class InterbankFundPage {
     await NewPage.locator(this.Elements.downtab).click()
   }
   async enterdebtaccount(accnum){
-    await NewPage.locator(this.Elements.debitacc).fill(accnum)
+    const field = NewPage.locator(this.Elements.debitacc);
+    // await NewPage.locator(this.Elements.debitacc)
+    await field.waitFor({ state: 'visible' });
+    await field.fill(accnum);
   }
+async enteramount(Amount) {
+    const field = NewPage.locator(this.Elements.debtAmount);
+    await field.waitFor({ state: 'visible' });
+    await field.fill(Amount)
+}
 
-  async enteramount(amount){
-    await NewPage.locator(this.Elements.Amount).fill(amount)
-  }
+async entercreditaccount(credaccnum) {
+    const field = NewPage.locator(this.Elements.creditacc);
+    await field.waitFor({ state: 'visible' });
+    await field.fill(credaccnum);
+}
 
-  async entercreditaccount(credaccnum){
-    await NewPage.locator(this.Elements.creditacc).fill(credaccnum)
-  }
+async clicksubmit() {
+    const btn = NewPage.locator(this.Elements.submit);
+    await btn.waitFor({ state: 'visible' });
+    await btn.click();
+}
+  // async enteramount(amount){
+  //   await NewPage.locator(this.Elements.Amount).fill(amount)
+  //   await NewPage.waitForTimeout(2000);
+  // }
 
-  async clicksubmit(){
-    await NewPage.locator(this.Elements.submit).click()
-    await NewPage.waitForTimeout(2000);
-  }
+  // async entercreditaccount(credaccnum){
+  //   await NewPage.locator(this.Elements.creditacc).fill(credaccnum)
+  //   await NewPage.waitForTimeout(2000);
+  // }
+
+  // async clicksubmit(){
+  //   await NewPage.locator(this.Elements.submit).click()
+  //   await NewPage.waitForTimeout(2000);
+  // }
 
   async clickok(){
     // await NewPage.locator(this.Elements.ok).click()
@@ -108,7 +131,14 @@ export default class InterbankFundPage {
     await NewPage.locator(this.Elements.No).click()
   }
 
-  async clickNOoptn(){
-    await NewPage.locator(this.Elements.noOptn).click()
-  }
+  async clickNOoptn() {
+        try {
+            await NewPage.getByRole('button', { name: 'No' }).click();
+            console.log("Clicked No in Stay on Same Screen popup");
+        } catch {
+            await NewPage.locator(this.Elements.noOptn).click();
+            console.log("Clicked No (fallback)");
+        }
+        await NewPage.waitForTimeout(1000);
+    }
     }

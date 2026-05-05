@@ -21,11 +21,13 @@ When("click on down tab", async function(){
 When("enter Debit Account Number {string}", async function(accnum : string){
    Fundtransfer = await new InterbankFundPage(fixture.page);
      await Fundtransfer.enterdebtaccount(accnum);
+     await fixture.page.waitForTimeout(2000)
 });
 
-When("enter amount {string}", async function(amount : string){
+When("enter debit amount {string}", async function(Amount : string){
    Fundtransfer = await new InterbankFundPage(fixture.page);
-     await Fundtransfer.enteramount(amount);
+     await Fundtransfer.enteramount(Amount);
+     await fixture.page.waitForTimeout(2000)
 });
 
 When("enter Credit Account Number {string}", async function(credaccnum : string){
@@ -38,17 +40,17 @@ When("click on Submit", async function(){
      await Fundtransfer.clicksubmit();
 });
 
-When("Click on OK", async function(){
+When("Click on OK in bankfund", async function(){
   Fundtransfer = await new InterbankFundPage(fixture.page);
      await Fundtransfer.clickok();
 });
 
-When("click on NO", async function(){
+When("click on NO in bankfund", async function(){
   Fundtransfer = await new InterbankFundPage(fixture.page);
      await Fundtransfer.clickNO();
 });
 
-When("Clik on NO option", async function(){
+When("Clik on NO option in bankfund", async function(){
   Fundtransfer = await new InterbankFundPage(fixture.page);
      await Fundtransfer.clickNOoptn();
 });

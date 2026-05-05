@@ -51,7 +51,7 @@ Feature: Open And Close Branch and Teller Batch
 
      Examples:
       | HomePageTitle                                       |   Status    |SearchName      |    status1        |TillType1| BranchCode | UserId   | TillType | CH_Currency | MinBal | MaxBal           | CL_Currency | MaxTxnAmt | AuthLimit     |Status1    |BranchName|
-    |  Oracle Financial Services                              | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | DINESH1    | Till    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
+    |  Oracle Financial Services                              | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | ATESTER4    | Till    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
 
     @BranchOps3 @SBM @TillToVaultandVaultToTill @tdUserIdandTillTypeandTillTypechange
   Scenario Outline: Perform vault to teller and teller to vault change successfully

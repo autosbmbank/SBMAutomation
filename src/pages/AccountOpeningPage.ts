@@ -44,7 +44,23 @@ export default class AccountOpeningPage {
         unlock : '//*[@id="Unlock_oj4|text"]',
         undebit : '//*[@id="BLK_CUST_ACCOUNT__ACSTATNODR"]/div/div/div',
         uncredit : '//*[@id="BLK_CUST_ACCOUNT__ACSTATNOCR"]/div/div/div',
-        getAccNo:"//label[@for='BLK_CUST_ACCOUNT__ACC|input']//following::div[5]"
+        getAccNo:"//label[@for='BLK_CUST_ACCOUNT__ACC|input']//following::div[5]",
+        accountsignatory : '//*[@id="SVCACSIG_oj118|text"]',
+        addrow : '//*[@id="cmdAddRow_BLK_ACCSIGDETAILS"]/button',
+        customersearch : '//*[@id="BLK_ACCSIGDETAILS__CIFIDRC0"]/div[1]/span/oj-button/button',
+        fetch1 : '//*[@id="_oj3|text"]',
+        firstrecord : '//*[@id="TableLov"]/div[1]/table/tbody',
+        signatorysearch : '//*[@id="BLK_ACCSIGDETAILS__SIGIDRC0"]/div[1]/span/oj-button/button',
+        fetch2 :'//*[@id="_oj3|text"]',
+        // firstrecord1 : '//*[@id="TableLov"]/div[1]/table/tbody',
+        savebtn3 : '//*[@id="BTN_OK_oj16|text"]',
+        close : '//*[@id="Close_oj3|text"]',
+        ok3 : '//*[@id="BTN_OK_oj1|text"]',
+        saveclose : '//*[@id="BTN_OK_oj47|text"]',
+        offsetbranch : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__OFFBRN|input"]',
+        offsetaccount : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__OFFACC|input"]',
+        CloseMode : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__CLSMOD|input"]',
+
      }
 
 // customer account 
@@ -149,7 +165,74 @@ async getauthorizeFrame() {
 
     return await iframe.contentFrame();
 }
+
+// signatory frame
+async getsignatoryframe(){
+  const frame = await this.handleAOFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+
+}
+
+// list of values
+async getlistofframe(){
+  const frame = await this.getsignatoryframe();
+
+  const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
  
+// listof valuesid frame
+async getlistoffvaluesframe(){
+  const frame = await this.getsignatoryframe();
+
+  const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
+
+// confirmation message 
+async handleconfirmframe(){
+   try {
+        const outerFrameHandle = await this.page.waitForSelector(
+  '//iframe[contains(@title, "Customer Accounts Maintenance")]',{ timeout: 30000 }
+);
+    const outerFrame = await outerFrameHandle.contentFrame();
+    const innerFrameHandle = await outerFrame.waitForSelector('iframe[id="ifr_AlertWin"]', { timeout: 50000 });
+    const innerFrame = await innerFrameHandle.contentFrame();
+    return innerFrame;
+  } catch (err) {
+    console.log("handleOverrideFrame failed:", err);
+    throw err;
+  }
+}
+
+// account closure
+async getclosureframe(){
+  const frame = await this.handleAOFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+
+}
+
+
      async clicknewtab(){
         const frame = await this.handleAOFrame()
         await frame.waitForSelector(this.Elements.New, { state: 'visible', timeout: 15000 });
@@ -198,11 +281,13 @@ async entermedia(media){
     await frame.waitForSelector(this.Elements.Media, { state: 'visible', timeout: 30000 });
        await frame.locator(this.Elements.Media).clear()
        await frame.locator(this.Elements.Media).fill(media)
+       await this.page.waitForTimeout(2000)
 }
 async ClickMIStab(){
     const frame = await this.handleAOFrame()
        await frame.waitForSelector(this.Elements.MIStab, { state: 'visible', timeout: 30000 });
       await frame.click(this.Elements.MIStab);
+      await this.page.waitForTimeout(2000)
 }
 
 async enterpoolcode(poolcode){
@@ -210,23 +295,27 @@ async enterpoolcode(poolcode){
     await frame.waitForSelector(this.Elements.PoolCode, { state: 'visible', timeout: 30000 });
            await frame.locator(this.Elements.PoolCode).clear()
        await frame.locator(this.Elements.PoolCode).fill(poolcode)
+       await this.page.waitForTimeout(2000)
 }
 
 async ClickSavebutton(){
    const frame = await this.handleMISFrame()
     await frame.waitForSelector(this.Elements.savebtn, { state: 'visible', timeout: 25000 });
        await frame.click(this.Elements.savebtn); 
+       await this.page.waitForTimeout(2000)
 }
 async Clickfielstab(){
    const frame = await this.handleAOFrame()
        await frame.waitForSelector(this.Elements.fieldstab, { state: 'visible', timeout: 30000 });
       await frame.click(this.Elements.fieldstab); 
+      await this.page.waitForTimeout(2000)
 }
 async enterKDICFP(KDIC){
    const frame = await this.getUDEFrame()
    await frame.waitForSelector(this.Elements.KDIC_FP_ODS, { state: 'visible', timeout: 30000 });
            await frame.locator(this.Elements.KDIC_FP_ODS).clear()
        await frame.locator(this.Elements.KDIC_FP_ODS).fill(KDIC)
+       await this.page.waitForTimeout(2000)
 }
 async ClickSavebtn(){
     const frame = await this.getUDEFrame()
@@ -347,9 +436,109 @@ async Clickexit(){
     await frame.click(this.Elements.uncredit);
     }
 
+    async enteraccountnumber(accnum){
+      const frame = await this.handleAOFrame()
+       await frame.waitForSelector(this.Elements.accountnum, { state: 'visible', timeout: 30000 });
+           await frame.locator(this.Elements.accountnum).clear()
+       await frame.locator(this.Elements.accountnum).fill(accnum)
+    }
+
     async getAccNumber(){
          const frame = await this.handleAOFrame()
          accNumber=await frame.innerText(this.Elements.getAccNo)
         console.log("Account number "+accNumber)
     }
+
+    async clicksignatorytab(){
+         const frame = await this.handleAOFrame()
+         await frame.waitForSelector(this.Elements.accountsignatory, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.accountsignatory);
+    }
+
+    async clickaddrow(){
+         const frame = await this.getsignatoryframe()
+         await frame.waitForSelector(this.Elements.addrow, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.addrow);
+    }
+
+    async clicksearchcustomer(){
+         const frame = await this.getsignatoryframe()
+         await frame.waitForSelector(this.Elements.customersearch, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.customersearch);
+    }
+
+    async clickfetchSTD(){
+         const frame = await this.getlistofframe()
+         await frame.waitForSelector(this.Elements.fetch1, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.fetch1);
+    }
+
+    async clickfirstrecord(){
+         const frame = await this.getlistofframe()
+         await frame.waitForSelector(this.Elements.firstrecord, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.firstrecord);
+    }
+
+    async clicksignatorysearch(){
+         const frame = await this.getsignatoryframe()
+         await frame.waitForSelector(this.Elements.signatorysearch, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.signatorysearch);
+    }
+
+    async clickfetchbutton(){
+         const frame = await this.getlistoffvaluesframe()
+         await frame.waitForSelector(this.Elements.fetch2, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.fetch2);
+    }
+
+    async clicksavesignatory(){
+         const frame = await this.getsignatoryframe()
+         await frame.waitForSelector(this.Elements.savebtn3, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.savebtn3);
+    }
+
+    async clickclose(){
+      const frame = await this.handleAOFrame()
+        await frame.waitForSelector(this.Elements.close, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.close);
+    }
+
+    async clickokconfirm(){
+      const frame = await this.handleconfirmframe()
+      await frame.waitForSelector(this.Elements.ok3, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.ok3);
+    await this.page.waitForTimeout(2000)
+    }
+
+    async enteroffsetbranch(branch){
+      const frame = await this.getclosureframe()
+       await frame.waitForSelector(this.Elements.offsetbranch, { state: 'visible', timeout: 30000 });
+           await frame.locator(this.Elements.offsetbranch).clear()
+       await frame.locator(this.Elements.offsetbranch).fill(branch)
+       await this.page.waitForTimeout(2000)
+    }
+
+    async enteroffsetnumber(offsetaccnum){
+      const frame = await this.getclosureframe()
+       await frame.waitForSelector(this.Elements.offsetaccount, { state: 'visible', timeout: 30000 });
+           await frame.locator(this.Elements.offsetaccount).clear()
+       await frame.locator(this.Elements.offsetaccount).fill(offsetaccnum)
+       await this.page.waitForTimeout(2000)
+    }
+
+    async enterclosemode(closemode){
+      const frame = await this.getclosureframe()
+       await frame.waitForSelector(this.Elements.CloseMode, { state: 'visible', timeout: 30000 });
+           await frame.locator(this.Elements.CloseMode).clear()
+       await frame.locator(this.Elements.CloseMode).fill(closemode)
+       await this.page.waitForTimeout(2000)
+    }
+
+    async clicksaveclose(){
+      const frame = await this.getclosureframe()
+      await frame.waitForSelector(this.Elements.saveclose, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.saveclose);
+    }
+
 }
+

@@ -12,14 +12,15 @@ Scenario Outline: Inter Bank Fund Transfer Domestic
              And enter the Screen name "<Screen>"
              And click on down tab
              And enter Debit Account Number "<DebitAccountNo>"
-             And enter amount "<Amount>"
+             And enter debit amount "<Amount>"
              And enter Credit Account Number "<CreditAccountNo>"
              And click on Submit
-             And Click on OK
-             And click on NO
-             And Clik on NO option
+             And Click on OK in bankfund
+             And click on NO in bankfund
+             And Clik on NO option in bankfund
 
              Examples:
     | HomePageTitle             | Screen | DebitAccountNo | Amount | CreditAccountNo |
     | Oracle Financial Services | 0006 |   0012415565001  | 1000   | 0012405712001 |
+    
              

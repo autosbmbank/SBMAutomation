@@ -1,7 +1,7 @@
 @BookingBank
 Feature: Cross border Transaction booking bank
 
-@Booking
+@Booking @SBM
 Scenario Outline: Cross Border Transaction Booking Bank Transfer
           Given User navigates to the application
             When MAK user enters the username and password

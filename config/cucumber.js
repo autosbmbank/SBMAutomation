@@ -1,7 +1,7 @@
   module.exports = {
      default: {
  
-        tags:"@Booking",
+        tags:"@RTGS1",
        
  
           formatOptions: {

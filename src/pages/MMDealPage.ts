@@ -28,12 +28,12 @@ export default class MMDealPage {
         currency:        '//input[@id="BLK_MMVW_CONTRACT_MASTER__CURRENCY|input"]',
         amount:          '//input[@id="BLK_MMVW_CONTRACT_MASTER__AMOUNT|input"]',
         liquidation:     '//select[@id="BLK_MMTRONL_MASTER__LIQMODE"] | //*[contains(@id,"LIQMODE") and contains(@id,"|input")]',
-        contractRefNo:   '[id="BLK_MMTRONL_MASTER__CONTREF|input"]',
+        contractRefNo:   '//*[@id="BLK_MMVW_CONTRACT_MASTER__UREF|input"]',
 
         // Authorize screen — override checkboxes
-        overrideCheckboxes: "//input[@type='checkbox'][contains(@id,'CONFIRM')] | //input[@type='checkbox'][contains(@id,'override')]",
+        overrideCheckboxes: '//*[@id="BLK_CSVWS_TR_OVERRIDES__CONFIRMEDRC1"]/div/div',
         authorizeBtn:        '//*[contains(@id,"BTN_AUTH") and contains(@id,"|text")] | //button[contains(@title,"Authorize")]',
-
+        authcontractRefNo: '//*[@id="BLK_MMVW_CONTRACT_MASTER__FCCREF|input"]',
         // Success messages
         successMessage:  "//*[@id='ERRTBL:48_0']",
     }
@@ -98,7 +98,7 @@ export default class MMDealPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
-        await frame.waitForSelector(this.Elements.contractRefNo, { state: 'attached', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.authcontractRefNo, { state: 'attached', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
@@ -184,21 +184,15 @@ export default class MMDealPage {
     }
 
     async clickAcceptButton() {
-        try {
-            // Override frame appears after save
-            const overrideFrame = await this.getOverrideFrame();
+       
+          try{
+            const overrideFrame = await this.getAlertFrame();
             await overrideFrame.locator(this.Elements.acceptBtn).click();
-        } catch {
-            // Try alert frame
-            try {
-                const alertFrame = await this.getAlertFrame();
-                await alertFrame.locator(this.Elements.acceptBtn).click();
-            } catch {
-                // Try main frame directly
-                const frame = await this.getFrame();
-                await frame.locator(this.Elements.acceptBtn).click();
-            }
-        }
+          }catch{
+            console.log("not found any overrides")
+          }
+       
+          console.log("accepted overrides")
         await this.page.waitForTimeout(2000);
     }
 
@@ -220,6 +214,7 @@ export default class MMDealPage {
 
     async verifySuccessMessage() {
         const alertFrame = await this.getAlertFrame();
+        
         const message = alertFrame.locator(this.Elements.successMessage);
         await expect(message).toHaveText('Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
@@ -232,23 +227,52 @@ export default class MMDealPage {
         const refToUse = contractRefNo || contractReference;
         if (!refToUse) throw new Error("Contract Reference not available — check Maker flow ran successfully");
         const frame = await this.getFrame();
-        await frame.locator(this.Elements.contractRefNo).clear();
-        await frame.locator(this.Elements.contractRefNo).fill(refToUse);
+        await frame.locator(this.Elements.authcontractRefNo).clear();
+        await frame.locator(this.Elements.authcontractRefNo).fill(refToUse);
         console.log("Entering MM Contract Reference: " + refToUse);
     }
 
     async confirmAllOverrideCheckboxes() {
-        // ✅ Override checkboxes appear in subscreen after clicking Authorize
-        const subFrame = await this.getSubScreenFrame();
-        const checkboxes = subFrame.locator(this.Elements.overrideCheckboxes);
-        const count = await checkboxes.count();
-        console.log("Override checkboxes found: " + count);
-        for (let i = 0; i < count; i++) {
-            const checkbox = checkboxes.nth(i);
-            if (!(await checkbox.isChecked())) {
-                await checkbox.check();
-            }
+      const subFrame = await this.getSubScreenFrame();
+
+    // ✅ Find all oj-switch elements by id pattern
+    const switchCount = await subFrame.evaluate(() => {
+        return document.querySelectorAll(
+            "oj-switch[id*='BLK_CSVWS_TR_OVERRIDES__CONFIRMED']"
+        ).length;
+    });
+    console.log("Override switches found:", switchCount);
+
+    // ✅ Click oj-switch-track for each unchecked toggle
+    for (let i = 0; i < switchCount; i++) {
+        const isChecked = await subFrame.evaluate((index) => {
+            const ojSwitch = document.querySelector(
+                `oj-switch[id='BLK_CSVWS_TR_OVERRIDES__CONFIRMEDRC${index}']`
+            );
+            // Check the thumb inside oj-switch
+            const thumb = ojSwitch?.querySelector(
+                "div.oj-switch-thumb[role='switch']"
+            );
+            return thumb?.getAttribute('aria-checked') === 'true';
+        }, i);
+
+        console.log(`Row ${i} checked: ${isChecked}`);
+
+        if (!isChecked) {
+            // ✅ Click the track to toggle ON
+            await subFrame.locator(
+                `oj-switch[id='BLK_CSVWS_TR_OVERRIDES__CONFIRMEDRC${i}'] ` +
+                `div.oj-switch-track`
+            ).click();
+            await subFrame.waitForTimeout(500);
+            console.log(`✅ Toggled ON row ${i}`);
+        } else {
+            console.log(`Row ${i} already ON — skipping`);
         }
+    }
+
+    await subFrame.waitForTimeout(1000);
+    console.log("All overrides confirmed")
         await this.page.waitForTimeout(1000);
     }
 

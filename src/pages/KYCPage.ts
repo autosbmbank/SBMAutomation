@@ -84,14 +84,14 @@ export default class KYCPage {
     async clickEnterQuery() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
-        // ✅ NEEDED — wait for query fields to be ready
+        
         await frame.waitForSelector(this.Elements.kycRefNumber, { state: 'visible', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.executeQueryTab);
-        // ✅ NEEDED — results take time to load after query
+        
         await frame.waitForTimeout(4000);
     }
 
@@ -101,8 +101,7 @@ export default class KYCPage {
         await frame.waitForTimeout(2000);
     }
 
-    // ─── Main Form Fields — No waitForSelector needed, fill/click auto-wait ───
-
+    
     async enterFullName(fullName: string) {
         const frame = await this.getFrame();
         await frame.locator(this.Elements.fullName).clear();
@@ -112,6 +111,7 @@ export default class KYCPage {
     async selectKYCCustomerType(kycCustomerType: string) {
         const frame = await this.getFrame();
     await frame.locator(this.Elements.custtype).fill(kycCustomerType)
+    await frame.waitForTimeout(500);
     await frame.locator(this.Elements.custtype).press('Enter')
     await frame.waitForTimeout(2000);
         // await frame.getByText(kycCustomerType, { exact: true }).first().click();
@@ -120,6 +120,7 @@ export default class KYCPage {
     async selectRiskLevel(riskLevel: string) {
         const frame = await this.getFrame();
        await frame.locator(this.Elements.risklevel).fill(riskLevel)
+       await frame.waitForTimeout(500);
     await frame.locator(this.Elements.risklevel).press('Enter')
     await frame.waitForTimeout(2000);
     }

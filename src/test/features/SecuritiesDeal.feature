@@ -1,4 +1,4 @@
-@Securities
+@Securities1
 Feature: Securities Deal Input Feature
 
   @SEC1 @SBM @SecuritiesDealCreationAndAuthorize
@@ -26,9 +26,8 @@ Feature: Securities Deal Input Feature
     And User clicks Securities Accept button
     And User validates Securities Success Message
     And user SignOff the application
-
     When CHE user enters the username and password
-   # When CHE user login in the application
+    When CHE user login in the application
     Then valdiate the home page tite as "<HomePageTitle>"
     When user enters the function name as "<FunctionName>" and click search button
     And User clicks Securities Enter Query Tab

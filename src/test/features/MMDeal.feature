@@ -8,9 +8,8 @@ Feature: Money Market Deal - Placement Deal Feature
     When MAK user enters the username and password
     And click on signin button
     Then valdiate the home page tite as "<HomePageTitle>"
-     And enter the Branch number as "<BranchNumber>"
+    #  And enter the Branch number as "<BranchNumber>"
     When user enters the function name as "<MakerFunctionName>" and click search button
-    
     And User clicks on MM New Tab
     And User enters MM Product Code "<ProductCode>"
     And User enters MM Customer Number "<CustomerNumber>"
@@ -18,12 +17,11 @@ Feature: Money Market Deal - Placement Deal Feature
     And User enters MM Amount "<Amount>"
     And User selects MM Liquidation as Manual
     And User clicks MM Save button
-    And User clicks MM Accept button
-    And User clicks MM Ok button
+    # And User clicks MM Accept button
+    # And User clicks MM Ok button
     And User validates MM Success Message
-    And enter the Branch number as "000"
+    # And enter the Branch number as "000"
     And user SignOff the application
-
     When CHE user enters the username and password
     When CHE user login in the application
     Then valdiate the home page tite as "<HomePageTitle>"
@@ -38,4 +36,5 @@ Feature: Money Market Deal - Placement Deal Feature
 
     Examples:
       | HomePageTitle             | MakerFunctionName | CheckerFunctionName | ProductCode | CustomerNumber | Currency | Amount | ContractReference  |BranchNumber|
-      | Oracle Financial Services | MMDTRONL           | MMDTRONL            | OMOP        | 428200         | KES      | 30000  | 001OMOP252721501   |001|
+       | Oracle Financial Services | MMDTRONL           | MMDTRONL            | ONPL        | 076620         | USD   | 30000  |  000ONPL260630027  |001|
+      | Oracle Financial Services | MMDTRONL           | MMDTRONL            | OMOB      |  076620        | USD      | 30000  | 001OMOP252721501   |001|

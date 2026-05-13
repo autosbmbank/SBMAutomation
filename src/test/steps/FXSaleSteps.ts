@@ -73,6 +73,7 @@ When("user expands FXSale FX Out Denomination Details", async function () {
 When("user clicks FXSale Submit button", async function () {
     fixture.logger.info("clicks FXSale Submit button");
     await fxSalePageloc.clickSubmit();
+    await fxSalePageloc.approvalconfirm() 
 });
 
 Then("user validates FXSale Success Message", async function () {
@@ -144,10 +145,12 @@ When("user fills FXPurchase FX In denomination from Bought Amount {string}",
 
 When("user clicks FXPurchase Submit button", async function () {
     fixture.logger.info("clicks FXPurchase Submit button");
-    await fxSalePageloc.clickSubmit(); // ← reuse same method
+    await fxSalePageloc.clickSubmit();
+     await fxSalePageloc.purchaseapprovalconfirm()
 });
 
 Then("user validates FXPurchase Success Message", async function () {
     fixture.logger.info("validates FXPurchase Success Message");
+    
     await fxSalePageloc.verifySuccessMessage(); // ← reuse same method
 });

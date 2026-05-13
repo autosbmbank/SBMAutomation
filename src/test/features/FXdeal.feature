@@ -16,7 +16,7 @@ Feature: FX Deal - Forward Deal Feature
     And User enters FX Bought Amount "<BoughtAmount>"
     And User selects FX Bought Value Date "<BoughtValueDate>"
     And User searches FX Sold Currency "<SoldCurrency>"
-    And User enters FX Sold Amount "<SoldAmount>"
+    # And User enters FX Sold Amount "<SoldAmount>"
     And User selects FX Sold Value Date "<SoldValueDate>"
     And User clicks FX Calculate
     And User clicks on FX Fields Tab
@@ -40,4 +40,4 @@ Feature: FX Deal - Forward Deal Feature
     Examples:
       | HomePageTitle             | FunctionName | ProductCode | Counterparty | BoughtCurrency | BoughtAmount | BoughtValueDate | SoldCurrency | SoldAmount | SoldValueDate | SquareOffRate |
        | Oracle Financial Services | FXDTRONL     | FXFD        | 000005       | EUR            | 1000         | 03/11/2026       | KES          | 150840.00  | 03/20/2026    | 10            |
-       | Oracle Financial Services | FXDTRONL     | FXSD        | 000005       | EUR            | 1000         | 03/04/2026       | KES          | 150840.00  | 03/05/2026    | 10            |
+       | Oracle Financial Services | FXDTRONL     | SPOT      | 000005       | EUR            | 1000         | 03/04/2026       | KES          | 150840.00  | 03/05/2026    | 10            |

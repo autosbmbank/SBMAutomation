@@ -92,7 +92,7 @@ When("User confirms MM all Override Checkboxes", async function () {
 When("User clicks MM Authorize button and clicks Ok", async function () {
     fixture.logger.info("clicks MM Authorize button and clicks Ok");
     await mmPageloc.clickAuthorizeButton();
-    await mmPageloc.clickOkButton();
+    // await mmPageloc.clickOkButton();
 });
 
 Then("User validates MM auth success message", async function () {

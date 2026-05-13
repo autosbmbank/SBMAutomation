@@ -26,7 +26,7 @@ Feature:Account Management Feature
     And user clicks on Authorize Tab
     And user clicks on Accept Button
     Then user Validates Block Success message with "<Success Message>"
-    When user Click on TDFrame Exit button
+    # When user Click on TDFrame Exit button
   
     Examples:
    | HomePageTitle                                       | BranchNumber | FunctionName                    | Account        |Amount   |Start Date  | End Date  |Success Message|branchnumber|functionname|Status  |

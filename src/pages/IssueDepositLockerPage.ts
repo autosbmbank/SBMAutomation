@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let Lframe,ADframe,Contractrefrn
+let IDLframe,ADframe,Contractrefrn
 // let Bframe
 export default class IssueDepositLockerPage {
 
@@ -31,7 +31,8 @@ export default class IssueDepositLockerPage {
         Authorizedl: "//span[@id='Authorize_oj8|text']",
         Authorizebuton: "//*[@id='BLK_BOOK_TXN__AUTHORIZATION_oj14|text']", 
         contractrefrn: "//input[@id='BLK_CONTRACT_DETAILS__CONREFNO|input']",
-        
+        okButton : "//span[@id='BTN_OK_oj0|text']",
+
     
     }
 
@@ -40,125 +41,108 @@ export default class IssueDepositLockerPage {
     async handleIssueDepositLockerFrame() {
     const frameElementHandle = await this.page.waitForSelector('//iframe[contains(@id,"ifr_LaunchWin")]',{ timeout: 30000 });
 
-    const Lframe = await frameElementHandle.contentFrame();
+    const IDLframe = await frameElementHandle.contentFrame();
 
-    if (!Lframe) {
+    if (!IDLframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
-    return Lframe;
+    return IDLframe;
    }
 
     async clickNewbutton() {
-    const Lframe = await this.handleIssueDepositLockerFrame();
+    const IDLframe = await this.handleIssueDepositLockerFrame();
 
-    await Lframe.waitForSelector(this.Elements.Newbutton,{state: 'visible',timeout: 20000});
+    await IDLframe.waitForSelector(this.Elements.Newbutton,{state: 'visible',timeout: 20000});
 
-    await Lframe.click(this.Elements.Newbutton);
+    await IDLframe.click(this.Elements.Newbutton);
    }
    
 
 
     async enterproductcodel(productcodel: string) {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.locator(this.Elements.Productcodel).fill(productcodel);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.locator(this.Elements.Productcodel).fill(productcodel);
+    await IDLframe.waitForTimeout(3000);
 
     }
     async clickPtab() {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.click(this.Elements.clickPtab);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.click(this.Elements.clickPtab);
+    await IDLframe.waitForTimeout(3000);
     }
     async entervaultcode(vaultcode: string) {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.locator(this.Elements.vaultcode).fill(vaultcode);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.locator(this.Elements.vaultcode).fill(vaultcode);
+    await IDLframe.waitForTimeout(3000);
 
     }
     async entercustomer(customer: string) {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.locator(this.Elements.customer).fill(customer);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.locator(this.Elements.customer).fill(customer);
+    await IDLframe.waitForTimeout(3000);
 
     }
     async enterbranch(branch: string) {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.locator(this.Elements.branch).fill(branch);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.locator(this.Elements.branch).fill(branch);
+    await IDLframe.waitForTimeout(3000);
 
     }
     async enteraccnumber(accnumber: string) {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.locator(this.Elements.accountnumber).fill(accnumber);    
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.locator(this.Elements.accountnumber).fill(accnumber);    
+    await IDLframe.waitForTimeout(3000);
 
     }
     
     async clicksave() {
-    const Lframe = await this.handleIssueDepositLockerFrame();
-    await Lframe.click(this.Elements.saveLocker);
-    await Lframe.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.click(this.Elements.saveLocker);
+    await IDLframe.waitForTimeout(3000);
     }
-    
+    async clickokbtn() {
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.click(this.Elements.OKbutn);
+    await IDLframe.waitForTimeout(3000);
+    }   
 
-     async clickOk() {
-
-    try{
-
-     const outerFrameHandle1 = await this.page.waitForSelector("//iframe[@id='ifr_LaunchWin6108434161084341']", { timeout: 5000 });
-     const outerFrame = await outerFrameHandle1.contentFrame();
-
-     // Wait for the Override Message frame inside it
-     const innerframehandle1 = await outerFrame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 5000 });
-     const overrideFrame = await innerframehandle1.contentFrame();
-     //const message = successframe.locator(this.Elements.successmsg);
-     //await message.waitFor({ state: 'visible', timeout: 15000 });
-     // await expect(message).toHaveText('Successfully Saved', {timeout: 15000});
-     const okButton = overrideFrame.locator(this.Elements.OKbutn);
-     await okButton.waitFor({state: 'visible', timeout: 5000 });
-     await okButton.click();
-     console.log("Successfully clicked on OK button")
-
-     } catch (error) {
-      console.log("Override or Alert frame not found");
-     }
-    }
+     
 
 async handleAuthorizeIssueDepositFrame() {
       
       const frame = await this.handleIssueDepositLockerFrame();
     const frameElementHandle = await frame.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
-    const ADframe = await frameElementHandle.contentFrame();
+    const AIDframe = await frameElementHandle.contentFrame();
     console.log("Authroize frame")
 
-    if (!ADframe) {
+    if (!AIDframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
-    return ADframe;
+    return AIDframe;
     }
    
 async clickEnterQuery() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleIssueDepositLockerFrame();
-    await frame.waitForSelector(this.Elements.Newbutton, {state: 'visible',timeout: 20000});
-    await frame.click(this.Elements.EntrQuery);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.waitForSelector(this.Elements.Newbutton, {state: 'visible',timeout: 20000});
+    await IDLframe.click(this.Elements.EntrQuery);
    }
 
    async entercontractrefrn() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const GSframe = await this.handleIssueDepositLockerFrame();
-    await GSframe.waitForSelector(this.Elements.contractrefrn, {state: 'visible',timeout: 20000});
-    await GSframe.locator(this.Elements.contractrefrn).fill(Contractrefrn)
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.waitForSelector(this.Elements.contractrefrn, {state: 'visible',timeout: 20000});
+    await IDLframe.locator(this.Elements.contractrefrn).fill(Contractrefrn)
    }
   async getcontrarefn() {       
-            const GSframe = await this.handleIssueDepositLockerFrame();
+            const IDLframe = await this.handleIssueDepositLockerFrame();
                //await GSframe.click(this.Elements.fetchcontrrfn);
-      Contractrefrn = await GSframe.innerText(this.Elements.getcontrrfn)
+      Contractrefrn = await IDLframe.innerText(this.Elements.getcontrrfn)
     console.log("Contract Reference:"+Contractrefrn)
        
     }
@@ -166,44 +150,25 @@ async clickEnterQuery() {
     async clickExecuteQuery() {
     //const frame = await this.handledeleteBookTransferFrame(); // or handleBookTransferFrame()
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleIssueDepositLockerFrame();
-    await frame.waitForSelector(this.Elements.ExectQuery, {state: 'visible',timeout: 15000,});
-    await frame.click(this.Elements.ExectQuery);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.waitForSelector(this.Elements.ExectQuery, {state: 'visible',timeout: 15000,});
+    await IDLframe.click(this.Elements.ExectQuery);
     }
 
     async clickAuthorizetab() {
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleIssueDepositLockerFrame();
-    await frame.click(this.Elements.Authorizedl);
-    await frame.waitForTimeout(3000);
+    const IDLframe = await this.handleIssueDepositLockerFrame();
+    await IDLframe.click(this.Elements.Authorizedl);
+    await IDLframe.waitForTimeout(3000);
       }
 
       
-      /*async clickAuthorizebtn() {
-  try {
-    //const authorizeFrame = this.page
-      //.frameLocator('//iframe[contains(@title, "Book Transfer Transaction Input")]')
-      //.frameLocator('//iframe[contains(@title, "Authorize")]');
-
-    //const authorizeBtn = authorizeFrame.locator('#BLK_BOOK_TXN__AUTHORIZATION');
-    //const frame = await this.handleBookTransferFrame();
-    const Bframe = await this.handleAuthorizeBookTransferFrame();
-
-    //await authorizeBtn.waitFor({ state: 'visible', timeout: 5000 });
-    //await authorizeBtn.click();
-    await Bframe.click(this.Elements.Authorizebtn);
-    console.log("Clicked on Authorize button");
-
-  } catch (error) {
-    console.error("Authorize frame not found", error);
-    throw error;
-  }
-} */
+      
 async clickAuthorizebtn() {
     //const frame = await this.handleBookTransferFrame();
-    const Bframe = await this.handleAuthorizeIssueDepositFrame();
-    await Bframe.click(this.Elements.Authorizebuton);
-    await Bframe.waitForTimeout(3000);
+    const AIDframe = await this.handleAuthorizeIssueDepositFrame();
+    await AIDframe.click(this.Elements.Authorizebuton);
+    await AIDframe.waitForTimeout(3000);
     }
 
 

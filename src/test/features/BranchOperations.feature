@@ -1,15 +1,15 @@
  @BranchOps
 Feature: Open And Close Branch and Teller Batch 
 
-@BranchOps1 @SBM @openBranchBatchAndTellerBatch
+@BranchOps1 @SBM1 @openBranchBatchAndTellerBatch
   Scenario Outline: Perform Open Branch Batch successfully
   Given User navigates to the application
    When MAK user enters the username and password
-    When MAK user login in the application
-    Then valdiate the home page tite as "<HomePageTitle>"
-   And user selects BrOPs NextGen UI Dashboard
-         And selects Open Branch Batch Option
-        And selects Open Teller Batch Option
+  When MAK user login in the application
+  Then valdiate the home page tite as "<HomePageTitle>"
+  And user selects BrOPs NextGen UI Dashboard
+   And selects Open Branch Batch Option
+   And selects Open Teller Batch Option
       #  And user exits from NextGen BrOPs
        
         
@@ -18,7 +18,7 @@ Feature: Open And Close Branch and Teller Batch
          | Oracle Financial Services                           | 000     |
 
 
-@BranchOps2 @SBM @OpenVaultandTill @tdUserIdchangeandTillType
+@BranchOps2 @SBM1 @OpenVaultandTill @tdUserIdchangeandTillType
   Scenario Outline: Perform Open Till or Vault
   Given User navigates to the application
    When MAK user enters the username and password
@@ -51,9 +51,9 @@ Feature: Open And Close Branch and Teller Batch
 
      Examples:
       | HomePageTitle                                       |   Status    |SearchName      |    status1        |TillType1| BranchCode | UserId   | TillType | CH_Currency | MinBal | MaxBal           | CL_Currency | MaxTxnAmt | AuthLimit     |Status1    |BranchName|
-    |  Oracle Financial Services                              | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | ATESTER4    | Till    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
+    |  Oracle Financial Services                              | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | ATESTER4   | Vault    |KES         | 0    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
 
-    @BranchOps3 @SBM @TillToVaultandVaultToTill @tdUserIdandTillTypeandTillTypechange
+    @BranchOps3 @SBM1 @TillToVaultandVaultToTill @tdUserIdandTillTypeandTillTypechange
   Scenario Outline: Perform vault to teller and teller to vault change successfully
   Given User navigates to the application
     When MAK user enters the username and password
@@ -111,4 +111,4 @@ Feature: Open And Close Branch and Teller Batch
  Examples:
       | HomePageTitle                                       | BranchNumber | LoginID | Username    | HomeBranch | status | StartDate       | Language | Branch1 | Role1           | Branch2 | Role2         | App1  | App2 | App3 | App4    | App5     |   Status    |SearchName      |    status1        |TillType1| BranchCode | UserId   | TillType | CH_Currency | MinBal | MaxBal           | CL_Currency | MaxTxnAmt | AuthLimit     |Status1    |BranchName|
     # |  Oracle Financial Services                              | 999        | AUTO     | AUTOUSER      | 100        | Enable |DEC 03, 2025  | ENG      | 100     | OBBRN_MANAGER        |100  | OBBRN_BASE    | PLATO | REMO | OBPY | DEPOSIT | LOAN | Unauthorized  | Branch User Limits| Authorized       |Vault    |*.*       | CLPMAUTO8  | Till    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
-     |  Oracle Financial Services                              | 999        | AUTO     | AUTOUSER      | 100        | Enable |DEC 03, 2025  | ENG      | 100     | OBBRN_MANAGER        |100  | OBBRN_BASE    | PLATO | REMO | OBPY | DEPOSIT | LOAN | Unauthorized  | Branch User Limits| Authorized       |Till    |*.*       | CLPMAUTO7  | Vault    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |
+     |  Oracle Financial Services                              | 999        | AUTO     | AUTOUSER      | 100        | Enable |DEC 03, 2025  | ENG      | 100     | OBBRN_MANAGER        |100  | OBBRN_BASE    | PLATO | REMO | OBPY | DEPOSIT | LOAN | Unauthorized  | Branch User Limits| Authorized       |Till    |*.*       | ATESTER7 | Vault    |KES         | 0.00    | 9,999,999,999.00| KES   | 5,000.00   | 9,999,999.00    |Unauthorized| 100     |

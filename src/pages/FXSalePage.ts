@@ -479,8 +479,40 @@ private async fillFXOutSingleDenomination(denomination: string, qty: string): Pr
         console.log("Clicked on Submit");
         await newPage.waitForTimeout(2000);
     }
+    async approvalconfirm(){
+        await newPage.locator('(//span[text()="Confirm"])[1]').click()
+        await newPage.waitForTimeout(2000);
+        try{
+           await newPage.locator(
+        "oj-checkboxset.oj-checkboxset-single"
+    ).first().click();
+    
+    console.log("Selected first approver");
+      await newPage.locator('(//span[text()="Submit For Approval"])[1]').click()
+        await newPage.waitForTimeout(2000);
+    
+}
+catch{
+    console.log("approval from approver not required")
+   
+}
+
+    await newPage.waitForTimeout(500);
+        // await newPage.pause()
+       
+    }
+     async purchaseapprovalconfirm(){
+        await newPage.locator('(//span[text()="Confirm"])[1]').click()
+        await newPage.waitForTimeout(2000);
+         await newPage.locator('(//span[text()="Submit For Approval"])[1]').click()
+        await newPage.waitForTimeout(2000);
+
+   
+       
+    }
 
     async verifySuccessMessage() {
+        
         await expect(
             await newPage.locator(this.elements.successmsg).textContent()
         ).toContain('Success');

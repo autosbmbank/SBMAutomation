@@ -188,12 +188,13 @@ export default class FXDealPage {
         const frame = await this.getFrame();
         await frame.locator(this.Elements.calculateBtn).click();
         await frame.waitForTimeout(2000);
+       
     }
 
     async enterSquareOffRate(squareOffRate: string) {
        
          const alertFrame = await this.getAlertFrame();
-     alertFrame.locator('//*[@id="BTN_ACCEPT_oj1|text"]').click();
+         alertFrame.locator('//*[@id="BTN_ACCEPT_oj1|text"]').click();
         const authFrame = await this.getAuthorizeSubFrame();
         await authFrame.locator(this.Elements.squareOffRate).clear();
         await authFrame.locator(this.Elements.squareOffRate).fill(squareOffRate);
@@ -233,16 +234,52 @@ export default class FXDealPage {
         if (!contractRefNo) throw new Error("Contract Reference not captured — check Maker flow ran successfully");
         const frame = await this.getFrame();
         await frame.locator(this.Elements.contractRefNo).clear();
-        await frame.locator(this.Elements.contractRefNo).fill(contractRefNo);
+        //  await frame.locator(this.Elements.contractRefNo).fill("000FXFD260631005");
+         await frame.locator(this.Elements.contractRefNo).fill(contractRefNo);
         console.log("Entering Contract Reference: " + contractRefNo);
     }
 
     async clickConfirmRadioButton() {
-        const authFrame = await this.getAuthorizeSubFrame();
-        await authFrame.locator(this.Elements.confirmRadio).click();
-        console.log("clicked on radio button")
-        await this.page.waitForTimeout(1000);
+        const subFrame = await this.getAuthorizeSubFrame();
+       
+       const switchCount = await subFrame.evaluate(() => {
+        // ✅ Match any CONFIRMED oj-switch regardless of prefix
+        return document.querySelectorAll(
+            "oj-switch[id*='CONFIRMED']"
+        ).length;
+    });
+    console.log("Override switches found:", switchCount);
+
+    for (let i = 0; i < switchCount; i++) {
+        const isChecked = await subFrame.evaluate((index) => {
+            const switches = Array.from(
+                document.querySelectorAll("oj-switch[id*='CONFIRMED']")
+            );
+            const ojSwitch = switches[index];
+            const thumb = ojSwitch?.querySelector(
+                "div.oj-switch-thumb[role='switch']"
+            );
+            return thumb?.getAttribute('aria-checked') === 'true';
+        }, i);
+
+        console.log(`Row ${i} checked: ${isChecked}`);
+
+        if (!isChecked) {
+            // ✅ Click track to toggle ON
+            const track = subFrame.locator(
+                "oj-switch[id*='CONFIRMED'] div.oj-switch-track"
+            ).nth(i);
+            await track.click();
+            await subFrame.waitForTimeout(500);
+            console.log(`✅ Toggled ON row ${i}`);
+        } else {
+            console.log(`Row ${i} already ON — skipping`);
+        }
     }
+    await subFrame.waitForTimeout(1000);
+    console.log("All FX overrides confirmed");
+}
+    
 
     async clickAuthorizeOnPopup() {
         const authFrame = await this.getAuthorizeSubFrame();
@@ -263,9 +300,10 @@ export default class FXDealPage {
 
     async verifyAuthSuccessMessage() {
          const authFrame = await this.getAuthorizeSubFrame();
+       
              const frameElementHandle2 = await authFrame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 3000 });
                 const successframe= await frameElementHandle2.contentFrame();
-                 
+                await this.page.waitForTimeout(2000);  
           const message= successframe.locator(this.Elements.successMessage)
         await expect(message).toHaveText('Successfully Authorized');
         await successframe.click(this.Elements.okBtn)

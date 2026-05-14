@@ -1,7 +1,7 @@
   module.exports = {
      default: {
  
-        tags:"@TD1",
+        tags:"@KYC",
        
  
           formatOptions: {

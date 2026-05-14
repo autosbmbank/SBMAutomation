@@ -48,9 +48,9 @@ When("enters the Account number {string}", async function(acno : string){
   await WDPage.enterACNum(acno);
 }); 
 
-When("enters the Transaction Amount {string}", async function(txnamt : string){
+When("enters the Transaction Amount {string} currency {string}", async function(txnamt : string,currency: string){
   const WDPage = new WithdrawalsPage(fixture.page);
-  await WDPage.enterTxnAmt(txnamt);
+  await WDPage.enterTxnAmt(txnamt,currency);
 });
 
 When("enters the Customer Information {string} {string}", async function (denomination : string,qty:string) {

@@ -56,8 +56,8 @@ When("user provides Account Number {string}", async function (accountNumber: str
     await DepositPage.enterAccountNumber(accountNumber);
   });
 
-When("user provides Transaction Amount {string}", async function (amount: string) {
-    await DepositPage.enterTransactionAmount(amount);
+When("user provides Transaction Amount {string} currency {string}", async function (amount: string,currency: string) {
+    await DepositPage.enterTransactionAmount(amount,currency);
   });
 
 When( "user provides Customer Interview {string} {string}",async function (denomination: string, qty: string) {

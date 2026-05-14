@@ -97,6 +97,7 @@ Feature: Create Account and Authorize
     Examples:
     | HomePageTitle             | CustomerNo | Currency | AccountClass | Location | Media | PoolCode | KDIC_FP_ODS | 
     | Oracle Financial Services | 000006    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          | 
+      | Oracle Financial Services | 000007   | USD      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          | 
 
     @Account3
      Scenario Outline: Block Account Credit Freeze

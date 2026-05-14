@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let GAframe,AAframe
+let GAframe,AAframe,Amendnumber,CurrecyGA,CustomrGA,ContractamountGA
 // let Bframe
 export default class GuaranteeAmendmentpage {
 
@@ -23,19 +23,24 @@ export default class GuaranteeAmendmentpage {
         clickPGA: "//span[@id='BLK_AMEND_DETAILS__BTN_P_oj92|text']",
         saveamend:"//span[@id='Save_oj7|text']",
         acceptamend: "//span[@id='BTN_ACCEPT_oj1|text']",
-        OKbutn : "//span[@id='BTN_OK_oj0|text']",
+        getamendnumbr:'//*[@id="BLK_AMEND_DETAILS__AMENDMENT_NO"]/div[1]/div/div/div',
+        getcurrecyga:'//*[@id="BLK_AMEND_DETAILS__CCY"]/div[1]/div/div/div',
+        getcustomrga:'//*[@id="BLK_PARTY_DETAILS__CIFIDRC0|input"]',
+        getcontractamtga:'//*[@id="BLK_AMEND_DETAILS__CONAMT|input"]',
+        AMnumber:"//input[@id='BLK_AMEND_DETAILS__AMENDMENT_NO|input']",
+        okamend : "//span[@id='BTN_OK_oj0|text']",
         exitamend:"//span[@id='BTN_EXIT_IMG_oj113|text']",
         Amendnumber: "//input[@id='BLK_AMEND_DETAILS__AMENDMENT_NO|input']",
         Authorizedl: "//span[@id='Authorize_oj8|text']",
         Authorizebutton: "//*[@id='BLK_AUTH_DETAILS__BTN_AUTH_oj24|text']",
         currency:"//input[@id='BLK_REYKEY_DETAILS__CONTCCY|input']",
         contractamount:"//input[@id='BLK_REYKEY_DETAILS__CONTAMT|input']",
-        customerid:"//input[@id='BLK_REYKEY_DETAILS__CIFID|input']" 
-        
-    
-    }
+        customerid:'//*[@id="BLK_PARTY_DETAILS__CIFIDRC0|input"]',
+        okButton : "//span[@id='BTN_OK_oj0|text']",
+        partiesamend:'//*[@id="TAB_PARTIES"]/span'
 
-   
+            
+    }   
 
     async handleGuaranteeAmendmentFrame() {
     const frameElementHandle = await this.page.waitForSelector('//iframe[contains(@id,"ifr_LaunchWin")]',{ timeout: 30000 });
@@ -43,7 +48,7 @@ export default class GuaranteeAmendmentpage {
     const GAframe = await frameElementHandle.contentFrame();
 
     if (!GAframe) {
-        throw new Error('Book Transfer frame not loaded');
+        throw new Error('Frame not loaded');
     }
 
     return GAframe;
@@ -55,7 +60,7 @@ export default class GuaranteeAmendmentpage {
     const AAframe = await frameElementHandle.contentFrame();
 
     if (!AAframe) {
-        throw new Error('Book Transfer frame not loaded');
+        throw new Error('Frame not loaded');
     }
 
     return AAframe;
@@ -71,7 +76,7 @@ export default class GuaranteeAmendmentpage {
    async handleInformationMessageFrame() {
   try {
         const outerFrameHandle = await this.page.waitForSelector(
-  '//iframe[contains(@title, "Guarantees and Standby Letters of Credit Amendment ")]', { timeout: 30000 }
+  '//iframe[contains(@title, "Guarantees and Standby Letters of Credit Amendment")]', { timeout: 30000 }
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
@@ -84,9 +89,6 @@ export default class GuaranteeAmendmentpage {
     throw err;
   }
 }
-   
-
-
     async entercontractreference(Contrarefn: string) {
     const GAframe = await this.handleGuaranteeAmendmentFrame();
     await GAframe.locator(this.Elements.Contrarefn).fill(Contrarefn);
@@ -104,6 +106,11 @@ export default class GuaranteeAmendmentpage {
     await GAframe.click(this.Elements.saveamend);
     await GAframe.waitForTimeout(3000);
     }
+    async clickpartiesamend() {
+    const GAframe = await this.handleGuaranteeAmendmentFrame();
+    await GAframe.click(this.Elements.partiesamend);
+    await GAframe.waitForTimeout(3000);
+    }
     async clickacceptamend() {
     const AAframe = await this.handleAcceptAmendmentFrame();
     await AAframe.click(this.Elements.acceptamend);
@@ -111,9 +118,9 @@ export default class GuaranteeAmendmentpage {
     }
     
 
-     async clickOk() {
+     async clickOkbtn() {
     const GAframe = await this.handleInformationMessageFrame();
-    await GAframe.click(this.Elements.saveamend);
+    await GAframe.click(this.Elements.okamend);
     await GAframe.waitForTimeout(3000);
     }
 
@@ -141,18 +148,70 @@ async handleAuthorizeAmendFrame() {
    
 async clickEnterQuery() {
     
-    //const frame = await this.handleAuthorizeBookTransferFrame();
+  
     const GAframe = await this.handleGuaranteeAmendmentFrame();
-    await GAframe.waitForSelector(this.Elements.Newamend, {state: 'visible',timeout: 20000});
+    await GAframe.waitForSelector(this.Elements.EntrQuery, {state: 'visible',timeout: 20000});
     await GAframe.click(this.Elements.EntrQuery);
    }
-async clickAmendnumber() {
-    
-    //const frame = await this.handleAuthorizeBookTransferFrame();
+
+  
+    async enterAmendnumber() {
+       
     const GAframe = await this.handleGuaranteeAmendmentFrame();
-    await GAframe.waitForSelector(this.Elements.Amendnumber, {state: 'visible',timeout: 20000});
-    await GAframe.click(this.Elements.Amendnumber);
+    await GAframe.waitForSelector(this.Elements.AMnumber, {state: 'visible',timeout: 2000});
+    await GAframe.locator(this.Elements.AMnumber).fill(Amendnumber)
    }
+   async entercurrencyga() {
+    
+    const AAMframe = await this.handleAuthorizeAmendFrame();
+    await AAMframe.waitForSelector(this.Elements.currency, {state: 'visible',timeout: 2000});
+    await AAMframe.locator(this.Elements.currency).fill(CurrecyGA)
+   }
+   async entercustomerga() {
+    
+    
+    const AAMframe = await this.handleAuthorizeAmendFrame();
+    await AAMframe.waitForSelector(this.Elements.customerid, {state: 'visible',timeout: 2000});
+    await AAMframe.locator(this.Elements.customerid).fill(CustomrGA)
+   }
+   async enterontractamountga() {
+    
+    
+    const AAMframe = await this.handleAuthorizeAmendFrame();
+    await AAMframe.waitForSelector(this.Elements.contractamount, {state: 'visible',timeout: 2000});
+    await AAMframe.locator(this.Elements.contractamount).fill(ContractamountGA)
+   }
+  async getAmendno() {       
+            const GAframe = await this.handleGuaranteeAmendmentFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      Amendnumber = await GAframe.innerText(this.Elements.getamendnumbr)
+    console.log("Amendment Number:"+Amendnumber)
+       
+    }
+    async getcurrencyga() {       
+            const GAframe = await this.handleGuaranteeAmendmentFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      CurrecyGA = await GAframe.innerText(this.Elements.getcurrecyga)
+    console.log("Currency:"+CurrecyGA)
+       
+    }
+    async getcustomerga() {       
+            const GAframe = await this.handleGuaranteeAmendmentFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      CustomrGA = await GAframe.locator(this.Elements.getcustomrga).inputValue()
+    console.log("Customer:"+CustomrGA)
+       
+    }
+    async getcontractamountga() {       
+            const GAframe = await this.handleGuaranteeAmendmentFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+    //   ContractamountGA = await GAframe.innerText(this.Elements.getcontractamtga)
+    // console.log("Contract Amount:"+ContractamountGA)
+     ContractamountGA = await GAframe.locator(this.Elements.getcontractamtga).inputValue()
+     console.log("Contract Amount:"+ContractamountGA)
+     
+       
+    }
    
 
     async clickExecuteQuery() {
@@ -179,25 +238,7 @@ async clickAuthorizebtn() {
     await AAMframe.waitForTimeout(3000);
     }
 
-async entercurrency(currency: string) {
-    const AAMframe = await this.handleAuthorizeAmendFrame();
-    await AAMframe.locator(this.Elements.currency).fill(currency);
-    await AAMframe.waitForTimeout(3000);
 
-    }
-    
-async entercontractamount(contractamount: string) {
-    const AAMframe = await this.handleAuthorizeAmendFrame();
-    await AAMframe.locator(this.Elements.contractamount).fill(contractamount);
-    await AAMframe.waitForTimeout(3000);
-
-    }
-    async entercustomerid(customerid: string) {
-    const AAMframe = await this.handleAuthorizeAmendFrame();
-    await AAMframe.locator(this.Elements.customerid).fill(customerid);
-    await AAMframe.waitForTimeout(3000);
-
-    }
 
 async clickOK() {
   try {

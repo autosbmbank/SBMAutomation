@@ -13,56 +13,39 @@ let bookTransfer: BookTransferPage;
 
 setDefaultTimeout(timeout);
 
-When("user clicks on New",
-  async function () {
-    fixture.logger.info("Clicking New in Book Transfer");
+When("user clicks on New BT",async function () {
+    fixture.logger.info("Click New in Book Transfer");
     bookTransfer = new BookTransferPage(fixture.page);
     await bookTransfer.handleBookTransferFrame();
     await bookTransfer.clickNew();
   }
 );
 
-When("user enters sourcecodeb as {string}",
-  async function (SourceCodeb: string) {
+When("user enters sourcecodeb as {string}",async function (SourceCodeb: string) {
     bookTransfer = new BookTransferPage(fixture.page);
     await bookTransfer.enterSourceCodeb(SourceCodeb);
   }
 );
-When("user enters Networkcodeb as {string}",
-  async function (Networkcodeb: string) {
+When("user enters Networkcodeb as {string}",async function (Networkcodeb: string) {
     bookTransfer = new BookTransferPage(fixture.page);
     await bookTransfer.enterNetworkcodeb(Networkcodeb);
-  }
-);
+  });
 
-When("user enters Debtor account as {string}",
-  async function (DebitorAccount: string) {
+When("user enters Debtor account as {string}",async function (DebitorAccount: string) {
     await bookTransfer.enterDebitorAccount(DebitorAccount);
     
-  }
-);
+  });
 
-When(
-  "user enters creditor account as {string}",
-  async function (CreditorAccount: string) {
+When("user enters creditor account as {string}",async function (CreditorAccount: string) {
     await bookTransfer.enterCreditorAccount(CreditorAccount);
   }
 );
 
-/*When(
-  "user enters creditor Currency as {string}",
-  async function (CreditCurrency: string) {
-    await bookTransfer.enterCreditCurrency(CreditCurrency);
-  }
-);*/
-
-When("user enters creditor amount as {string}",
-  async function (CreditAmount: string) {
+When("user enters creditor amount as {string}",async function (CreditAmount: string) {
     await bookTransfer.enterCreditAmount(CreditAmount);
   }
 );
-When("user enters exchange rate as {string}",
-  async function (Exchangerate: string) {
+When("user enters exchange rate as {string}",async function (Exchangerate: string) {
     await bookTransfer.enterExchangerate(Exchangerate);
 
   }
@@ -71,44 +54,47 @@ When("user enters exchange rate as {string}",
 When("click on Enrich button", async function () {
   await bookTransfer.clickEnrich();
 });
-
-
+When("user exits BookTransferPage", async function () {
+  await bookTransfer.clickExit();
+});
 
 When("clicks on save button", async function () {
   await bookTransfer.saveTransaction();
 });
 
-Then("clicks on OK button", async function () {
-  await bookTransfer.clickOKbutton1();
+Then("clicks on OK btn", async function () {
+  await bookTransfer.clickokTransaction();
 });
-/* ------------------- Delete Transaction -------------------*/
+Then("clicks on OK button", async function () {
+  await bookTransfer.clickOK();
+});
+
 
 When('user clicks on Enter Query', async function () {
-  fixture.logger.info("Clicking New in Book Transfer");
+  fixture.logger.info("Click Enter Query in Book Transfer");
     bookTransfer = new BookTransferPage(fixture.page);
     //await bookTransfer.handledeleteBookTransferFrame();
     await bookTransfer.clickEnterQuery();
 });
 
-When(
-  'user enters Transaction reference number as {string}',
-  async function (refNo: string) {
-      await bookTransfer.enterTransactionReferenceNumber(refNo);
-  }
-);
+
+  When('get Transaction reference number BT', async function () {
+     bookTransfer = new BookTransferPage(fixture.page);
+       fixture.logger.info("Fetch Transaction reference number");
+    await bookTransfer.getTransactionReferenceNumber();
+});
+
+When('user enters Transaction reference number BT', async function () {
+    fixture.logger.info("Entering TransactionReferenceNumber");
+      bookTransfer = new BookTransferPage(fixture.page);
+      //await bookTransfer.handledeleteBookTransferFrame();
+      await bookTransfer.enterTransactionReferenceNumber();
+  });
 
 When('user clicks on Execute Query', async function () {
     await bookTransfer.clickExecuteQuery();
 });
 
-
-/*Then("clicks on Delete", async function () {
-  fixture.logger.info("Clicking Delete button");
-  await bookTransfer.clickDeletebutton();
-}); */
-
-
-/*--------------------------------------------------------*/
 
 When('user clicks on Authorize tab', async function () {
    fixture.logger.info("Clicking tab in Book Transfer");
@@ -122,24 +108,5 @@ When('user clicks on Authorize button', async function () {
 
 
 
-/*--------------------------------------------------------
 
-When(
-  "user selects Instructed Currency Indicator as {string}",
-  async function (debitcurrency: string) {
-    await bookTransfer.selectDebitCurrency(debitcurrency);
-  }
-);
-
-When("User enters the debit amount as {string}", async function(debitAmount : string){
-    bookTransfer = new BookTransferPage(fixture.page);
- await bookTransfer.enterdebitAmount(debitAmount);
-})
-
-/*--------------------------------------------------------
-
-When("user selects checkbox {string}",
-  async function (TemplateID: string) {
-    await bookTransfer.selectTemplateCheckbox(TemplateID);
-  }); */
 

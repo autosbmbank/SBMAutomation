@@ -32,7 +32,7 @@ export default class ReatailDepositPage {
     icLiqBtn:"//span[@data-bind='text : labelsCommon.liquidate']",
     //transactionAmount: "(//input[@id='_oj105-input-text|input'])[1]",
     // transactionAmount: "(//div[@class='oj-text-field-middle']//input)[93]",
-    transactionAmount: '//*[@id="_oj214-input-text|input"]',
+    transactionAmount: '//*[@id="_oj208-input-text|input"]',
     AccountAmount:"//*[@id='_oj369-input-text|input']",
    InformationBtn: "(//a[contains(@role,'button')])[23]",
     customerInformation: "//input[@name='UDF_Customer']",
@@ -282,10 +282,28 @@ async closeScreen(){
     
   }
 
-  async enterTransactionAmount(amount: string) {
-    await newPage.locator(this.elements.transactionAmount).fill(amount);
+  async enterTransactionAmount(amount: string,currency: string) {
+     await newPage.locator(
+        '//*[@id="oj-select-choice-tfpm_ob_cmn_fd_currency"]/span/a'
+    ).click();
+    await newPage.waitForTimeout(500);
+     await newPage.locator(`//*[@aria-label="${currency}"]`).click();
+    console.log("Selected KES currency");
+    await newPage.waitForTimeout(500);
+     await newPage.locator(
+        "fsgbu-ob-cmn-fd-amount input[aria-required='true']" +
+        ":not([disabled]):not([readonly])"
+    ).filter({ visible: true }).fill(amount);
+
+    await newPage.locator(
+        "fsgbu-ob-cmn-fd-amount input[aria-required='true']" +
+        ":not([disabled]):not([readonly])"
+    ).filter({ visible: true }).press('Tab');
+
+    await newPage.waitForTimeout(1000);
     console.log("Entered Transaction Amount:", amount);
-    await newPage.locator(this.elements.accountNumber).click()
+
+   
   }
 
   

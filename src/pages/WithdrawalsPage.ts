@@ -191,8 +191,14 @@ async enterACNum(acno){
  await targetPage.waitForTimeout(2000);
 }
 
-async enterTxnAmt(txnamt:string){
-
+async enterTxnAmt(txnamt:string,currency: string){
+ await targetPage.locator(
+        '//*[@id="oj-select-choice-tfpm_ob_cmn_fd_currency"]/span/a'
+    ).click();
+    await targetPage.waitForTimeout(500);
+     await targetPage.locator(`//*[@aria-label="${currency}"]`).click();
+    console.log("Selected KES currency");
+    await targetPage.waitForTimeout(500);
  // Target only: not disabled, not readonly, aria-required=true
 const txnAmountInput = targetPage.locator(
   "fsgbu-ob-cmn-fd-amount input[data-oj-internal=''][aria-required='true']:not([disabled]):not([readonly])"
@@ -271,9 +277,9 @@ async txnsave(){
 async normaltxnsave(){
   await targetPage.getByRole('button', { name: 'Submit' }).click();
   await targetPage.waitForTimeout(5000);
-  const successMsg = targetPage.locator("//div[contains(text(),'Approval Confirmation')]", {timeout:3000});
+  const successMsg = targetPage.locator("//div[contains(text(),'Transaction Completed Successfully')]", {timeout:3000});
   await expect(successMsg).toBeVisible();
-  await targetPage.getByRole('button', { name: 'Confirm' }).click();
+  await targetPage.locator('(//span[text()="Ok"])[1]').click();
 }
 async validatemsg(){
   const successMsg = targetPage.locator("//div[contains(text(),'Transaction Submitted For Approval Successfully')]", {timeout:3000});

@@ -1,8 +1,8 @@
 @FXSale
 Feature: FX Sale Walk-in Feature
 
-  @FXSALE1 @SBM @FXSaleWalkin
-  Scenario Outline: Validate FX Sale Walk-in successfully
+  @FXSALE1 @SBM1 @FXSaleWalkin
+  Scenario Outline: Validate FX Sale Walk-in successfully 8203
 
     Given User navigates to the application
     When MAK user enters the username and password
@@ -24,10 +24,10 @@ Feature: FX Sale Walk-in Feature
 
     Examples:
       | HomePageTitle             | BoughtCurrency | BoughtAmount | CurrencyPaid | BeneficiaryName | 
-      | Oracle Financial Services | USD            |  50            | KES          | John                |
+      | Oracle Financial Services | USD            |  1           | KES          | John                |
 
-@FXPURCHASE1 @SBM @FXPurchaseWalkin
-  Scenario Outline: Validate FX Purchase Walk-in successfully
+@FXPURCHASE1 @SBM1 @FXPurchaseWalkin
+  Scenario Outline: Validate FX Purchase Walk-in successfully 8004
 
     Given User navigates to the application
     When MAK user enters the username and password
@@ -50,4 +50,4 @@ Feature: FX Sale Walk-in Feature
 
     Examples:
       | HomePageTitle             | BoughtCurrency | BoughtAmount | CurrencyPaid | BeneficiaryName |
-      | Oracle Financial Services | USD            | 10          | KES          | John            | 
+      | Oracle Financial Services | USD            | 1         | KES          | John            | 

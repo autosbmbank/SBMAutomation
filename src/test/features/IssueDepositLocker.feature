@@ -27,7 +27,7 @@ Feature: BookTransfer Account Transaction
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
              When user enters the function name as "DLDTRONL" and click search button
       And user clicks on Enter Query IDL
-      And user enters Contract reference IDL as "<Contract Reference>" 
+      And enter Contract reference IDL
       And user clicks on Execute Query IDL
       And user clicks on Authorize tab IDL
       And user clicks on Authorize button IDL

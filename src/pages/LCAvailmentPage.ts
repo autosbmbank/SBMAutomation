@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let LAframe,ADframe,CurrencyLCA,ContractamountLCA,CustomerLCA
+let LAframe,ADframe,CurrecyLCA,ContractamtLCA,CustomrLCA
 // let Bframe
 export default class LCAvailmentPage {
 
@@ -24,16 +24,18 @@ export default class LCAvailmentPage {
         Availamount: "//input[@id='BLK_AVAILMENTS__AVLAMT|input']",
         saveAvail:"//span[@id='Save_oj7|text']",
         OKbutn : "//span[@id='BTN_OK_oj0|text']",
-        Search: "//a[normalize-space()='Search']",
-        Authorizedl: "//span[@id='Authorize_oj8|text']",
-        Authorizebuton: "//*[@id='BLK_BOOK_TXN__AUTHORIZATION_oj14|text']", 
+        okButton:"//span[@id='BTN_OK_oj0|text']",
+        exitavail:'//*[@id="BTN_EXIT_IMG_oj85|text"]',        
+        Authorizedla: "//span[@id='Authorize_oj8|text']",
+        Authorizebutonla: "//*[@id='BLK_BOOK_TXN__AUTHORIZATION_oj14|text']", 
         instructedCurrencyIndicator: "//select[@id='BLK_BOOK_TXN__INSTRUCTED_CCY_IND']",
-        getcurrencyLCA:"",
-        currencyLCA:"",
-        getcontractamountLCA:"",
-        contractamountLCA:"",
-        getcustomerLCA:"",
-        customerLCA:""
+        getcurrecyLCA:'//*[@id="BLK_AVAILMENTS__CONTCCY"]/div[1]/div/div/div',
+        currencyLCA:'//*[@id="BLK_AVAILMENTS__CONTCCY|input"]',
+        getcontractamttLCA:'//*[@id="BLK_AVAILMENTS__AVLAMT|input"]',
+        contractamountLCA:'//*[@id="BLK_AVAILMENTS__AVLAMT|input"]',
+        getcustomrLCA:'//*[@id="BLK_AVAILMENTS__CNTRPRTY"]/div[1]/div/div/div',
+        customerLCA:'//*[@id="BLK_AVAILMENTS__CNTRPRTY|input"]',
+        exitathr:'//*[@id="BTN_EXIT_IMG_oj85|text"]',
     
     }
 
@@ -42,163 +44,172 @@ export default class LCAvailmentPage {
     async handleLCAvailmentsFrame() {
     const frameElementHandle = await this.page.waitForSelector('//iframe[contains(@id,"ifr_LaunchWin")]',{ timeout: 30000 });
 
-    const Lframe = await frameElementHandle.contentFrame();
+    const LAframe = await frameElementHandle.contentFrame();
 
-    if (!Lframe) {
+    if (!LAframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
-    return Lframe;
+    return LAframe;
    }
+   async handleInformationMessageFrame() {
+  try {
+        const outerFrameHandle = await this.page.waitForSelector(
+  '//iframe[contains(@title, "Letters Of Credit Availment Detail")]', { timeout: 30000 }
+);
+    const outerFrame = await outerFrameHandle.contentFrame();
+    const innerFrameHandle = await outerFrame.waitForSelector(
+      'iframe[id="ifr_AlertWin"]', { timeout: 50000 }
+    );
+    const innerFrame = await innerFrameHandle.contentFrame();
+    return innerFrame;
+  } catch (err) {
+    console.log("handleInformationMessageFrame failed:", err);
+    throw err;
+  }
+}
 
     async clickNewavail() {
-    const Lframe = await this.handleLCAvailmentsFrame();
+    const LAframe = await this.handleLCAvailmentsFrame();
 
-    await Lframe.waitForSelector(this.Elements.Newavail,{state: 'visible',timeout: 20000});
+    await LAframe.waitForSelector(this.Elements.Newavail,{state: 'visible',timeout: 20000});
 
-    await Lframe.click(this.Elements.Newavail);
+    await LAframe.click(this.Elements.Newavail);
    }
    
 
 
     async entercontrareference(Contrarfn: string) {
-    const Lframe = await this.handleLCAvailmentsFrame();
-    await Lframe.locator(this.Elements.Contrarfn).fill(Contrarfn);
-    await Lframe.waitForTimeout(3000);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.locator(this.Elements.Contrarfn).fill(Contrarfn);
+    await LAframe.waitForTimeout(3000);
 
     }
     async clickPCtab() {
-    const Lframe = await this.handleLCAvailmentsFrame();
-    await Lframe.click(this.Elements.clickPC);
-    await Lframe.waitForTimeout(3000);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.click(this.Elements.clickPC);
+    await LAframe.waitForTimeout(3000);
     }
     async enterAvailmentamount(Availamount: string) {
-    const Lframe = await this.handleLCAvailmentsFrame();
-    await Lframe.locator(this.Elements.Availamount).fill(Availamount);
-    await Lframe.waitForTimeout(3000);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.locator(this.Elements.Availamount).fill(Availamount);
+    await LAframe.waitForTimeout(3000);
 
     }
     
     async clicksaveavail() {
-    const Lframe = await this.handleLCAvailmentsFrame();
-    await Lframe.click(this.Elements.saveAvail);
-    await Lframe.waitForTimeout(3000);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.click(this.Elements.saveAvail);
+    await LAframe.waitForTimeout(3000);
+    }
+    async clickOkbtn() {
+    const LAframe = await this.handleInformationMessageFrame();
+    await LAframe.click(this.Elements.OKbutn);
+    await LAframe.waitForTimeout(3000);
+    }
+    async clickexitavail() {
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.click(this.Elements.exitavail);
+    await LAframe.waitForTimeout(3000);
+    }
+    async clickexitathr() {
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.click(this.Elements.exitathr);
+    await LAframe.waitForTimeout(3000);
     }
     
 
-     async clickOk() {
+     
 
-    try{
-
-     const outerFrameHandle1 = await this.page.waitForSelector("//iframe[@id='ifr_LaunchWin6108434161084341']", { timeout: 5000 });
-     const outerFrame = await outerFrameHandle1.contentFrame();
-
-     // Wait for the Override Message frame inside it
-     const innerframehandle1 = await outerFrame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 5000 });
-     const overrideFrame = await innerframehandle1.contentFrame();
-     //const message = successframe.locator(this.Elements.successmsg);
-     //await message.waitFor({ state: 'visible', timeout: 15000 });
-     // await expect(message).toHaveText('Successfully Saved', {timeout: 15000});
-     const okButton = overrideFrame.locator(this.Elements.OKbutn);
-     await okButton.waitFor({state: 'visible', timeout: 5000 });
-     await okButton.click();
-     console.log("Successfully clicked on OK button")
-
-     } catch (error) {
-      console.log("Override or Alert frame not found");
-     }
-    }
-
-async handleAuthorizeIssueDepositFrame() {
+async handleAuthorizeLCAvailmentFrame() {
       
       const frame = await this.handleLCAvailmentsFrame();
     const frameElementHandle = await frame.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
-    const ADframe = await frameElementHandle.contentFrame();
+    const ALCframe = await frameElementHandle.contentFrame();
     console.log("Authroize frame")
 
-    if (!ADframe) {
+    if (!ALCframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
-    return ADframe;
+    return ALCframe;
     }
    
 async clickEnterQuery() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleLCAvailmentsFrame();
-    await frame.waitForSelector(this.Elements.Newavail, {state: 'visible',timeout: 20000});
-    await frame.click(this.Elements.EntrQuery);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.waitForSelector(this.Elements.Newavail, {state: 'visible',timeout: 20000});
+    await LAframe.click(this.Elements.EntrQuery);
    }
 
    
 
     async clickExecuteQuery() {
-    //const frame = await this.handledeleteBookTransferFrame(); // or handleBookTransferFrame()
-    //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleLCAvailmentsFrame();
-    await frame.waitForSelector(this.Elements.ExectQuery, {state: 'visible',timeout: 15000,});
-    await frame.click(this.Elements.ExectQuery);
+    
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.waitForSelector(this.Elements.ExectQuery, {state: 'visible',timeout: 15000,});
+    await LAframe.click(this.Elements.ExectQuery);
     }
 async getcurrencyLCA() {       
-            const GSframe = await this.handleLCAvailmentsFrame();
+            const LAframe = await this.handleLCAvailmentsFrame();
                //await GSframe.click(this.Elements.fetchcontrrfn);
-      CurrencyLCA = await GSframe.innerText(this.Elements.getcurrencyLCA)
-    console.log("Currency :"+CurrencyLCA)
+      CurrecyLCA = await LAframe.innerText(this.Elements.getcurrecyLCA)
+    console.log("Currency :"+CurrecyLCA)
        
     }
     async entercurrencyLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const GSframe = await this.handleLCAvailmentsFrame();
-    await GSframe.waitForSelector(this.Elements.currencyLCA, {state: 'visible',timeout: 20000});
-    await GSframe.locator(this.Elements.currencyLCA).fill(CurrencyLCA)
+    const ALCframe = await this.handleLCAvailmentsFrame();
+    await ALCframe.waitForSelector(this.Elements.currencyLCA, {state: 'visible',timeout: 20000});
+    await ALCframe.locator(this.Elements.currencyLCA).fill(CurrecyLCA)
    }
    async getcontractamountLCA() {       
-            const GSframe = await this.handleLCAvailmentsFrame();
+            const LAframe = await this.handleLCAvailmentsFrame();
                //await GSframe.click(this.Elements.fetchcontrrfn);
-      ContractamountLCA = await GSframe.innerText(this.Elements.getcontractamountLCA)
-    console.log("Contract Amount:"+ContractamountLCA)
+      ContractamtLCA = await LAframe.locator(this.Elements.getcontractamttLCA).inputValue()
+    console.log("Contract Amount:"+ContractamtLCA)
        
     }
     async entercontractamountLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const GSframe = await this.handleLCAvailmentsFrame();
-    await GSframe.waitForSelector(this.Elements.contractamountLCA, {state: 'visible',timeout: 20000});
-    await GSframe.locator(this.Elements.contractamountLCA).fill(ContractamountLCA)
+    const ALCframe = await this.handleLCAvailmentsFrame();
+    ContractamtLCA = await ALCframe.waitForSelector(this.Elements.contractamountLCA, {state: 'visible',timeout: 20000});
+    await ALCframe.locator(this.Elements.contractamountLCA).fill(ContractamtLCA)
    }
    async getcustomerLCA() {       
-            const GSframe = await this.handleLCAvailmentsFrame();
+            const LAframe = await this.handleLCAvailmentsFrame();
                //await GSframe.click(this.Elements.fetchcontrrfn);
-      CustomerLCA = await GSframe.innerText(this.Elements.getcustomerLCA)
-    console.log("Contract Amount:"+CustomerLCA)
+      CustomrLCA = await LAframe.innerText(this.Elements.getcustomrLCA)
+    console.log("Customer:"+CustomrLCA)
        
     }
     async entercustomerLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const GSframe = await this.handleLCAvailmentsFrame();
-    await GSframe.waitForSelector(this.Elements.customerLCA, {state: 'visible',timeout: 20000});
-    await GSframe.locator(this.Elements.customerLCA).fill(CustomerLCA)
+    const ALCframe = await this.handleLCAvailmentsFrame();
+    await ALCframe.waitForSelector(this.Elements.customerLCA, {state: 'visible',timeout: 20000});
+    await ALCframe.locator(this.Elements.customerLCA).fill(CustomrLCA)
    }
    
 
     async clickAuthorizetab() {
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const frame = await this.handleLCAvailmentsFrame();
-    await frame.click(this.Elements.Authorizedl);
-    await frame.waitForTimeout(3000);
+    const LAframe = await this.handleLCAvailmentsFrame();
+    await LAframe.click(this.Elements.Authorizedla);
+    await LAframe.waitForTimeout(3000);
       }
 
       
       
 async clickAuthorizebtn() {
     //const frame = await this.handleBookTransferFrame();
-    const Bframe = await this.handleAuthorizeIssueDepositFrame();
-    await Bframe.click(this.Elements.Authorizebuton);
-    await Bframe.waitForTimeout(3000);
+    const ALCframe = await this.handleAuthorizeLCAvailmentFrame();
+    await ALCframe.click(this.Elements.Authorizebutonla);
+    await ALCframe.waitForTimeout(3000);
     }
 
 

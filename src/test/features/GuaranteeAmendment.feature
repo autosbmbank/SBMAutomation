@@ -13,20 +13,28 @@ Feature: BookTransfer Account Transaction
       And user clicks on New GA  
       And user enters Contract Reference GA as "<Contract Reference>"  
       And user click P GA
+      And get Amendment Number in GA
+      And get Currency in GA      
+      And get Contract Amount in GA
+      And click on Parties in GA
+      And get Customer in GA
       And clicks on save btn in GA
       And clicks on accept in GA
       Then clicks on OK btn in GA
       When user clicks on exits GuaranteeAmendmentPage
-      And User signoff the application
+      And user SignOff the application
              When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
              When user enters the function name as "LCDGUAMD" and click search button
       And user clicks on Enter Query in GA
       And user enters Contract Reference GA as "<Contract Reference>"
-      And user enters Amendment Number in GA as "<Amendment Number>" 
+      And user enters Amendment Number in GA
       And user clicks on Execute Query in GA
       And user clicks on Authorize tab in GA
+      And user enters Currency in GA
+      And user enters Contract amount in GA
+      And user enters Customer in GA      
       And user clicks on Authorize button in GA
       Then clicks on OK button in GA
 
@@ -34,5 +42,5 @@ Feature: BookTransfer Account Transaction
       
     Examples:
       
-                  | HomePageTitle                                       | BranchNumber | FunctionName     | Contract Reference |  Amendment Number| 
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUAMD      | 000APGR260620001   |  2 |
+                  | HomePageTitle                                       | BranchNumber | FunctionName     | Contract Reference |   
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUAMD      | 000APGR260621020   |  

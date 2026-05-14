@@ -63,21 +63,20 @@ When("user enters Vault code IDL as {string}",
   });
 
   Then("clicks on OK tab IDL", async function () {
-    await IssueDepositLocker.clickOk();
+    await IssueDepositLocker.clickokbtn();
   });
   When('user clicks on Enter Query IDL', async function () {
     fixture.logger.info("Clicking New in Book Transfer");
-      IssueDepositLocker = new IssueDepositLockersPage(fixture.page);
-      //await bookTransfer.handledeleteBookTransferFrame();
+      IssueDepositLocker = new IssueDepositLockersPage(fixture.page);      
       await IssueDepositLocker.clickEnterQuery();
   });
   
-  When("get Contract Reference IDL", async function () {
+  When("get Contract reference IDL", async function () {
        IssueDepositLocker = new IssueDepositLockersPage(fixture.page);
          fixture.logger.info("Fetch Contract Reference");
       await IssueDepositLocker.getcontrarefn();
   });
-  When('user enters Contract Reference IDl', async function () {
+  When('enter Contract reference IDL', async function () {
       fixture.logger.info("Entering contract reference in IssueDepositLocker Page");
         IssueDepositLocker = new IssueDepositLockerPage(fixture.page);
         //await bookTransfer.handledeleteBookTransferFrame();

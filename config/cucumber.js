@@ -1,7 +1,7 @@
   module.exports = {
      default: {
  
-        tags:"@GUARANTEE1",
+        tags:"@LCAmendmentscreen",
        
  
           formatOptions: {

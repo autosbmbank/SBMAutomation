@@ -32,7 +32,7 @@ When("user enters Liability No LC as {string}",
 
   });
 
-When("user click P GA", async function () {
+When("user click P LC", async function () {
   await Liabilitycreation.clickPLCtab();
 });
     

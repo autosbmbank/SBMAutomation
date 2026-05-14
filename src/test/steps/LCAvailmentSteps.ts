@@ -76,9 +76,18 @@ When("user enters Availment amount LCA as {string}",
   When("clicks on save btn LCA", async function () {
     await LCAvailment.clicksaveavail();
   });
+  When("user exits LCAvailmentPage", async function () {
+    await LCAvailment.clickexitavail();
+  });
+  When("user exits Authr LCAvailmentPage", async function () {
+    await LCAvailment.clickexitavail();
+  });
 
   Then("clicks on OK btn LCA", async function () {
-    await LCAvailment.clickOk();
+    await LCAvailment.clickOkbtn();
+  });
+  Then("clicks on OK button in LCA", async function () {
+    await LCAvailment.clickOK();
   });
   When('user clicks on Enter Query in LCA', async function () {
     fixture.logger.info("Clicking New in Book Transfer");

@@ -8,7 +8,7 @@ Feature: Top Up Term Deposit LCY Feature
     When MAK user enters the username and password
     And click on signin button
     Then valdiate the home page tite as "<HomePageTitle>"
-    #  And enter the Branch number as "<BranchNumber>"
+    # And enter the Branch number as "<BranchNumber>"
     When user enters the function name as "<FunctionName>" and click search button
     And User clicks on TopUp New Tab
     And User enters TopUp Account Number "<AccountNumber>"
@@ -22,9 +22,8 @@ Feature: Top Up Term Deposit LCY Feature
     And User clicks TopUp Save button
     And User clicks TopUp Accept button and clicks Ok
     And User validates TopUp Success Message 
-    # And enter the Branch number as "000"
+    #  And enter the Branch number as "000"
     And user SignOff the application
-
     When CHE user enters the username and password
     When CHE user login in the application
     Then valdiate the home page tite as "<HomePageTitle>"
@@ -38,5 +37,5 @@ Feature: Top Up Term Deposit LCY Feature
 
     Examples:
       | HomePageTitle             | FunctionName | AccountNumber | TopUpAmount | Percentage | PayInAmount | OffsetAccount | TopUpReference   | BranchNumber|
-      # | Oracle Financial Services | STDTDTOP     | 0013000027159  | 2000        | 100        | 2000        | 0001073641002  | 000TOPD260620016 |001|
+      #  | Oracle Financial Services | STDTDTOP     | 0002000001002 | 2000        | 100        | 2000        | 0001073641002  | 000TOPD260620016 |001|
        | Oracle Financial Services | STDTDTOP     | 0002000000027  | 2000        | 100        | 2000        | 0001428031002 | 000TOPD260620016 |000|

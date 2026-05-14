@@ -195,31 +195,9 @@ export default class TopUpTermDepositPage {
 
     async clickSaveButton() {
         const frame = await this.getFrame();
-
-        // Capture TopUp reference before save if not already captured
-        // if (!topUpRefNo) {
-        //     try {
-        //         await frame.waitForSelector(this.Elements.topUpRefNo, { state: 'attached', timeout: 5000 });
-        //         topUpRefNo = await frame.locator(this.Elements.topUpRefNo).inputValue();
-        //         console.log("TopUp Reference captured before save: " + topUpRefNo);
-        //     } catch {
-        //         console.log("TopUp Reference not available before save");
-        //     }
-        // }
-
         await frame.locator(this.Elements.saveButton).click();
         await frame.waitForTimeout(2000);
-
-        // Capture reference after save if still not captured
-        // if (!topUpRefNo) {
-        //     try {
-        //         await frame.waitForSelector(this.Elements.topUpRefNo, { state: 'attached', timeout: 10000 });
-        //         topUpRefNo = await frame.locator(this.Elements.topUpRefNo).inputValue();
-        //         console.log("TopUp Reference captured after save: " + topUpRefNo);
-        //     } catch {
-        //         console.log("Could not capture TopUp Reference Number");
-        //     }
-        // }
+       
     }
 
     async clickAcceptAndOk() {
@@ -272,7 +250,7 @@ console.log("TopUp Reference captured:", topUpRefNo);
         );
         const successframe = await frameElementHandle2.contentFrame();
         const message = successframe.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Successfully Authorized');
+        await expect(message).toHaveText('Record Successfully Authorized');
         await successframe.locator(this.Elements.okBtn).click();
     }
 

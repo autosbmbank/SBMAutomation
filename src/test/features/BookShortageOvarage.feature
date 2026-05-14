@@ -1,8 +1,8 @@
 @Book
 Feature: Book Shortage and Book Overage Feature
 
-  @BOOK1 @SBM @BookShortage
-  Scenario Outline: Validate Book Shortage successfully
+  @BOOK1 @SBM1 @BookShortage
+  Scenario Outline: Validate Book Shortage successfully 7551
 
     Given User navigates to the application
     When MAK user enters the username and password
@@ -19,9 +19,9 @@ Feature: Book Shortage and Book Overage Feature
 
     Examples:
       | HomePageTitle             | CurrencyCode | Amount |
-      | Oracle Financial Services | KES          | 1000  |
+      | Oracle Financial Services | USD         | 5  |
 
-  @BOOK2 @SBM @BookOverage
+  @BOOK2 @SBM1 @BookOverage
   Scenario Outline: Validate Book Overage successfully
 
     Given User navigates to the application

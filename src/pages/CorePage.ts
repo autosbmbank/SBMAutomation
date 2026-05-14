@@ -92,6 +92,7 @@ accepttbtn:"#BTN_OK",
         }
     }
     async clickNewTab(){
+        // await this.page.pause()
         await frame.locator(this.Elements.newTab).click()
     }
     async selectCustomerType(custType:string){

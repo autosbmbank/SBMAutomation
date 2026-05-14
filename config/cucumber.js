@@ -1,7 +1,7 @@
   module.exports = {
      default: {
  
-        tags:"@LCAmendmentscreen",
+        tags:"@KYC",
        
  
           formatOptions: {

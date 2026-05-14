@@ -57,11 +57,11 @@ export default class CreateTellerPage {
     toggleCarryForward: "(//div[@role='switch'])[2]",
     toggleInterBranch: "(//div[@role='switch'])[3]",
     currency:"(//input[@aria-label='Please select the value for Currency Code'])[1]",
-    MinBal: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[52]",
-    MaxBal:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[53]",
+    MinBal: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[51]",
+    MaxBal:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[52]",
     currency1:"(//input[@aria-label='Please select the value for Currency Code'])[2]",
-    MaxTransamnt: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[56]",
-    AuthTransamnt:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[57]"
+    MaxTransamnt: "(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[55]",
+    AuthTransamnt:"(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[56]"
   };
   async NextGenFun() {
     await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
@@ -340,19 +340,30 @@ await newPage.waitForTimeout(2000)
      await newPage.waitForTimeout(2000)
     
   }
-    async selectBranchLov(branch: string) {
- 
-       await newPage.locator("(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[43]").clear();
-     await newPage.locator("(//input[@class='oj-inputtext-input oj-text-field-input oj-component-initnode'])[43]").fill(branch);
-      await newPage.waitForTimeout(2000)
-    
-  }
+  
 
-  async selectUserLov(user: string) {
-    await newPage.locator(this.ele.lovUser).clear();
-    await newPage.locator(this.ele.lovUser).fill(user);
-    await newPage.waitForTimeout(2000)
-  }
+async selectBranchLov(branch: string) {
+    // ✅ Branch Code — _oj238 exact id
+    const branchInput = newPage.locator('[id="_oj238-lov-search|input"]');
+    
+    await branchInput.fill(branch);
+    await branchInput.press('Enter');
+    await newPage.waitForTimeout(2000);
+
+   
+}
+
+async selectUserLov(userId: string) {
+    const branchInput = newPage.locator('[id="_oj239-lov-search|input"]');
+    
+    await branchInput.fill(userId);
+    await branchInput.press('Enter');
+    await newPage.waitForTimeout(2000);
+
+}
+
+
+  
 
   async selectTillIndicator(type: string) {
     
@@ -378,8 +389,18 @@ await newPage.waitForTimeout(2000)
     
    await newPage.locator(this.ele.currency).fill(curr);
    await newPage.waitForTimeout(2000)
-   await newPage.locator(this.ele.MinBal).clear();
-    await newPage.locator(this.ele.MinBal).fill(min);
+  await newPage.locator(
+        "fsgbu-ob-cmn-fd-amount input[aria-required='true']" +
+        ":not([disabled]):not([readonly])"
+    ).filter({ visible: true }).nth(0).fill(min);
+    
+    await newPage.locator(
+        "fsgbu-ob-cmn-fd-amount input[aria-required='true']" +
+        ":not([disabled]):not([readonly])"
+    ).filter({ visible: true }).nth(0).press('Tab');
+    
+    await newPage.waitForTimeout(500);
+    console.log("Entered Min Balance:", min);
     await newPage.waitForTimeout(2000)
     await newPage.locator(this.ele.MaxBal).fill(max);
     await newPage.waitForTimeout(2000)
@@ -389,7 +410,7 @@ await newPage.waitForTimeout(2000)
     
    await newPage.locator(this.ele.currency1).fill(curr);
    await newPage.waitForTimeout(2000)
-   await newPage.locator(this.ele.MaxTransamnt).clear();
+  //  await newPage.locator('//*[@id="_oj238-input-text|input"]').clear();
     await newPage.locator(this.ele.MaxTransamnt).fill(maxTxn);
     await newPage.waitForTimeout(2000)
     await newPage.locator(this.ele.AuthTransamnt).fill(auth);

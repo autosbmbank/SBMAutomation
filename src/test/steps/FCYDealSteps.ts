@@ -1,4 +1,4 @@
-import { When, setDefaultTimeout } from "@cucumber/cucumber";
+import { Then, When, setDefaultTimeout } from "@cucumber/cucumber";
 import { fixture } from "../../hooks/pageFixture";
 import FCYDealPage from "../../pages/FCYDealPage";
 import { timeout } from "../../hooks/hooks";
@@ -62,7 +62,13 @@ When("user fills FCY denomination from Bought Amount {string}",
 When("user clicks FCY Submit and clicks Ok", async function () {
     fixture.logger.info("clicks FCY Submit and clicks Ok");
     await fcyPageloc.clickSubmitAndOk();
+    await fcyPageloc.approvalconfirm()
 });
+
+Then("user validates success message in FCY", async function () {
+  fixture.logger.info("user validates success message in FCY");
+    await fcyPageloc.verifySuccessMessage()  
+})
 
 When("user clicks Yes in FCY Advice Confirmation", async function () {
     fixture.logger.info("clicks Yes in FCY Advice Confirmation");

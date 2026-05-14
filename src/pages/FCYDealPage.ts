@@ -309,22 +309,33 @@ private async fillSingleDenominationQty(denomination: string, qty: string) {
         await newPage.locator(this.elements.submitButton).click();
         console.log("Clicked on Submit");
         await newPage.waitForTimeout(2000);
-         await expect(await newPage.locator(this.elements.successmsg).textContent()).toContain('Success')
-            console.log('Successfully Saved')
-            await newPage.locator(this.elements.okButton).click()
-            await newPage.locator(this.elements.adviceconf).click()
-          
-
-        // try {
-        //     await newPage.locator(this.elements.okSuccessBtn).click();
-        //     console.log("Clicked Ok after Submit");
-        // } catch {
-        //     await newPage.locator(this.elements.okButton).click();
-        //     console.log("Clicked Ok (fallback) after Submit");
-        // }
-        // await newPage.waitForTimeout(1000);
+      
     }
-
+async approvalconfirm(){
+        await newPage.locator('(//span[text()="Confirm"])[1]').click()
+        await newPage.waitForTimeout(2000);
+        // await newPage.pause()
+         await newPage.locator(
+        "oj-checkboxset.oj-checkboxset-single"
+    ).first().click();
+    
+    console.log("Selected first approver");
+    await newPage.waitForTimeout(500);
+        await newPage.locator('(//span[text()="Submit For Approval"])[1]').click()
+        await newPage.waitForTimeout(2000);
+    }
+    async verifySuccessMessage() {
+            await expect(
+                await newPage.locator(this.elements.successmsg).textContent()
+            ).toContain('Success');
+            console.log("FX Sale Walk-in — Success");
+            try {
+                await newPage.locator(this.elements.okSuccessBtn).click();
+            } catch {
+                await newPage.locator(this.elements.okButton).click();
+            }
+             await newPage.locator(this.elements.adviceconf).click()
+        }
     async clickYesInAdviceConfirmation() {
         try {
             await newPage.getByRole('button', { name: 'Yes' }).click();

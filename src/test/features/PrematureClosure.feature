@@ -8,7 +8,7 @@ Feature: Premature Closure
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
              And enter the Branch number as "001"
-             When user enters the function name as "ICDREDMN" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
              And Click on New
              And enter Term Deposit Account Number "<TDAccountNumber>"
             #  And Click on Arrow
@@ -25,5 +25,5 @@ Feature: Premature Closure
              And Click on Exit btn2
 
              Examples:
-             | HomePageTitle             | TDAccountNumber | Percentage | Amount | OffsetAccount |
-             | Oracle Financial Services | 0013049468931 |    100      | 3538000  | 0001428031002 |
+             | HomePageTitle             | FunctionName |   TDAccountNumber | Percentage | Amount | OffsetAccount |
+             | Oracle Financial Services | ICDREDMN |    0013049468931 |    100      | 3538000  | 0001428031002 |

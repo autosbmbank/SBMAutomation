@@ -9,7 +9,7 @@ Feature: Booking a Loan
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
             # And enter the Branch number as "<BranchNumber>"
-            When user enters the function name as "CLDACCNT" and click search button
+            When user enters the function name as "<FunctionName>" and click search button
              And User clicks on New Tab1
              And enters the product code "<ProductCode>" 
              And enter customer ID "<CustomerID>" 
@@ -27,7 +27,7 @@ Feature: Booking a Loan
              When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-             When user enters the function name as "STDCUSAC" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
              And click on Enter Query
              And enter loan account number "<AccountNumber>"
              And Click on Execute Query

@@ -28,11 +28,14 @@ When("clicks on P button", async function(){
     await WSPage.clickonPbutton();
 });
 
-When("clicks Ok on the override screen", async function(){
+When("clicks save on the override screen", async function(){
     WSPage = await new WholesalePage(fixture.page);
-    await WSPage.clickonOkbutton();
+    await WSPage.clickonsavebutton();
 });
-
+When("get the account number in STDCUSTD", async function () {
+    WSPage = await new WholesalePage(fixture.page);
+     await WSPage.getAccNumber();
+ });
 When("enters the Initial Deposit Amount {string}", async function(initdeposit : string){
     WSPage = await new WholesalePage(fixture.page);
     await WSPage.enterInitialDeposit(initdeposit);
@@ -191,6 +194,11 @@ When("clicks on Ok after accept", async function(){
     WSPage = await new WholesalePage(fixture.page);
     await WSPage.clickokafteraccept();
 }); 
+
+When("Click on Exit in STDCUSTD", async function(){
+    WSPage = await new WholesalePage(fixture.page);
+    await WSPage.clickexit();
+});
 Then("System should save the record successfully and status should be Unauthorized", async function(){
     WSPage = await new WholesalePage(fixture.page);
     await WSPage.verifyAuthorizationStatusforwholesale();

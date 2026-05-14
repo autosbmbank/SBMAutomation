@@ -82,6 +82,12 @@ When('User enters the Instructing Agent BICFI as {string}', async function (IAco
     fixture.logger.info(`Enter Instructing Agent BICFI: ${IAcode}`);
     await RtgsOutbound.enterInstructingAgentBICFI(IAcode);
 });
+
+When("click on first row in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clicksfirstrow();
+});
+
 When('User clicks on enrich button', async function () {
     RtgsOutbound = new RTGSOutboundPage(fixture.page);
     // fixture.logger.info(`Clicking on enrich button: ${Enrichcode}`);
@@ -97,3 +103,43 @@ When('User clicks on Ok button as {string}', async function (Ok) {
     fixture.logger.info(`Clicking on Ok button: ${Ok}`);
     await RtgsOutbound.clickOk();
 });
+
+When("Click on exit button in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickexitbtn();
+});
+
+When("click on enter Query tab in PSDORTBT",async function(){
+   RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickenterquerytab();
+});
+
+When("enter Transaction Reference No in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.enterreferencenumber();
+});
+
+When("Click on Execute Query tab in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickexecutequerytab();
+});
+
+When("Click on Authorize tab in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickauthorizetab();
+});
+
+When("Click on Authorize button1 in PSDORTBT",async function(){
+   RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickauthorizebutton();
+});
+
+When("click on ok button1 in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clickokbtn();
+})
+
+When("get the transaction reference number in PSDORTBT", async function () {
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.getTransrefNumber();
+ });

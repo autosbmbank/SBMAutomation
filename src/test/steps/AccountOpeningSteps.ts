@@ -43,7 +43,7 @@ When("enter media {string}", async function(media : string){
      await AOPage.entermedia(media);
 });
 
-When("click on MIS tab", async function(){
+When("click on MIS tab in STDCUSAC", async function(){
    AOPage = await new AccountOpeningPage(fixture.page);
      await AOPage.ClickMIStab();
 });
@@ -160,4 +160,84 @@ When("Click on Execute Query in STDCUSAC", async function () {
  When("get the account number", async function () {
     AOPage = await new AccountOpeningPage(fixture.page);
      await AOPage.getAccNumber();
+ });
+
+ When("click on Account Signatory tab", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksignatorytab();
+ });
+
+ When("click on addrow in signatory details", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickaddrow();
+ });
+
+ When("click on search button in customer id", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksearchcustomer();
+ });
+
+ When("click on fetch in STDCUSAC", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickfetchSTD();
+ });
+
+ When("click on first record", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickfirstrecord();
+ });
+
+ When("click on search in signature id", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksignatorysearch();
+ });
+
+ When("click on fetch button", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickfetchbutton();
+ });
+
+ When("click on save in signatory details", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksavesignatory();
+ });
+
+// When("click on Account Signatory tab", async function(){
+//    AOPage = await new AccountOpeningPage(fixture.page);
+//      await AOPage.clicksignatorytab();
+//  });
+
+When("enter the Account number {string}", async function(accnum : string){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.enteraccountnumber(accnum);
+});
+
+When("click on close option", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickclose();
+ });
+
+When("click on ok for confirm", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clickokconfirm();
+ });
+
+ When("enter offset branch {string}", async function(branch : string){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.enteroffsetbranch(branch);
+});
+
+When("enter offset account {string}", async function(offsetaccnum : string){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.enteroffsetnumber(offsetaccnum);
+});
+
+When("enter close mode {string}", async function(closemode : string){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.enterclosemode(closemode);
+});
+
+When("click on save in account closure", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksaveclose();
  });

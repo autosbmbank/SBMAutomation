@@ -8,7 +8,7 @@ Feature: Create Account and Authorize
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
              And enter the Branch number as "001"
-             When user enters the function name as "STDCUSAC" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
              And clicks on New tab
              And enter Customer no "<CustomerNo>"
              And enter Currency1 "<Currency>"
@@ -44,11 +44,11 @@ Feature: Create Account and Authorize
               And Click on OKButton
              
     Examples:
-    | HomePageTitle             | CustomerNo | Currency | AccountClass | Location | Media | PoolCode | KDIC_FP_ODS | 
-    # | Oracle Financial Services | 106999    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          | 
-     | Oracle Financial Services |430981    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          |
-       | Oracle Financial Services | 430978    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          |
-    #  | Oracle Financial Services |129999    | USD      | DBCA      | KE         | MAIL   | DFLTPOOL | YES          | 
+    | HomePageTitle             | FunctionName |CustomerNo | Currency | AccountClass | Location | Media | PoolCode | KDIC_FP_ODS | 
+    # | Oracle Financial Services | STDCUSAC  |106999    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          | 
+     | Oracle Financial Services |STDCUSAC    |430981    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          |
+       | Oracle Financial Services |STDCUSAC   | 430978    | KES      | DBSA      | KE         | MAIL   | DFLTPOOL | YES          |
+    #  | Oracle Financial Services |STDCUSAC   |129999    | USD      | DBCA      | KE         | MAIL   | DFLTPOOL | YES          | 
 
    @Account2
        Scenario Outline: Block Account Debit Freeze

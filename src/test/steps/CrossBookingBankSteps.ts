@@ -72,6 +72,11 @@ When("click on first row in PSDOCBBT",async function(){
      await CrossPage.clicksfirstrow();
 });
 
+When("click on Search button in PSDOCBBT",async function(){
+    CrossPage = await new CrossBookingBankPage(fixture.page);
+     await CrossPage.clicksearch();
+});
+
 When("enter Debitor Details {string}",async function(name : string){
     CrossPage = await new CrossBookingBankPage(fixture.page);
      await CrossPage.enterName(name);

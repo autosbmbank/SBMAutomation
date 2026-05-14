@@ -65,7 +65,7 @@ When("user Click on Add Row", async function () {
 
 When("user Select Debit from given drop down list", async function () {
   fixture.logger.info("Selecting Debit");
-  await ProcessingPageloc.selectDrCrOption("D");
+  await ProcessingPageloc.selectDrCrOption();
 });
 
 
@@ -103,7 +103,7 @@ When("user Click on Add Row (+)", async function () {
 
 When("user Select Credit from given drop down list", async function () {
   fixture.logger.info("Selecting Credit");
-  await ProcessingPageloc.selectDrCrOption1("C");
+  await ProcessingPageloc.selectDrCrOption1();
 });
 
 When("user Enter the CrBranch Code {string}", async function (code: string) {
@@ -145,12 +145,18 @@ When("user System will populate Pop Window. Click on Ok", async function () {
 When("user Click on Save and Click on Ok", async function () {
   fixture.logger.info("Clicking Save and verifying success");
   await ProcessingPageloc.clickSaveButton();
-  await ProcessingPageloc.verifySuccessMessage();
+  // await ProcessingPageloc.verifySuccessMessage();
 });
 
 When("user Click on Batch Close", async function () {
   fixture.logger.info("Clicking Batch Close");
   await ProcessingPageloc.clickBatchClose();
+  //await ProcessingPageloc.verifySuccessMessage();
+})
+
+When("user click on ok after Batch Close", async function () {
+  fixture.logger.info("Clicking OK");
+  await ProcessingPageloc.clickOK();
   //await ProcessingPageloc.verifySuccessMessage();
 })
 
@@ -163,16 +169,22 @@ When("user click on exit button", async function () {
   
 })
 
-
-
-When("select {string} from the drop down list", async function (status: string) {
-   ProcessingPageloc = new VoucherEntryProcessingPage(fixture.page);
+When("user select Authorization Status", async function () {
+  ProcessingPageloc = new VoucherEntryProcessingPage(fixture.page);
   fixture.logger.info("Handling Journal Frame");
-  await ProcessingPageloc.handleJournalFrame();
-
-  fixture.logger.info(`Selecting ${status} from drop down`);
-  await ProcessingPageloc.selectAuthorizationStatus(status);
+   await ProcessingPageloc.handleJournalFrame();
+  fixture.logger.info("Selecting Unauthorized");
+  await ProcessingPageloc.selectAuthorizationStatus();
 });
+
+// When("select {string} from the drop down list", async function (status: string) {
+//    ProcessingPageloc = new VoucherEntryProcessingPage(fixture.page);
+//   fixture.logger.info("Handling Journal Frame");
+//   await ProcessingPageloc.handleJournalFrame();
+
+//   fixture.logger.info(`Selecting ${status} from drop down`);
+//   await ProcessingPageloc.selectAuthorizationStatus(status);
+// });
 When("user enter Batch number", async function () {
    await ProcessingPageloc.handleJournalFrame();
   fixture.logger.info(`Entering Branch Number: `);

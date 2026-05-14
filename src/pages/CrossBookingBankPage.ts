@@ -24,6 +24,7 @@ export default class CrossBookingBankPage {
         CreditBICFI : '//*[@id="BLK_BRN_OUT_FICT_MSG__CDTA_FINID_BICFI|input"]',
         DebitBICFI : '//*[@id="BLK_BRN_OUT_FICT_MSG__DTA_FINID_BICFI|input"]',
         INBICFI : '//*[@id="BLK_BRN_OUT_FICT_MSG__IND_FINID_BICFI|input"]',
+        searchbtn : '//*[@id="BLK_BRN_OUT_FICT_MSG__IND_FINID_BICFI"]/div[1]/span/oj-button',
         firstrow : '//*[@id="TableLov"]/div[1]/table/tbody/tr',
         ChargeBearer : '//*[@id="BLK_BRN_RTGS_IN_ISO_TXN__CHARGE_BEARER|input"]',
         Enrich : '//*[@id="BLK_BRN_OUT_CCT_TXN__BTN_ENRICH_oj138|text"]',
@@ -183,6 +184,12 @@ async clicksfirstrow(){
       await frame.click(this.Elements.firstrow);
 
 }
+
+ async clicksearch(){
+  const frame = await this.handleCrossBankFrame()
+        await frame.waitForSelector(this.Elements.searchbtn, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.searchbtn);
+ }
 async selectchargebearer() {
     const frame = await this.handleCrossBankFrame();
 

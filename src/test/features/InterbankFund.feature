@@ -1,7 +1,7 @@
 @FundTransfer
 Feature: Inter bank Fund Transfer
 
-@Transfer1 @SBM
+@Transfer1 @SBM1
 Scenario Outline: Inter Bank Fund Transfer Domestic
  Given User navigates to the application
             When MAK user enters the username and password

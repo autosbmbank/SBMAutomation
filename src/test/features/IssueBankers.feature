@@ -1,7 +1,7 @@
 @IssueBankers
 Feature: Issue bankers Cheque
 
-@BankerCheque
+@BankerCheque @SBM1
 Scenario Outline: Issue Bankers Cheque - Walkin (Cash)
  Given User navigates to the application
             When MAK user enters the username and password

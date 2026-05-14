@@ -72,6 +72,11 @@ When("click on first row in PSDOCBCT",async function(){
      await CustomerPage.clicksfirstrow();
 });
 
+When("click on Search button in PSDOCBCT",async function(){
+    CustomerPage = await new CrossBorderCustomerPage(fixture.page);
+     await CustomerPage.clicksearch();
+});
+
 When("Enters Creditor Details {string}",async function(name : string){
     CustomerPage = await new CrossBorderCustomerPage(fixture.page);
      await CustomerPage.enterName(name);

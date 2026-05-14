@@ -9,7 +9,7 @@ Feature: BookTransfer Account Transaction
             # When CHE user enters the username and password
             # When CHE user login in the application
               Then valdiate the home page tite as "- 000 - 000 - 000 - Oracle Financial Services - ENG - Transaction Input"
-             When user enters the function name as "PBDOTONL" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
       And user clicks on New    
       And user enters Networkcodeb as "<Networkcodeb>"  
       And user enters Debtor account as "<Debtor Account>"  
@@ -26,7 +26,7 @@ Feature: BookTransfer Account Transaction
              When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-             When user enters the function name as "PBDOTONL" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
       And user clicks on Enter Query
       And user enters Transaction reference number as "<Transaction Reference Number>" 
       And user clicks on Execute Query

@@ -1,7 +1,7 @@
   module.exports = {
      default: {
  
-        tags:"@RTGS1",
+        tags:"@TD1",
        
  
           formatOptions: {

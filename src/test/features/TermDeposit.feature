@@ -7,7 +7,7 @@
             When MAK user enters the username and password
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-             And enter the Branch number as "001"
+              And enter the Branch number as "001"
             # And enter the Branch number as "<BranchNumber>"
             When user enters the function name as "STDCUSTD" and click search button
         And clicks on New
@@ -63,7 +63,7 @@
         #  Then System should authorize the record successfully and record status should be Authorized for STSCUSTD
         Examples:
      | BranchNumber  | FunctionName | CustomerNumber | AccountClass | TDCurrency | InitialDepositAmount |  TDPayIn | Percentage  | OffsetAccount   |   PayoutType  |   PayoutPercentage  | PayoutOffsetAccount |   PayoutComponent |  Location | Media | PoolCode |branchnumber|functionname|
-     | 100           | STDCUSTD     | 130001       | FDEP          | KES        | 50000                 |  Account | 100         | 0002057225002   |   Account     |   100               | 0002057225002       |   Principal        |  KE      | MAIL  | DFLTPOOL |999         |STSCUSTD    |
+     | 100           | STDCUSTD     | 000006       | FDEP          | KES        | 50000                 |  Account | 100         | 0002057225002   |   Account     |   100               | 0002057225002       |   Principal        |  KE      | MAIL  | DFLTPOOL |999         |STSCUSTD    |
 
 
 

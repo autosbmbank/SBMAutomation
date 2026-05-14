@@ -1,7 +1,7 @@
  @RTGS
 Feature: RTGS Inbound and Outbound Transaction
 
-@RTGSINBOUND
+@RTGSINBOUND @SBM
     Scenario Outline: creating RTGS Inbound Transaction
       Given User navigates to the application
               When MAK user enters the username and password

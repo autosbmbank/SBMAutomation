@@ -1,16 +1,16 @@
 @Processing
 Feature: Processing Feature
 
-  @Processing01 @Voucher101
+  @Processing01 @Voucher101 @SBM
   Scenario Outline: Verify Voucher entry DR GL and CR Customer Account 101 functionality
     Given User navigates to the application
             When MAK user enters the username and password
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-    And enter the Branch number as "<BranchNumber>"
+    # And enter the Branch number as "<BranchNumber>"
     When user enters the function name as "<FunctionName>" and click search button
     When user Click on New
-    And user Enter the Batch Number "<BatchNumber>"
+     And user Enter the Batch Number "<BatchNumber>"
     And user Enter the Description "<Description>"
     And user Enter the Debit "<Debit>"
     And user Enter the Credit "<Credit>"
@@ -34,26 +34,27 @@ Feature: Processing Feature
     And user System will populate Pop Window. Click on Ok
     And user Click on Save and Click on Ok
     And user Click on Batch Close
+    #And user click on ok after Batch Close
     And user click on exit button
-    And enter the Branch number as "<branchnumber>"
+    # And enter the Branch number as "<branchnumber>"
     And user SignOff the application
-    And CHE user enters the username and password
-    And CHE user login in the application
-    And valdiate the home page tite as "<HomePageTitle>"
-    And enter the Branch number as "<BranchNumber>"
-    When user enters the function name as "<FunctionName>" and click search button
-    And select "<AuthorizationStatus>" from the drop down list 
+             When CHE user enters the username and password
+             When CHE user login in the application
+             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
+            #  And enter the Branch number as "001"
+             When user enters the function name as "DESJNLON" and click search button
+    And user select Authorization Status
     And user enter Batch number
     And click on Search Button
     And user doubleclicks on the record
     And user Click on Authorize Button
     Then validate the success message
-    And enter the Branch number as "<branchnumber>"
-    And user SignOff the application
+    # And enter the Branch number as "<branchnumber>"
+    # And user SignOff the application
 
   Examples:
-     | HomePageTitle                                       | BranchNumber | FunctionName  | BatchNumber | Description | Debit | Credit | DebitBranch | DebitAccount | CreditBranch | CreditAccount  | Currency | Amount | TransactionCode |functionname|AuthorizationStatus |branchnumber|
-    | Oracle Financial Services - ENG - Transaction Input | 001        | DEDJNLON        |     2004        | TEST       | 2000 | 2000   | 001         | 0010007176007    | 001          | 0011000135002 | KES      | 2000   | ACD             |DESJNLON   |    U                   |001|
+     | HomePageTitle                                       | BranchNumber | FunctionName  | BatchNumber | Description | Debit | Credit | DebitBranch | DebitAccount | CreditBranch | CreditAccount  | Currency | Amount | TransactionCode |branchnumber|
+    | Oracle Financial Services - ENG - Transaction Input | 001        | DEDJNLON        |     9006        | TEST       | 1000 | 1000   | 000         | 0001073641002    | 000          | 0001073638002 | KES      | 1000   | ACD         |001|
 
 
     @Processing02 @Voucher102

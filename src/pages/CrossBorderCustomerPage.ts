@@ -22,6 +22,7 @@ export default class CrossBorderCustomerPage {
         DebitBICFI : '//*[@id="BLK_BRN_OUT_CCT_MSG__DTA_FINID_BICFI|input"]',
         INBICFI : '//*[@id="BLK_BRN_OUT_CCT_MSG__IND_FINID_BICFI|input"]',
         firstrow : '//*[@id="TableLov"]/div[1]/table/tbody/tr',
+        searchbtn : '//*[@id="BLK_BRN_OUT_CCT_MSG__IND_FINID_BICFI"]/div[1]/span/oj-button',
         ChargeBearer : '//*[@id="BLK_BRN_OUT_CCT_TXN__CHARGE_BEARER|input"]',
         Enrich : '//*[@id="BLK_BRN_OUT_CCT_TXN__BTN_ENRICH_oj141|text"]',
         CreditorName : '//*[@id="BLK_BRN_OUT_CCT_MSG__CDTR_NM|input"]',
@@ -163,6 +164,12 @@ async clicksfirstrow(){
         await frame.waitForSelector(this.Elements.firstrow, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.firstrow);
 }
+
+async clicksearch(){
+  const frame = await this.handleCustomerFrame()
+        await frame.waitForSelector(this.Elements.searchbtn, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.searchbtn);
+ }
 
 async selectchargebearer() {
     const frame = await this.handleCustomerFrame();

@@ -8,7 +8,7 @@ Scenario Outline: Cross Border Transaction Booking Customer Transfer
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
             #  And enter the Branch number as "001"
-             When user enters the function name as "PSDOCBCT" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
              And user click on new tab in PSDOCBCT
              And Enters source code "<SourceCode>"
              And Enters Network code "<NetworkCode>"
@@ -20,6 +20,7 @@ Scenario Outline: Cross Border Transaction Booking Customer Transfer
              And Enters Debitor Agent Details "<DebitBICFI>"
             #  And Enters Creditor Details "<CreditorDetails>"
              And Enters Instructed Agent Details "<BICFI>"
+             And click on Search button in PSDOCBCT
              And click on first row in PSDOCBCT
              And get the transaction reference number in PSDOCBCT
              And selects the charge bearer in PSDOCBCT
@@ -34,7 +35,7 @@ Scenario Outline: Cross Border Transaction Booking Customer Transfer
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
             #  And enter the Branch number as "001"
-             When user enters the function name as "PSDOCBCT" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
              And click on enter Query tab in PSDOCBCT
              And enter Transaction Reference No in PSDOCBCT
              And Click on Execute Query tab in PSDOCBCT
@@ -43,5 +44,5 @@ Scenario Outline: Cross Border Transaction Booking Customer Transfer
               And click on ok button1 in PSDOCBCT
 
               Examples:
-    | HomePageTitle             | SourceCode | NetworkCode | TransferCurrecy | TransferAmount | DebitAccountNo | CreditBICFI  | DebitBICFI | BICFI     |ChargeBearer| CreditorName |
-    | Oracle Financial Services | MANL       | SWFITMX       |      KES       |     1000      | 0242031100003  | DBSSSGSGXXX | SBMKKENAXXX | CITIGB2LXXX |    SHAR   |   Imanuel    |  
+    | HomePageTitle             | FunctionName | SourceCode | NetworkCode | TransferCurrecy | TransferAmount | DebitAccountNo | CreditBICFI  | DebitBICFI | BICFI     |ChargeBearer| CreditorName |
+    | Oracle Financial Services | PSDOCBCT    |MANL       | SWFITMX       |      KES       |     1000      | 0001073641002  | DBSSSGSGXXX | SBMKKENAXXX | CITIGB2LXXX |    SHAR   |   Imanuel    |  

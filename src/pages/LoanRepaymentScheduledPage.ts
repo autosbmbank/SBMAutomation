@@ -28,7 +28,7 @@ export default class LRscheduledPage {
         Authorized: "//span[@id='Authorize_oj8|text']",
         Authorizebutton: "//*[@id='BLK_ACC__BTN_AUTH_oj20|text']",
         okButton : "//span[@id='BTN_OK_oj0|text']",
-        gettotalamt:'//*[@id="BLK_TOTAL__TOTALRC0|input"]',
+        gettotalamt:'//*[@id="BLK_TOTAL__AMTDUERC0|input"]',
         totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]'
        
        

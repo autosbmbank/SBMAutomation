@@ -1,5 +1,5 @@
 @ExportLCBooking
-Feature: Guarante Transaction
+Feature: ExportLCBooking Transaction
 
 @ExportLCBookingscreen @SBM @TDAccount
     Scenario Outline: ExportLCBooking Transaction using Credit by MAK and Authorise by CHE
@@ -32,6 +32,10 @@ Feature: Guarante Transaction
       And user enters dated of APP in ELCB as "<APP dated>"
       And user enters dated of BEN in ELCB as "<BEN dated>"
       And user enters dated of ISB in ELCB as "<ISB dated>" 
+      And user click on Fields tab ELCB
+      And clicks on accept in ELCB 
+      And user enter security type ELCB as "<Security Type>"
+      And user click on save field ELCB
       And clicks on save btn in ELCB  
         And clicks on accept in ELCB   
       Then clicks on OK btn in ELCB
@@ -57,5 +61,5 @@ Feature: Guarante Transaction
       
     Examples:
       
-                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|CreditAvailable |Expiry Place| APP party Id   |BEN party Id   |ISB party Id  | APP custrfn   |BEN custrfn   |ISB custrfn  | APP dated   |BEN dated   |ISB dated  |
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDTRONL      | ETLC        |  ADV          |000003 |1920           |3477            |Hyd         | 000003         |000006         | 000001         | 000008        |000009      |000001        | 05/04/2026 | 05/04/2026 | 05/04/2026 |
+                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|CreditAvailable |Expiry Place| APP party Id   |BEN party Id   |ISB party Id  | APP custrfn   |BEN custrfn   |ISB custrfn  | APP dated   |BEN dated   |ISB dated  | Security Type |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDTRONL      | ETLC        |  ADV          |000003 |1920           |3477            |Hyd         | 000003         |000006         | 000001         | 000008        |000009      |000001        | 05/04/2026 | 05/04/2026 | 05/04/2026 | AFRICAN GUARANTEE FUND |

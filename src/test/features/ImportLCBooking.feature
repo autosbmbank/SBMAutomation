@@ -1,7 +1,7 @@
 @ImportLCBooking
-Feature: Guarante Transaction
+Feature: ImportLCBooking Transaction
 
-@ImportLCBookingscreen @SBM @TDAccount
+@ImportLCBookingscreen @SBM 
     Scenario Outline: ImportLCBooking Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
@@ -35,6 +35,10 @@ Feature: Guarante Transaction
       And user enters Pool Code ILCB as "<Pool Code>"
       And user enters Rate Code ILCB as "<Rate Code>"
       And user click on save MIS ILCB
+      And user click on Fields tab ILCB
+      And clicks on accept in ILCB 
+      And user enter security type ILCB as "<Security Type>"
+      And user click on save field ILCB
       And clicks on save btn in ILCB  
      And clicks on accept in ILCB   
       Then clicks on OK btn in ILCB
@@ -51,6 +55,8 @@ Feature: Guarante Transaction
       And user enters currency in ILCB
       And user enters contract amount in ILCB
       And user enters customer in ILCB
+      And User click checkbox for Credit available with ILCB
+      And User click checkbox for No limit tracking done for the contract ILCB
       And user clicks on Authorize button in ILCB
       And clicks on OK button in ILCB
 
@@ -58,5 +64,5 @@ Feature: Guarante Transaction
       
     Examples:
       
-                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|CreditAvailable | Units |Expiry Place| Frequency |APP party Id   |BEN party Id   |ABK party Id  | Pool Code | Rate Code |
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDTRONL      | IRLC        |  OPN          |000006 |1290           |1768             |Months    |Hyd         |2           |000006         |000003         | 000004         | DFLTPOOL | BASE_RATE |
+                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|CreditAvailable | Units |Expiry Place| Frequency |APP party Id   |BEN party Id   |ABK party Id  | Pool Code | Rate Code | Security Type |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDTRONL      | IRLC        |  OPN          |000006 |1290           |1768             |Months    |Hyd         |2           |000006         |000003         | 000004         | DFLTPOOL | BASE_RATE |AFRICAN GUARANTEE FUND |

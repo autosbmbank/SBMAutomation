@@ -1,7 +1,7 @@
 @GuaranteeAmendment
-Feature: BookTransfer Account Transaction
+Feature: GuaranteeAmendment Transaction
 
-@GuaranteeAmendmentscreen @SBM @TDAccount
+@GuaranteeAmendmentscreen @SBM 
     Scenario Outline: GuaranteeAmendment Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
@@ -43,4 +43,4 @@ Feature: BookTransfer Account Transaction
     Examples:
       
                   | HomePageTitle                                       | BranchNumber | FunctionName     | Contract Reference |   
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUAMD      | 000APGR260621020   |  
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUAMD      | 000BIBG261500003   |  

@@ -79,7 +79,21 @@ When("user click P LCAT", async function () {
 When("user clicks on parties LCAT", async function () {
   await LCAmendment.clickparties();
 });
+When("user click on Fields tab LCAT", async function () {
+    await LCAmendment.clickfields();
+  });
+  When("clicks on accept in LCAT", async function () {
+      await LCAmendment.clickacceptlcat();
+    });
+  When("user enter security type LCAT as {string}",
+  async function (securitytype: string) {
+    LCAmendment = new LCATPage(fixture.page);
+    await LCAmendment.entersecuritytype(securitytype);
 
+  });
+  When("user click on save field LCAT", async function () {
+    await LCAmendment.clicksaveField();
+  });
     
   When("clicks on save btn LCAT", async function () {
     await LCAmendment.clicksaveavail();

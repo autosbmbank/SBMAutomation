@@ -1,5 +1,5 @@
 @Guarantee
-Feature: Guarante Transaction
+Feature: Guarantee Transaction
 
 @Guaranteescreen @SBM @TDAccount
     Scenario Outline: Guarantee Transaction using Credit by MAK and Authorise by CHE
@@ -19,6 +19,9 @@ Feature: Guarante Transaction
       And user enters Contract Amount GS as "<Contract Amount>"
       And user selects Purpose of Guarantee GS
       And user selects Expiry Type GS
+      And user get currency GS
+      And user get Customer GS
+      And user get Contract Amount GS
       And clicks on Default btn in GS
       And clicks on Accept btn in GS
       And clicks on OK in Main GS
@@ -27,7 +30,11 @@ Feature: Guarante Transaction
       And user enters party id of BEN in Parties as "<BEN party Id>"
       And clicks on Terms& Conditions btn in GS
       And clicks on + btn in GS
-      And user enters Terms& Conditions in GS as "<TermandCod>"     
+      And user enters Terms& Conditions in GS as "<TermandCod>" 
+      And user click on Fields tab GS
+      And clicks on accept in GS 
+      And user enter security type GS as "<Security Type>"
+      And user click on save field GS
       And clicks on save btn in GS
       And clicks on accept in GS
       Then clicks on OK btn in GS
@@ -41,9 +48,9 @@ Feature: Guarante Transaction
       And user enters Contract Reference GS
       And user clicks on Execute Query in GS
       And user clicks on Authorize tab in GS
-      And user enters currency in GS as "<currencyGS>"
-     And user enters contract amount in GS as "<contractamount>"
-      And user enters customer in GS as "<customerGS>"
+      And user enters currecy in GS
+     And user enters contract amt in GS
+      And user enters customer A in GS
       And User click checkbox for Guarantee type is not input
       And User click checkbox for No limit tracking done for the contract      
       And user clicks on Authorize button in GS
@@ -53,5 +60,5 @@ Feature: Guarante Transaction
       
     Examples:
       
-                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|GuaranteePurpose|ExpiryType|APP party Id   |BEN party Id   |TermandCod  | currencyGS| contractamount| customerGS|
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUONL      | APGR        |  ONC          |000001 |1290           |Issue           |Fixed     |000001         |000003         | Test   | KES |        1290       | 000001|
+                  | HomePageTitle                                       | BranchNumber | FunctionName     | Product Code|Operation Code|Customer|Contract Amount|GuaranteePurpose|ExpiryType|APP party Id   |BEN party Id   |TermandCod  | Security Type |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    LCDGUONL      | APGR        |  ONC          |000001 |1290           |Issue           |Fixed     |000001         |000003         | Test   |  AFRICAN GUARANTEE FUND |

@@ -147,6 +147,18 @@ When('user enters customer in ILCB', async function () {
    When("clicks on Parties btn in ILCB", async function () {
     await ImportLC.clickparties();
   });
+  When("user click on Fields tab ILCB", async function () {
+      await ImportLC.clickfields();
+    });
+    When("user enter security type ILCB as {string}",
+    async function (securitytype: string) {
+      ImportLC = new ILCBPage(fixture.page);
+      await ImportLC.entersecuritytype(securitytype);
+  
+    });
+    When("user click on save field ILCB", async function () {
+        await ImportLC.clicksaveField();
+      });
 When("user enters party id of APP in ILCB as {string}",
   async function (apppartyid: string) {
     ImportLC = new ILCBPage(fixture.page);
@@ -165,6 +177,12 @@ When("user enters party id of APP in ILCB as {string}",
     await ImportLC.enterabkpartyid(abkpartyid);
 
   });
+   When('User click checkbox for Credit available with ILCB', async function() {
+      await ImportLC.clickcreditavailable();
+    });
+    When('User click checkbox for No limit tracking done for the contract ILCB', async function () {
+      await ImportLC.clickToggleByNolimit();
+    });
   
      
   When("clicks on save btn in ILCB", async function () {

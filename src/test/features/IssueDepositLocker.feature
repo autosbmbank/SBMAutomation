@@ -1,5 +1,5 @@
 @DepositLocker
-Feature: BookTransfer Account Transaction
+Feature: DepositLocker Transaction
 
 @IssueDepositLocker @SBM @TDAccount
     Scenario Outline: Issue Deposit Locker Transaction using Credit by MAK and Authorise by CHE

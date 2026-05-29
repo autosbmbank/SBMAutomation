@@ -35,7 +35,7 @@ Feature: Book Shortage and Book Overage Feature
     And user expands Book Denomination
     And user fills Book Denomination from Amount "<Amount>"
     And user clicks Book Submit button
-    Then user validates Book Success Message
+   Then user validates Book Success Message
 
     Examples:
       | HomePageTitle             | CurrencyCode | Amount |

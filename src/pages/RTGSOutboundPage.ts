@@ -91,6 +91,10 @@ async getrowframe(){
         const frame =  await this.handleRTGSOutboundFrame();
        // await frame.waitForSelector(this.Elements.newTab, {state : 'visible' ,timeout: 10000 });
         await frame.click(this.Elements.newTab);
+        try{
+       const frame1 = await this.getauthorizeFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
  
     async enterSourceCode(SCode: string) {

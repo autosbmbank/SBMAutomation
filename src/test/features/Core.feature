@@ -9,6 +9,7 @@ Feature: Core Module Feature
              Then valdiate the home page tite as "<HomePageTitle>"
              When user enters the function name as "<FunctionName>" and click search button
               And User click on New Tab
+             And user click on ok in STDCIF
               And User clicks the button P
               And User enters Full Name "<FullName>"
               And User enters Short Name "<ShortName>"
@@ -32,6 +33,7 @@ Feature: Core Module Feature
              When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "<HomePageTitle>"
+          #    And enter the Branch number as "000"
              When user enters the function name as "<FunctionName>" and click search button
               And User clicks enter query Tab
               And User enters customer number "<number>"
@@ -59,6 +61,7 @@ Feature: Core Module Feature
              Then valdiate the home page tite as "<HomePageTitle>"
              When user enters the function name as "<FunctionName>" and click search button
               And User click on New Tab
+              And user click on ok in STDCIF
               And User selects customer Type as "<CustomerType>"
               And User clicks the button P
               And User enters Full Name "<FullName>"

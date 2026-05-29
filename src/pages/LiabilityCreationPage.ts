@@ -72,6 +72,10 @@ export default class LiabilityCreationPage {
     await LCframe.waitForSelector(this.Elements.Newliab,{state: 'visible',timeout: 20000});
 
     await LCframe.click(this.Elements.Newliab);
+    try{
+       const frame1 = await this.handleAuthorizeLiabFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
 

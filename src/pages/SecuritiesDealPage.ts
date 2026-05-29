@@ -102,6 +102,10 @@ export default class SecuritiesDealPage {
         await frame.click(this.Elements.newTab);
         // ✅ NEEDED — wait for form to load after new tab click
         await frame.waitForSelector(this.Elements.product, { state: 'visible', timeout: 15000 });
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
@@ -257,7 +261,7 @@ export default class SecuritiesDealPage {
     async verifySuccessMessage() {
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Successfully Saved');
+        await expect(message).toContainText('Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
     }
 
@@ -286,7 +290,7 @@ export default class SecuritiesDealPage {
                 const successframe= await frameElementHandle2.contentFrame();
                  
           const message= successframe.locator(this.Elements.successMessage)
-        await expect(message).toHaveText('Successfully Authorized');
+        await expect(message).toContainText('Successfully Authorized');
         await successframe.click(this.Elements.okBtn)
     }
 

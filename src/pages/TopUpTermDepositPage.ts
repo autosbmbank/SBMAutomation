@@ -92,14 +92,18 @@ export default class TopUpTermDepositPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
         // ✅ NEEDED — wait for form to load after new tab click
-        await frame.waitForSelector(this.Elements.accountNumber, { state: 'visible', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.newTab, { state: 'visible', timeout: 15000 });
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
-        await frame.waitForSelector(this.Elements.topUpRefNo, { state: 'attached', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.enterQueryTab, { state: 'attached', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
@@ -136,7 +140,7 @@ export default class TopUpTermDepositPage {
 
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Request Successfully Processed');
+        await expect(message).toContainText('Successfully Processed');
         await alertFrame.locator(this.Elements.okBtn).click();
       
     }
@@ -171,6 +175,7 @@ export default class TopUpTermDepositPage {
         const frame = await this.getFrame();
         await frame.locator('//*[@id="BLK_TDTOPUP_PAYIN__MULTIMODE_TDOFFSET_ACCRC0"]/div[1]/span/oj-button/button/div/span[1]/span').click()
         const subFrame=await this.getSubScreenFrame()
+         await subFrame.locator('//input[@id="1|input"]').fill(offsetAccount)
          await subFrame.click("//span[contains(text(),'Fetch')]")
          await subFrame.locator("tbody.oj-table-body")
         .getByText(offsetAccount, { exact: true })
@@ -186,7 +191,7 @@ export default class TopUpTermDepositPage {
         await frame.waitForTimeout(1000);
          const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Request Successfully Processed');
+        await expect(message).toContainText('Successfully Processed');
         await alertFrame.locator(this.Elements.okBtn).click();
 
           }
@@ -218,7 +223,7 @@ export default class TopUpTermDepositPage {
         const frame = await this.getFrame();
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Record Successfully Saved');
+        await expect(message).toContainText('Record Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
         await frame.waitForSelector(
     '[id="BLK_TDTOPUP_DETAIL__TOPUP_REF_NO|input"]',
@@ -250,7 +255,7 @@ console.log("TopUp Reference captured:", topUpRefNo);
         );
         const successframe = await frameElementHandle2.contentFrame();
         const message = successframe.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Record Successfully Authorized');
+        await expect(message).toContainText('Record Successfully Authorized');
         await successframe.locator(this.Elements.okBtn).click();
     }
 

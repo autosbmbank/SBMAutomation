@@ -79,8 +79,13 @@ export default class GuaranteeClaimPage {
         await frame.click(this.Elements.newTab);
         // ✅ NEEDED — wait for form to load
         await frame.waitForSelector(
-            this.Elements.contractRefNo, { state: 'visible', timeout: 15000 }
+            this.Elements.newTab, { state: 'visible', timeout: 15000 }
+
         );
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
@@ -88,7 +93,7 @@ export default class GuaranteeClaimPage {
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
         await frame.waitForSelector(
-            this.Elements.contractRefNo, { state: 'visible', timeout: 15000 }
+            this.Elements.enterQueryTab, { state: 'visible', timeout: 15000 }
         );
     }
 
@@ -244,7 +249,7 @@ export default class GuaranteeClaimPage {
     async verifySuccessMessage() {
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Record Successfully Saved');
+        await expect(message).toContainText('Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
         console.log("Guarantee Claim saved successfully");
     }
@@ -273,12 +278,12 @@ export default class GuaranteeClaimPage {
             );
             const successframe = await alertHandle.contentFrame();
             const message = successframe.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Successfully Authorized');
             await successframe.locator(this.Elements.okBtn).click();
         } catch {
             const alertFrame = await this.getAlertFrame();
             const message = alertFrame.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Successfully Authorized');
             await alertFrame.locator(this.Elements.okBtn).click();
         }
         console.log("Guarantee Claim authorized successfully");

@@ -4,7 +4,7 @@ import ReusableMethods from "../helper/wrapper/reusableMethods";
 
 let SIframe,ASIframe
 // let Bframe
-export default class StandingInstructionsPage {
+export default class CloseStandingInstructionsPage {
 
     private base: ReusableMethods;
   
@@ -20,12 +20,9 @@ export default class StandingInstructionsPage {
         EnterQuery: "//span[@id='EnterQuery_oj17|text']",
         ExectQuery: "//span[@id='ExecuteQuery_oj18|text']",  
         enterInstrno:'//input[@id="BLK_SITBINSTRUCTION__INSTRNO|input"]',
-        Authorized: "//span[@id='Authorize_oj8|text']",
-        Authorizebutton: "//*[@id='BLK_INST__BTN_AUTHORIZE_oj17|text']", 
-        okButton:'//span[@id="BTN_OK_oj0|text"]',
-        sicurrency:'//input[@id="BLK_REKEY__SI_AMT_CCYRC0|input"]',
-        siamount:'//input[@id="BLK_REKEY__SI_AMTRC0|input"]'
-       
+        close: '//*[@id="Close_oj3|text"]',        
+        okButton:'//span[@id="BTN_OK_oj1|text"]',
+               
     
     }
 
@@ -47,7 +44,7 @@ export default class StandingInstructionsPage {
    async handleInformationMessageFrame() {
   try {
         const outerFrameHandle = await this.page.waitForSelector(
-  '//iframe[contains(@title, "Guarantees and Standby Letters of Credit Contract Input")]', { timeout: 30000 }
+  '//iframe[contains(@title, "Standing Instruction Online Detailed")]', { timeout: 30000 }
 );
     const outerFrame = await outerFrameHandle.contentFrame();
     const innerFrameHandle = await outerFrame.waitForSelector(
@@ -82,7 +79,7 @@ async handleAuthorizeClosingFrame() {
     //const frame = await this.handleAuthorizeBookTransferFrame();
     const SIframe = await this.handleStandingInstructionFrame();
     await SIframe.waitForSelector(this.Elements.enterInstrno, {state: 'visible',timeout: 20000});
-    await SIframe.locator(this.Elements.enterInstrno);
+    await SIframe.locator(this.Elements.enterInstrno).fill(instrmentno);
    }
   
     
@@ -100,53 +97,20 @@ async handleAuthorizeClosingFrame() {
     await SIframe.click(this.Elements.ExectQuery);
     }
 
-    async clickAuthorizetabgs() {
+    async clickclosetab() {
         const SIframe = await this.handleStandingInstructionFrame();
-    await SIframe.click(this.Elements.Authorized);
+    await SIframe.click(this.Elements.close);
     await SIframe.waitForTimeout(3000);
       }      
       
-async clickAuthorizebtngs() {
-    
-    const ASIframe = await this.handleAuthorizeClosingFrame();
-    await ASIframe.click(this.Elements.Authorizebutton);
-    await ASIframe.waitForTimeout(3000);
-    }
-    async entersicurrency(sicurrncy: string) {
-    
-    //const frame = await this.handleAuthorizeBookTransferFrame();
-    const ASIframe = await this.handleAuthorizeClosingFrame();
-    await ASIframe.waitForSelector(this.Elements.sicurrency, {state: 'visible',timeout: 20000});
-    await ASIframe.locator(this.Elements.sicurrency);
-   }
-   async entersiamount(siamt: string) {
-    
-    //const frame = await this.handleAuthorizeBookTransferFrame();
-    const ASIframe = await this.handleAuthorizeClosingFrame();
-    await ASIframe.waitForSelector(this.Elements.siamount, {state: 'visible',timeout: 20000});
-    await ASIframe.locator(this.Elements.siamount);
-   }
+
   
     async clickOK() {
-  try {
-    const okButton = this.page
-      .frameLocator('iframe[id*="ifr_LaunchWin"]')
-      .frameLocator('#ifrSubScreen')
-      .frameLocator('#ifr_AlertWin')
-      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
+    const SIframe = await this.handleInformationMessageFrame();
+    await SIframe.click(this.Elements.okButton);
+    await SIframe.waitForTimeout(3000);
+    }
 
-    await okButton.waitFor({ state: 'visible', timeout: 20000 });
-    await okButton.click({ force: true }); // force if masked
-
-    console.log("Successfully clicked OK button in ALERTWIN");
-
-  } catch (error) {
-    console.error("Failed to click OK button in ALERTWIN frame", error);
-    throw error;
-  }
-
-}
-    
+}    
 
     
-}

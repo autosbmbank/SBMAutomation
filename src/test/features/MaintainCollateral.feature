@@ -1,8 +1,8 @@
 @MaintainCollateral
-Feature: BookTransfer Account Transaction
+Feature: MaintainCollateral Transaction
 
-@MaintainCollateralscreen @SBM @TDAccount
-    Scenario Outline: LC Availment Transaction using Credit by MAK and Authorise by CHE
+@MaintainCollateralscreen @SBM
+    Scenario Outline: MaintainCollateral Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
                When MAK user login in the application

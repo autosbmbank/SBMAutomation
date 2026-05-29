@@ -42,6 +42,16 @@ When("User in QuickCustomer frame click on New Tab",async function(){
     await CifPageloc.handleQuickCustFrame();
     await CifPageloc.clickNewTab();
 })
+
+When("user click on ok in STDCIF",async function(){
+    CifPageloc = new cifCreationPage(fixture.page);
+       fixture.logger.info("clicks on ok button");
+       
+    await CifPageloc.handleMISframe();
+    await CifPageloc.clicksok();
+})
+
+
 When("User selects customer Type as {string}",async function(custType:string){
 
     await CifPageloc.selectCustomerType(custType);
@@ -246,5 +256,5 @@ When("User accepts Autherize Alert",async function(){
 
 When("User validates success msg",async function(){
     await CifPageloc.verifySuccesssMessage();
-    // await CifPageloc.exitFrame()
+    await CifPageloc.exitFrame()
 })  

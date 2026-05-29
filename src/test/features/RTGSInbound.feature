@@ -1,4 +1,4 @@
- @RTGS
+ @RTGSINBOUND
 Feature: RTGS Inbound and Outbound Transaction
 
 @RTGSINBOUNDScreen @SBM
@@ -21,10 +21,10 @@ Feature: RTGS Inbound and Outbound Transaction
       And user enters debitor agent details for BICFI as "<BICFI>"
       And user enters instructing agent for BICFI as "<BICFI>"
       And User click on Enrichbutton
-      #And User Click on Other Creditor Details
-      #And User enters Department as "<Department>"
-      #And User enters Floor as "<Floor>"
-      #And User clicks on save
+      And User Click on Other Creditor Details
+      And User enters Department as "<Department>"
+      And User enters Floor as "<Floor>"
+      And User clicks on save
       And User clicks on savebutton
       Then User clicks on Okbutton
       And User clicks on Exit Button
@@ -43,8 +43,8 @@ Feature: RTGS Inbound and Outbound Transaction
       
     Examples:
       
-                  | HomePageTitle                                       | FunctionName     | SourceCode   | Network Code | Transfer Currency | Transfer Amount | Credit Account | BICFI        | BICFI        | BICFI        | BICFI        | BICFI        | 
-                  |Oracle Financial Services - ENG - Transaction Input  | PSDIT2BT         | MANL          | RTGSMX     |  KES              |  300            | 0001428031002   |  AAAGFRP1XXX  | AAAARSBGXXX  | AAAMFRP1XXX  | AACMUS41XXX  | AAALSARIJED  |
+                  | HomePageTitle                                       | FunctionName     | SourceCode   | Network Code | Transfer Currency | Transfer Amount | Credit Account | BICFI        | BICFI        | BICFI        | BICFI        | BICFI        | Department | Floor |
+                  |Oracle Financial Services - ENG - Transaction Input  | PSDIT2BT         | MANL          | RTGSMX     |  KES              |  300            | 0001428031002   |  AAAGFRP1XXX  | AAAARSBGXXX  | AAAMFRP1XXX  | AACMUS41XXX  | AAALSARIJED  | sub       | 23 |
 
 
  

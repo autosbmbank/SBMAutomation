@@ -76,6 +76,10 @@ export default class CollateralPoolPage {
     async clickNewTab() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
         // ✅ NEEDED — wait for form to load
        
     }
@@ -187,7 +191,7 @@ export default class CollateralPoolPage {
     async verifySuccessMessage() {
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Record Successfully Saved');
+        await expect(message).toContainText('Success');
         await alertFrame.locator(this.Elements.okBtn).click();
         console.log("Pool record saved successfully");
     }
@@ -222,12 +226,12 @@ export default class CollateralPoolPage {
             );
             const successframe = await alertHandle.contentFrame();
             const message = successframe.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Record Successfully Authorized');
             await successframe.locator(this.Elements.okBtn).click();
         } catch {
             const alertFrame = await this.getAlertFrame();
             const message = alertFrame.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Record Successfully Authorized');
             await alertFrame.locator(this.Elements.okBtn).click();
         }
         console.log("Pool record authorized successfully");

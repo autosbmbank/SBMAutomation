@@ -66,6 +66,7 @@ When("user click P LCA", async function () {
   await LCAvailment.clickPCtab();
 });
 
+
 When("user enters Availment amount LCA as {string}",
   async function (Availamount: string) {
     LCAvailment = new LCAPage(fixture.page);

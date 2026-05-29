@@ -6,8 +6,8 @@ Scenario Outline: Cross Border Transaction Booking Bank Transfer
           Given User navigates to the application
             When MAK user enters the username and password
             When MAK user login in the application
-             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-            #  And enter the Branch number as "001"
+             Then valdiate the home page tite as "<HomePageTitle>"
+              # And enter the Branch number as "001"
              When user enters the function name as "<FunctionName>" and click search button
              And user click on new tab in PSDOCBBT
              And enters source code "<SourceCode>"

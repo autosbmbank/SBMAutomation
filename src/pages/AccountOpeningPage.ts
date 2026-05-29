@@ -2,18 +2,22 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { timeout } from "../hooks/hooks";
-let frame,accNumber;
+import { getCustomerNo } from "../pages/CorePage"
+let frame,accNumber,successframe;
 export default class AccountOpeningPage {
     private base: ReusableMethods;
+  
 
     constructor(private page: Page) {
         this.base = new ReusableMethods(page);
+      
     }
 
      private Elements = {
 
 
         New : '//*[@id="New_oj0|text"]',
+        ok : '//*[@id="BTN_OK_oj3|text"]',
         CustomerNo : '//*[@id="BLK_CUST_ACCOUNT__CUSTNO|input"]',
         Currency : '//*[@id="BLK_CUST_ACCOUNT__CCY|input"]',
         AccountClass : '//*[@id="BLK_CUST_ACCOUNT__ACCLS|input"]',
@@ -21,6 +25,8 @@ export default class AccountOpeningPage {
         saveoptn : '//*[@id="BTN_OK_oj17|text"]',
         Location : '//*[@id="BLK_CUST_ACCOUNT__LOC|input"]',
         Media : '//*[@id="BLK_CUST_ACCOUNT__MEDIA|input"]',
+        mode : '//*[@id="BLK_CUST_ACCOUNT__OPMODE|input"]',
+        atm : '//*[@id="BLK_CUST_ACCOUNT__ATM"]/div/div',
         MIStab :'//*[@id="MICACCTM_oj112|text"]',
         PoolCode : '//*[@id="BLK_MISDETAILS__POOLCD|input"]',
         savebtn : '//*[@id="BTN_OK_oj102|text"]',
@@ -50,6 +56,7 @@ export default class AccountOpeningPage {
         customersearch : '//*[@id="BLK_ACCSIGDETAILS__CIFIDRC0"]/div[1]/span/oj-button/button',
         fetch1 : '//*[@id="_oj3|text"]',
         firstrecord : '//*[@id="TableLov"]/div[1]/table/tbody',
+        search : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__CLSMOD"]/div[1]/span/oj-button/button/div/span[1]/span',
         signatorysearch : '//*[@id="BLK_ACCSIGDETAILS__SIGIDRC0"]/div[1]/span/oj-button/button',
         fetch2 :'//*[@id="_oj3|text"]',
         // firstrecord1 : '//*[@id="TableLov"]/div[1]/table/tbody',
@@ -60,6 +67,7 @@ export default class AccountOpeningPage {
         offsetbranch : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__OFFBRN|input"]',
         offsetaccount : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__OFFACC|input"]',
         CloseMode : '//*[@id="BLK_CUST_ACCOUNT_CLOSURE__CLSMOD|input"]',
+        // successMessage: "//*[@id='ERRTBL:48_0']",
 
      }
 
@@ -76,14 +84,16 @@ async handleAOFrame() {
   }
 // accountgeneration tab 
 async handleaccountgenerationframe(){
+    try{
     const frame = await this.handleAOFrame();
-
+ 
     const iframe = await frame.waitForSelector(
         'iframe[id="ifrSubScreen"]',
         { state: 'visible', timeout: 30000 }
     );
-
+ 
     return await iframe.contentFrame();
+  }catch{}
 }
   //Management Information System 
 async handleMISFrame() {
@@ -237,14 +247,36 @@ async getclosureframe(){
         const frame = await this.handleAOFrame()
         await frame.waitForSelector(this.Elements.New, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.New);
+      try{
+       const frame1 = await this.handleaccountgenerationframe()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
      }
      
-     async entercustmno(custmno){
-        const frame = await this.handleAOFrame()
-       await frame.locator(this.Elements.CustomerNo).clear()
-       await frame.locator(this.Elements.CustomerNo).fill(custmno)
-     }
+    //  async clicksok(){
+    //     const frame = await this.handleaccountgenerationframe()
+    //     await frame.waitForSelector(this.Elements.ok, { state: 'visible', timeout: 15000 });
+    //   await frame.click(this.Elements.ok);
+    //  }
 
+     async entercustmno() {
+
+        const frame = await this.handleAOFrame()
+        
+ 
+        // const frame = await this.handleAOFrame()
+        const cifNo = getCustomerNo();
+       await frame.locator(this.Elements.CustomerNo).clear()
+       console.log("customerno"+cifNo)
+
+      //  await frame.locator(this.Elements.CustomerNo).fill(custmno)
+      await frame.locator(this.Elements.CustomerNo).fill(cifNo)
+     }
+    async entercustomernum(accountnumber){
+      const frame = await this.handleAOFrame()
+      await frame.locator(this.Elements.CustomerNo).clear()
+      await frame.locator(this.Elements.CustomerNo).fill(accountnumber)
+    }
 async entercurren(curren){
     const frame = await this.handleAOFrame()
        await frame.locator(this.Elements.Currency).clear()
@@ -289,7 +321,26 @@ async ClickMIStab(){
       await frame.click(this.Elements.MIStab);
       await this.page.waitForTimeout(2000)
 }
+async selectmodeofoperation() {
+    const frame = await this.handleAOFrame();
 
+    const chargeField = frame.locator(this.Elements.mode);
+
+    await chargeField.click();
+    await this.page.waitForTimeout(1000);
+
+    const singleOption = frame.locator("//li[normalize-space()='Single']");
+
+    await singleOption.waitFor({ state: 'visible' });
+    await singleOption.click();
+}
+
+async Clickatm(){
+    const frame = await this.handleAOFrame()
+       await frame.waitForSelector(this.Elements.atm, { state: 'visible', timeout: 30000 });
+      await frame.click(this.Elements.atm);
+      await this.page.waitForTimeout(2000)
+}
 async enterpoolcode(poolcode){
     const frame = await this.handleMISFrame()
     await frame.waitForSelector(this.Elements.PoolCode, { state: 'visible', timeout: 30000 });
@@ -384,39 +435,76 @@ async Clickexit(){
       const frame = await this.handleAOFrame()
         await frame.waitForSelector(this.Elements.executequery, { state: 'visible', timeout: 30000 });
     await frame.click(this.Elements.executequery);
+    await this.page.waitForTimeout(3000)
     }
 
     async Clickauthorize(){
         const frame = await this.handleAOFrame()
         await frame.waitForSelector(this.Elements.authorize, { state: 'visible', timeout: 30000 });
     await frame.click(this.Elements.authorize);
+    await this.page.waitForTimeout(3000)
     }
 
     async Clickaccept1(){
          const frame = await this.getauthorizeFrame()
          await frame.waitForSelector(this.Elements.acceptbtn, { state: 'visible', timeout: 30000 });
     await frame.click(this.Elements.acceptbtn);
+    await this.page.waitForTimeout(2000)
     }
 
-    async clickOkbtn() {
-  try {
-    const okButton = this.page
-      .frameLocator('iframe[id*="ifr_LaunchWin"]')
-      .frameLocator('#ifrSubScreen')
-      .frameLocator('#ifr_AlertWin')
-      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
- 
-    await okButton.waitFor({ state: 'visible', timeout: 20000 });
-    await okButton.click({ force: true }); // force if masked
- 
-    console.log("Successfully clicked OK button in ALERTWIN");
- 
-  } catch (error) {
-    console.error("Failed to click OK button in ALERTWIN frame", error);
-    throw error;
-  }
- 
+//     async clickOkbtn() {
+
+//     const frame = await this.getSubScreenFrame();
+
+//     const frameElementHandle2 = await frame.waitForSelector(
+//         'iframe[id="ifr_AlertWin"]',
+//         { state: 'visible', timeout: 30000 }
+//     );
+
+//     const successframe = await frameElementHandle2.contentFrame();
+
+//     const message = successframe.locator(this.Elements.okbtn);
+
+//     await expect(message).toContainText('Successfully Saved');
+
+//     await successframe.click(this.Elements.okbtn);
+// }
+      
+  async clickOkbtn() {
+
+    const frame = await this.getSubScreenFrame();
+
+    const frameElementHandle2 = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    const successframe = await frameElementHandle2.contentFrame();
+
+    //const message = successframe.locator('//span[contains(text(),"Successfully Saved")]');
+
+    // await expect(message).toContainText('Successfully Saved');
+
+    await successframe.click(this.Elements.OKbutton);
 }
+//   try {
+//     const okButton = this.page
+//       .frameLocator('iframe[id*="ifr_LaunchWin"]')
+//       .frameLocator('#ifrSubScreen')
+//       .frameLocator('#ifr_AlertWin')
+//       .getByRole('button', { name: 'OK' }); // using ARIA role for safety
+ 
+//     await okButton.waitFor({ state: 'visible', timeout: 20000 });
+//     await okButton.click({ force: true }); // force if masked
+ 
+//     console.log("Successfully clicked OK button in ALERTWIN");
+ 
+//   } catch (error) {
+//     console.error("Failed to click OK button in ALERTWIN frame", error);
+//     throw error;
+//   }
+ 
+// }
 
     async Clickunlock(){
          const frame = await this.handleAOFrame()
@@ -479,6 +567,11 @@ async Clickexit(){
     await frame.click(this.Elements.firstrecord);
     }
 
+    async clicksearch(){
+         const frame = await this.getclosureframe()
+         await frame.waitForSelector(this.Elements.search, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.search);
+    }
     async clicksignatorysearch(){
          const frame = await this.getsignatoryframe()
          await frame.waitForSelector(this.Elements.signatorysearch, { state: 'visible', timeout: 30000 });

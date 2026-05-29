@@ -19,10 +19,10 @@ Feature: Transaction booking Customer Incoming
              And enter Debitor Agent Details "<DebitBICFI>"
              And enter Instructed Agent Details "<BICFI>"
              And get the transaction reference number
-             And selects the charge bearer
-             And Click on Enrich
-             And enter Debitor Details "<DebitorName>"
-             And Click on Save option
+             And selects the charge bearer in PSDIT2CT
+             And Click on Enrich in PSDIT2CT
+             And enter Debitor Details "<DebitorName>" in PSDIT2CT
+             And Click on Save option in PSDIT2CT
              And Click on ok
              And Click on exit button
              And enter the Branch number as "000"

@@ -50,6 +50,7 @@ export default class UserCreationPage {
   async clickNewTab() {
     await this.page.waitForTimeout(2000)
     await userframe.locator(this.Elements.newTabBtn).click();
+    
   }
 
   async enterUserId(userId: string) {

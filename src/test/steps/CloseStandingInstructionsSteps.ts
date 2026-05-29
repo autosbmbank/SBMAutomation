@@ -21,18 +21,8 @@ When("user enter Instrument Number as {string}",
     await StandingInstruction.enterInstrnumber(instrmentno);
 
   });
-  When("user enter SI Currency as {string}",
-  async function (sicurrncy: string) {
-    StandingInstruction = new StandingInstructionsPage(fixture.page);
-    await StandingInstruction.entersicurrency(sicurrncy);
-
-  });
-  When("user enter SI Amount as {string}",
-  async function (siamt: string) {
-    StandingInstruction = new StandingInstructionsPage(fixture.page);
-    await StandingInstruction.entersiamount(siamt);
-  });
-  When("clicks on OK button", async function () {
+  
+  When("clicks on OK button SI", async function () {
     await StandingInstruction.clickOK();
   });
   When('user clicks on Enter Query SI', async function () {
@@ -48,12 +38,9 @@ When("user enter Instrument Number as {string}",
       });
       
     
-      When('user clicks on Authorize tab SI', async function () {
+      When('user clicks on Close tab SI', async function () {
          fixture.logger.info("Clicking tab in GS");
-        await StandingInstruction.clickAuthorizetabgs();
+        await StandingInstruction.clickclosetab();
       });
       
-      When('user clicks on Authorize button SI', async function () {
-        fixture.logger.info("Clicking authbtn in ILCB");
-        await StandingInstruction.clickAuthorizebtngs();
-      });
+      

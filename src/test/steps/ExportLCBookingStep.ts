@@ -114,6 +114,15 @@ When('user enters customer in ELCB', async function () {
    When("clicks on Parties btn in ELCB", async function () {
     await ExportLC.clickparties();
   });
+  When("user click on Fields tab ELCB", async function () {
+    await ExportLC.clickfields();
+  });
+  When("user enter security type ELCB as {string}",
+  async function (securitytype: string) {
+    ExportLC = new ELCBPage(fixture.page);
+    await ExportLC.entersecuritytype(securitytype);
+
+  });
 When("user enters party id of APP in ELCB as {string}",
   async function (apppartyid: string) {
     ExportLC = new ELCBPage(fixture.page);
@@ -172,6 +181,9 @@ When("user enters party id of APP in ELCB as {string}",
      
   When("clicks on save btn in ELCB", async function () {
     await ExportLC.clicksaveExportLC();
+  });
+  When("user click on save field ELCB", async function () {
+    await ExportLC.clicksaveField();
   });
   
   

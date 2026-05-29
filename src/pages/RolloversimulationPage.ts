@@ -31,10 +31,26 @@ export default class RolloverSimulationPage {
     }
   }
   
+  // subscreen frame 
+async getsubscreenFrame() {
+    const frame = await this.handlerolloverFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
+
   async clicknew(){
         const frame = await this.handlerolloverFrame()
         await frame.waitForSelector(this.Elements.New, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.New);
+      try{
+       const frame1 = await this.getsubscreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
      }
 
      async enteraccountnumb(accountnum){

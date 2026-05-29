@@ -128,6 +128,10 @@ export default class CloseSIPage {
     });
 
     await CSIframe.click(this.Elements.Newtab);
+    try{
+       const frame1 = await this.handleAuthorizeCloseSIFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
 

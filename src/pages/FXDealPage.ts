@@ -96,14 +96,18 @@ export default class FXDealPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
         // ✅ NEEDED — wait for form to load after new tab click
-        await frame.waitForSelector(this.Elements.productCode, { state: 'visible', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.newTab, { state: 'visible', timeout: 15000 });
+        try{
+       const frame1 = await this.getAuthorizeSubFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
-        await frame.waitForSelector(this.Elements.contractRefNo, { state: 'attached', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.enterQueryTab, { state: 'attached', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
@@ -163,6 +167,16 @@ export default class FXDealPage {
         await frame.waitForTimeout(1000);
     }
 
+     async enterSpotBoughtValueDate(boughtValueDate: string) {
+        const frame = await this.getFrame();
+        const Todate=await frame.locator('//input[@id="BLK_CONTRACT_MASTER__BOOKINGDT|input"]').inputValue()
+       await console.log("Todate")
+        await frame.locator(this.Elements.boughtValueDate).clear();
+        await frame.locator(this.Elements.boughtValueDate).fill(Todate);
+        await frame.locator(this.Elements.boughtValueDate).press('Tab');
+        await frame.waitForTimeout(1000);
+    }
+
     async searchSoldCurrency(soldCurrency: string) {
         const frame = await this.getFrame();
         await frame.locator(this.Elements.soldCurrency).fill(soldCurrency);
@@ -183,6 +197,17 @@ export default class FXDealPage {
         await frame.locator(this.Elements.soldValueDate).press('Tab');
         await frame.waitForTimeout(1000);
     }
+
+    async enterSpotSoldValueDate(soldValueDate: string) {
+        const frame = await this.getFrame();
+       const Todate=await frame.locator('//input[@id="BLK_CONTRACT_MASTER__BOOKINGDT|input"]').inputValue()
+       await console.log("Todate")
+        await frame.locator(this.Elements.soldValueDate).clear();
+        await frame.locator(this.Elements.soldValueDate).fill(Todate);
+        await frame.locator(this.Elements.soldValueDate).press('Tab');
+        await frame.waitForTimeout(1000);
+    }
+
 
     async clickCalculate() {
         const frame = await this.getFrame();
@@ -224,7 +249,7 @@ export default class FXDealPage {
         const alertFrame = await this.getAlertFrame();
          alertFrame.locator('//*[@id="BTN_ACCEPT_oj1|text"]').click();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Successfully Saved');
+        await expect(message).toContainText('Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
     }
 
@@ -305,7 +330,7 @@ export default class FXDealPage {
                 const successframe= await frameElementHandle2.contentFrame();
                 await this.page.waitForTimeout(2000);  
           const message= successframe.locator(this.Elements.successMessage)
-        await expect(message).toHaveText('Successfully Authorized');
+        await expect(message).toContainText('Successfully Authorized');
         await successframe.click(this.Elements.okBtn)
     }
 

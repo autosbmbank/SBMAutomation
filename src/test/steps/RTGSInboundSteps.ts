@@ -114,7 +114,7 @@ When("user enters instructing agent for BICFI as {string}", async function (Inst
   await rtgs.enterInstructingAgentBICFI(InstructingAgentBICFI);
 });
 
-/*When("User Click on Other Creditor Details",
+When("User Click on Other Creditor Details",
   async function () {
     fixture.logger.info("Clicking Other Creditor Details in RTGSInbound");
     rtgs = new RTGSPage(fixture.page);
@@ -133,7 +133,7 @@ When("User enters Floor as {string}", async function (Floor: string) {
 });
 When("User clicks on save", async function () {
   await rtgs.saveCreditorDetails();
-});*/
+});
 
 When("User click on Enrichbutton", async function () {
   await rtgs.clickEnrich();

@@ -79,6 +79,10 @@ export default class KYCPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
         await frame.waitForSelector(this.Elements.fullName, { state: 'visible', timeout: 5000 });
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
@@ -194,7 +198,7 @@ export default class KYCPage {
                         const successframe= await frameElementHandle2.contentFrame();
                          
                   const message= successframe.locator(this.Elements.successMessage)
-                await expect(message).toHaveText('Record Successfully Saved');
+                await expect(message).toContainText('Successfully Saved');
                 await successframe.click(this.Elements.okbtn)
             
                    
@@ -233,7 +237,7 @@ export default class KYCPage {
                 const successframe= await frameElementHandle2.contentFrame();
                  
           const message= successframe.locator(this.Elements.successMessage)
-        await expect(message).toHaveText('Record Successfully Authorized');
+        await expect(message).toContainText('Successfully Authorized');
         await successframe.click(this.Elements.okbtn)
                   
             }

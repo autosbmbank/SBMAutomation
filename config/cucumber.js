@@ -1,9 +1,8 @@
   module.exports = {
      default: {
  
-        tags:"@SBM",
-       
- 
+        tags:"@Booking",
+
           formatOptions: {
  
           snippetInterface: "async-await",

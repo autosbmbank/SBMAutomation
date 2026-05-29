@@ -329,6 +329,10 @@ async handleIFRFrameforAuthorize() {
       const frame = await this.handleDABFrame();
       await frame.waitForSelector(this.Elements.Newtab, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.Newtab);
+      try{
+       const frame1 = await this.handleANGFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
   }
   async clickNew(){
     await frame.click(this.Elements.Newtab);

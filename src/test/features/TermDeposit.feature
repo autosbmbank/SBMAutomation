@@ -6,17 +6,17 @@ Feature: Create and Authorize Term Deposit Account
             Given User navigates to the application
              When MAK user enters the username and password
              When MAK user login in the application
-             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
+             Then valdiate the home page tite as "<HomePageTitle>"
               And enter the Branch number as "001"
             # And enter the Branch number as "<BranchNumber>"
-             When user enters the function name as "STDCUSTD" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
               And clicks on New
               And enters the Customer Number "<CustomerNumber>"
               And enters the Account Class "<AccountClass>"
               And enters the Term Deposit Currency "<TDCurrency>"
               And clicks on P button
               And clicks save on the override screen
-        # And get the account number in STDCUSTD
+            #   And get the account number in STDCUSTD
               And enters the Initial Deposit Amount "<InitialDepositAmount>"
               And clicks on AddRow + in the Pay In Details section
         #  And selects the Term Deposit Pay In Option from the dropdown "<TDPayIn>"
@@ -49,9 +49,9 @@ Feature: Create and Authorize Term Deposit Account
               And user SignOff the application
              When CHE user enters the username and password
              When CHE user login in the application
-             Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
+             Then valdiate the home page tite as "<HomePageTitle>"
               And enter the Branch number as "001"
-             When user enters the function name as "STSCUSTD" and click search button
+             When user enters the function name as "<FunctionName>" and click search button
               And set Authorization Status to Unauthorized for STSCUSTD
               And enters the TDAccount Number for authorization for STSCUSTD
               And enters the Customer Number for authorization for STSCUSTD
@@ -62,8 +62,8 @@ Feature: Create and Authorize Term Deposit Account
               And Click on Ok after Accept for STSCUSTD
         #  Then System should authorize the record successfully and record status should be Authorized for STSCUSTD
         Examples:
-                  | BranchNumber | FunctionName | CustomerNumber | AccountClass | TDCurrency | InitialDepositAmount | TDPayIn | Percentage | OffsetAccount | PayoutType | PayoutPercentage | PayoutOffsetAccount | PayoutComponent | Location | Media | PoolCode | branchnumber | functionname |
-                  | 100          | STDCUSTD     | 000006         | FDEP         | KES        | 50000                | Account | 100        | 0002057225002 | Account    | 100              | 0002057225002       | Principal       | KE       | MAIL  | DFLTPOOL | 999          | STSCUSTD     |
+            | HomePageTitle             |  BranchNumber | FunctionName | CustomerNumber | AccountClass | TDCurrency | InitialDepositAmount | TDPayIn | Percentage | OffsetAccount | PayoutType | PayoutPercentage | PayoutOffsetAccount | PayoutComponent | Location | Media | PoolCode | branchnumber | functionname |
+            | Oracle Financial Services |  100          | STDCUSTD     | 000006         | FDEP         | KES        | 50000                | Account | 100        | 0002000003001 | Account    | 100              | 0002000003001       | Principal       | KE       | MAIL  | DFLTPOOL | 999          | STSCUSTD     |
 
 
 

@@ -18,6 +18,7 @@ Feature: LoanRepaymentUnScheduled Transaction
       And user enter Total amount Due LRUS
       And user click on Allocate button LRUS
       And user get Total amount Due LRUS
+      And clicks on accept in LRUS
       And user enter Total amount Due LRUS
       And clicks on save button LRUS
       Then clicks on OK btn LRUS

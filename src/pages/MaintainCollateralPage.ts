@@ -76,10 +76,26 @@ export default class MaintainCollateralPage {
     }
     async enterliabilityno(enterliab: string) {
     const LMCframe = await this.handleLaunchMCollateralFrame();
-    await LMCframe.locator(this.Elements.enterliab).fill(enterliab);
-    await LMCframe.waitForTimeout(3000);
+ const handle = await LMCframe.waitForSelector(
+            '//iframe[@id="ifrSubScreen"]', { timeout: 15000 }
+        );
+        const subFrame= await handle.contentFrame();
+ 
+         await subFrame.locator('//input[@id="1|input"]').fill(enterliab)
+         await subFrame.click("//span[contains(text(),'Fetch')]")
+         await subFrame.locator("tbody.oj-table-body")
+        .getByText(enterliab, { exact: true })
+        .first()
+        .click();
+
+
+
+
+
+    // await LMCframe.locator(this.Elements.enterliab).fill(enterliab);
+    // await LMCframe.waitForTimeout(3000);
     
-    console.log("Before entering Liability Number");
+    console.log("enteredLiability Number");
 
     }
     async clicksearchliab() {

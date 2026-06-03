@@ -26,6 +26,7 @@ export default class RTGSOutboundPage {
                 DebitorAgentBICFI: '//*[@id="BLK_BRN_RTGS_OUT_FICT_MSG__DTA_FINID_BICFI|input"]',                
                 CreditorBICFI: '//*[@id="BLK_BRN_RTGS_OUT_FICT_MSG__CDTR_FINID_BICFI|input"]',
                 InstructingAgentBICFI:'//*[@id="BLK_BRN_RTGS_OUT_FICT_MSG__IND_FINID_BICFI|input"]',
+                searchbtn : '//*[@id="BLK_BRN_RTGS_OUT_FICT_MSG__IND_FINID_BICFI"]/div[1]/span/oj-button',
                 firstrow : '//*[@id="TableLov"]/div[1]/table/tbody/tr',
                 enrichButton: '//*[@id="BLK_BRN_RTGS_OUT_ISO_TXN__BTN_ENRICH_oj128|text"]',
                 saveButton:'//*[@id="Save_oj7|text"]',
@@ -161,7 +162,11 @@ async enterDebitorBICFI(DBcode: string) {
   await frame.locator(this.Elements.InstructingAgentBICFI).fill(IAcode);
    
    }
-
+ async clicksearch (){
+  const frame = await this.handleRTGSOutboundFrame()
+        await frame.waitForSelector(this.Elements.searchbtn, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.searchbtn);
+ }
    async clicksfirstrow(){
      const frame = await this.getrowframe()
         await frame.waitForSelector(this.Elements.firstrow, { state: 'visible', timeout: 15000 });

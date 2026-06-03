@@ -26,6 +26,9 @@ When("user enters Account Number LRUS as {string}",
     await LRUnscheduled.enterAccountnumber(accountno);
  
   });
+  When("clicks on accept in LRUS", async function () {
+      await LRUnscheduled.clickacceptelrus();
+    });
  
 When("user click on Popualte Due button LRUS", async function () {
   await LRUnscheduled.clickPopulate();

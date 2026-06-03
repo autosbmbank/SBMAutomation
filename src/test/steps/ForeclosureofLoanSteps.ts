@@ -22,6 +22,9 @@ When("user clicks on Newtab FOL",async function () {
 When('user click on preclosure FOL', async function () {
   await LoanForeclosure.clickpreclosure();
 });
+When("clicks on accept in FOL", async function () {
+    await LoanForeclosure.clickacceptefl();
+  });
  
 When("user enters Account Number FOL as {string}",
   async function (accountno: string) {

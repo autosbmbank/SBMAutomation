@@ -24,16 +24,29 @@ export default class BookingLoanPage {
         enrich:'//*[@id="BLK_ACCOUNT_MASTER__BTN_ENRICH_oj98|text"]',
         preference:'//*[@id="TAB_DEFAULT"]/span',
         autoLiquidation:'//*[@id="BLK_ACCOUNT_MASTER__TRACKRECEVALIQ"]/div/div',
+        getaccnum : '//*[@id="BLK_ACCOUNT_MASTER__ACCNO"]/div[1]/div/div',
+        linkagedetails : '//*[@id="TAB_LINKAGES"]',
+        addrow : '//*[@id="cmdAddRow_BLK_COLL_LINKAGES"]',
+        linkagetype : '//*[@id="BLK_COLL_LINKAGES__LINKAGE_TYPERC0|input"]',
+        searchoptn : '//*[@id="BLK_COLL_LINKAGES__LINKED_REFERENCE_NORC0"]/div[1]/span/oj-button',
+        fetch : '//*[@id="_oj9|text"]',
+        linked : '//*[@id="BLK_COLL_LINKAGES__LINKED_PERCENT_NUMBERRC0|input"]',
+        order : '//*[@id="BLK_COLL_LINKAGES__UTIL_ORDERRC0|input"]',
+        fields : '//*[@id="TAB_UDF"]/span',
+        search : '//*[@id="BLK_CLVWS_ACCOUNT_UDF_CHAR__FIELD_CHAR_1RC13"]/div[1]/span/oj-button/button/div/span[1]',
+        fetchbtn : '//*[@id="_oj3|text"]',
+        firstrecord : '//*[@id="TableLov"]/div[1]/table/tbody/tr[1]',
         saveBtn:'//*[@id="Save_oj7|text"]',
-        acceptBtn:"//input[@id='BTN_ACCEPT']",
+        acceptBtn:'//*[@id="BTN_ACCEPT_oj1|text"]',
         // successmsg:"//span[@title='Successfully Saved']",
-        okBtn:"//input[@id='BTN_OK']",
-       enterQuery : "//li[@id='EnterQuery']//a", 
-       accountNumber : "//input[@id='BLK_ACCOUNT_MASTER__ACCNO'] ",
-       executeQuery : "//a[normalize-space()='Execute Query']", 
-       autorizeBtn : "//a[normalize-space()='Authorize']", 
-       authorize1 : "//button[@id='BLK_ACCOUNTDETAILS__BTN_AUTH']",
-       okButton : "//input[@id='BTN_OK']",
+        okBtn:'//*[@id="BTN_OK_oj0|text"]',
+        exit : '//*[@id="BTN_EXIT_IMG_oj128|text"]',
+       enterQuery : '//*[@id="EnterQuery_oj17|text"]', 
+       accountNumber : '//*[@id="BLK_ACCOUNT_MASTER__ACCNO|input"]',
+       executeQuery : '//*[@id="ExecuteQuery_oj18|text"]', 
+       autorizeBtn : '//*[@id="Authorize_oj8|text"]', 
+       authorize1 : '//*[@id="BLK_ACCOUNTDETAILS__BTN_AUTH_oj28|text"]',
+       okButton : '//*[@id="BTN_OK_oj0|text"]',
 
        newButton: '//*[@id="New_oj0|text"]',
         accountNmber : '//*[@id="BLK_DSBR_MASTER__ACTNO|input"]',
@@ -66,8 +79,29 @@ export default class BookingLoanPage {
             // console.log("Frame not found");
         }
     }
+//  remarks frame
+async getSubScreenFrame() {
+    const frame = await this.handleLoanFrame();
 
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
 
+    return await iframe.contentFrame();
+}
+
+//  remarks frame
+async getoverrideFrame() {
+    const frame = await this.handleLoanFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
     async clicknewTab(){
     frame = await this.handleLoanFrame();
   await frame.waitForSelector(this.Elements.newTab, { state: 'visible', timeout: 15000 });
@@ -117,47 +151,100 @@ export default class BookingLoanPage {
         await frame.click(this.Elements.autoLiquidation)
 
     }
+    async clickfields(){
+        await frame.click(this.Elements.fields)
 
+    }
+    async clicklinkage(){
+       frame = await this.handleLoanFrame();
+       await frame.click(this.Elements.linkagedetails)
+    }
+    async clickrow(){
+        frame = await this.handleLoanFrame();
+        await frame.click(this.Elements.addrow)
+    }
+    async selectlinkagetype(){
+        const frame = await this.handleLoanFrame();
+
+    const chargeField = frame.locator(this.Elements.linkagetype);
+
+    await chargeField.click();
+    await this.page.waitForTimeout(1000);
+
+    const facilityOption = frame.locator("//li[normalize-space()='Facility']");
+
+    await facilityOption.waitFor({ state: 'visible' });
+    await facilityOption.click();
+    }
+    async clicksearchoptn(){
+      frame = await this.handleLoanFrame();
+      await frame.click(this.Elements.searchoptn)
+    }
+
+    async clickfetchbtn(){
+        frame = await this.getSubScreenFrame();
+        await frame.click(this.Elements.fetch)
+
+    }
+
+    async enterpercent(percent){
+         frame = await this.handleLoanFrame();
+        await frame.locator(this.Elements.linked).fill(percent);
+    }
+    async enterorder(order){
+        frame = await this.handleLoanFrame();
+       await frame.locator(this.Elements.order).fill(order);
+    }
+    async clicksearch(){
+        await frame.click(this.Elements.search)
+
+    }async clickfetch(){
+        frame = await this.getSubScreenFrame();
+        await frame.click(this.Elements.fetchbtn)
+
+    }async selectfirstrecord(){
+        frame = await this.getSubScreenFrame();
+        await frame.click(this.Elements.firstrecord)
+
+    }
     async clickSave(){
+        frame = await this.handleLoanFrame();
         await frame.click(this.Elements.saveBtn)
+    }
+async clickexit(){
+        await frame.click(this.Elements.exit)
     }
 
 async overrideFrame() {
-    try {
-        // Wait for the outer Account Details frame
-        const outerFrameHandle = await this.page.waitForSelector('iframe[title*="Account Details"]', { timeout: 30000 });
-        const outerFrame = await outerFrameHandle.contentFrame();
-
-        // Wait for the Override Message frame inside it
-        const overrideFrameHandle = await outerFrame.waitForSelector('iframe[title*="Override Message"]', { timeout: 15000 });
-        const overrideFrame = await overrideFrameHandle.contentFrame();
-
-        // Wait for Accept button and click it
-        await overrideFrame.waitForSelector('input[id="BTN_ACCEPT"]', { state: 'visible', timeout: 15000 });
-        await overrideFrame.click('input[id="BTN_ACCEPT"]');
-        console.log("Clicked on Accept button in Override Message");
-
-    } catch (error) {
-        console.log("Override or Alert frame not found");
-    }
+    const frame = await this.getoverrideFrame()
+         await frame.waitForSelector(this.Elements.acceptBtn, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.acceptBtn);
+    await this.page.waitForTimeout(2000)
 }
+    
 
    
  async verifySuccessMessage() {
-         const frameElement2 = await frame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 10000 });
-       const  successframe = await frameElement2.contentFrame();
-        //const message = successframe.locator(this.Elements.successmsg);
-        //await message.waitFor({ state: 'visible', timeout: 15000 });
-       // await expect(message).toHaveText('Successfully Saved', {timeout: 15000});
-       const okButton = successframe.locator(this.Elements.okBtn);
-        await okButton.waitFor({state: 'visible', timeout: 15000 });
-        await okButton.click();
-        console.log("Successfully clicked on ok button")
+         const frame = await this.handleLoanFrame();
 
-    }
+    const frameElementHandle2 = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    const successframe = await frameElementHandle2.contentFrame();
+
+    //const message = successframe.locator('//span[contains(text(),"Successfully Saved")]');
+
+    // await expect(message).toContainText('Successfully Saved');
+
+    await successframe.click(this.Elements.okBtn);
+}
 
 async captureinputvalue(){
-    account=await frame.locator("//input[@id='BLK_ACCOUNT_MASTER__ACCNO']").inputValue()
+    frame = await this.handleLoanFrame();
+    account=await frame.innerText(this.Elements.getaccnum)
+    // account=await frame.locator('//*[@id="BLK_ACCOUNT_MASTER__ACCNO"]/div[1]/div/div').inputValue()
     console.log("inputValue"+account)
 
 }
@@ -182,7 +269,7 @@ async handleloanAuthorizeFrame() {
          await frame.waitForTimeout(2000);
  }
 
-        async enterAccountNmbr(number : string){ 
+        async enterAccountNmbr(){ 
                      frame = await this.handleloanAuthorizeFrame();
             await frame.waitForSelector(this.Elements.accountNumber,{state : 'visible', timeout: 15000})
         await frame.locator(this.Elements.accountNumber).fill(account);
@@ -205,50 +292,28 @@ async handleloanAuthorizeFrame() {
       
 
  async overrideauthFrame() {
-    try {
-        // Wait for the outer Account Details frame
-        const outerFrameHandle = await this.page.waitForSelector('//iframe[contains(@title, "Account Details")]', { timeout: 20000 });
-        const outerFrame = await outerFrameHandle.contentFrame();
-
-        // Wait for the Override Message frame inside it
-        const overrideFrameHandle = await outerFrame.waitForSelector('iframe[title*="Authorize"]', { timeout: 15000 });
-        const overrideFrame = await overrideFrameHandle.contentFrame();
-
-        // Wait for Accept button and click it
-        await overrideFrame.waitForSelector("//button[@id='BLK_ACCOUNTDETAILS__BTN_AUTH']", { state: 'visible', timeout: 15000 });
-                await overrideFrame.click(this.Elements.authorize1);
-
-        console.log("Clicked on Accept button in Override Message");
-
-    } catch (error) {
-        console.log("Override or Alert frame not found");
+    const frame = await this.getSubScreenFrame()
+        await frame.waitForSelector(this.Elements.authorize1, { state: 'visible', timeout: 30000 });
+    await frame.click(this.Elements.authorize1);
+    await this.page.waitForTimeout(3000)
     }
-}
-
+ 
  async verifyauthSuccessMessage() {
 
-    try{
+    const frame = await this.getSubScreenFrame();
 
-         const outerFrameHandle1 = await this.page.waitForSelector('//iframe[contains(@title, "Account Details")]', { timeout: 20000 });
-        const outerFrame = await outerFrameHandle1.contentFrame();
+    const frameElementHandle2 = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
 
-        // Wait for the Override Message frame inside it
-        const overrideFrameHandle1 = await outerFrame.waitForSelector('iframe[title*="Authorize"]', { timeout: 15000 });
-        const overrideFrame = await overrideFrameHandle1.contentFrame();
+    const successframe = await frameElementHandle2.contentFrame();
 
-         const frameElement = await frame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 20000 });
-       const  successframe = await frameElement.contentFrame();
-        //const message = successframe.locator(this.Elements.successmsg);
-        //await message.waitFor({ state: 'visible', timeout: 15000 });
-       // await expect(message).toHaveText('Successfully Saved', {timeout: 15000});
-       const okButton = successframe.locator(this.Elements.okButton);
-        await okButton.waitFor({state: 'visible', timeout: 15000 });
-        await okButton.click();
-        console.log("Successfully clicked on ok button")
+    //const message = successframe.locator('//span[contains(text(),"Successfully Saved")]');
 
-   } catch (error) {
-        console.log("Override or Alert frame not found");
-    }
+    // await expect(message).toContainText('Successfully Saved');
+
+    await successframe.click(this.Elements.okButton);
 }
 async handleDisbursementFrame() {
         try {

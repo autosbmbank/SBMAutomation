@@ -11,10 +11,11 @@ Scenario Outline: Inter Bank Fund Transfer Domestic
              And Click on NextGen tab
              And enter the Screen name "<Screen>"
              And click on down tab
-             And enter Debit Account Number "<DebitAccountNo>"
              And enter debit amount "<Amount>"
+             And enter Debit Account Number "<DebitAccountNo>"
              And enter Credit Account Number "<CreditAccountNo>"
              And click on Submit
+             And click on Confirm button
              And Click on OK in bankfund
              And click on NO in bankfund
              And Clik on NO option in bankfund

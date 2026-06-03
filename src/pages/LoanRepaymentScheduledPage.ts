@@ -29,7 +29,8 @@ export default class LRscheduledPage {
         Authorizebutton: "//*[@id='BLK_ACC__BTN_AUTH_oj20|text']",
         okButton : "//span[@id='BTN_OK_oj0|text']",
         gettotalamt:'//*[@id="BLK_TOTAL__AMTDUERC0|input"]',
-        totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]'
+        totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]',
+        acceptlrs:"//span[@id='BTN_ACCEPT_oj1|text']"
        
        
    
@@ -61,6 +62,18 @@ export default class LRscheduledPage {
  
     return ALRSframe;
     }
+    async handleAcceptLRScheduledFrame() {
+    const LRSframe = await this.handleLRScheduledFrame();
+    const frameElementHandle = await LRSframe.waitForSelector('iframe[id="ifr_AlertWin"]',{ timeout: 30000 });
+
+    const AccLRSframe = await frameElementHandle.contentFrame();
+
+    if (!AccLRSframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+
+    return AccLRSframe;
+   }
    
     async handleInformationMessageFrame() {
   try {
@@ -94,6 +107,12 @@ export default class LRscheduledPage {
        await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
         }catch{}
    }
+   async clickacceptelrs() {
+    const AccLRSframe = await this.handleAcceptLRScheduledFrame();
+    await AccLRSframe.click(this.Elements.acceptlrs);
+    await AccLRSframe.waitForTimeout(3000);
+    }
+ 
    async entertotalamount() {
    
     //const frame = await this.handleAuthorizeBookTransferFrame();

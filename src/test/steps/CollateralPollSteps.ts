@@ -25,6 +25,11 @@ When("User enters Pool Code {string}", async function (poolCode: string) {
     await poolPageloc.enterPoolCode(poolCode);
 });
 
+When("enter Linked percentage number {string}", async function (percentage: string) {
+    fixture.logger.info("enters linked percentage: " + percentage);
+    await poolPageloc.enterPercentage(percentage);
+});
+
 When("User searches Pool Currency {string}", async function (poolCurrency: string) {
     fixture.logger.info("searches Pool Currency: " + poolCurrency);
     await poolPageloc.searchPoolCurrency(poolCurrency);
@@ -40,6 +45,16 @@ When("User searches Pool Collateral Code {string}", async function (collateralCo
     await poolPageloc.searchCollateralCode(collateralCode);
 });
 
+When("click on fetch button in GCDMPOOL", async function () {
+    fixture.logger.info("clicks Pool Save button");
+    await poolPageloc.clickfetch();
+});
+
+When("click on first record in GCDMPOOL", async function () {
+    fixture.logger.info("clicks Pool Save button");
+    await poolPageloc.clickfirst();
+});
+
 When("User clicks Pool Save button", async function () {
     fixture.logger.info("clicks Pool Save button");
     await poolPageloc.clickSaveButton();
@@ -48,6 +63,11 @@ When("User clicks Pool Save button", async function () {
 When("User clicks Pool Ok button", async function () {
     fixture.logger.info("clicks Pool Ok button");
     await poolPageloc.clickOkButton();
+});
+
+When("click on exit in GCDMPOOL", async function () {
+    fixture.logger.info("clicks Pool Ok button");
+    await poolPageloc.clickexit();
 });
 
 When("User validates Pool Success Message", async function () {

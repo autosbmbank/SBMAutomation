@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let ILCBframe,AILCBframe,Contractrefrn,AIBframe,MILCBframe,ContractamtILCB,CurrencyILCB,CustomerILCB
+let ILCBframe,AILCBframe,Contractrefrn,AIBframe,MILCBframe,ContractamtILCB,CurrencyILCB,CustomerILCB,FILCBframe
 // let Bframe
 export default class ImportLCBookingPage {
 
@@ -39,8 +39,8 @@ export default class ImportLCBookingPage {
         contractrefrn: "//input[@id='BLK_CONTRACT_DETAILS__CONREFNO|input']",
         Authorizedgs: "//span[@id='Authorize_oj8|text']",
         Authorizebuttongs: "//*[@id='BLK_AUTH_DETAILS__BTN_AUTH_oj24|text']",
-        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC3"]/div/div/div' ,
-        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC2"]/div/div/div',
+        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC1"]/div/div' ,
+        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC0"]/div/div',
         MISilcb:'//*[@id="MICTFMIS_oj152|text"]',
         frequencyi:'//*[@id="BLK_CONTRACT_DETAILS__FREQ|input"]',
         expiryplacei:'//*[@id="BLK_CONTRACT_DETAILS__EXPPLACE|input"]',
@@ -56,6 +56,9 @@ export default class ImportLCBookingPage {
         currencyilcb:'//*[@id="BLK_CONTRACT_DETAILS__CONTCCY|input"]', 
         Authcurrencyilcb:'//*[@id="BLK_REYKEY_DETAILS__CONTCCY|input"]',               
         customerilcb:'//*[@id="BLK_REYKEY_DETAILS__CIFID|input"]',
+         securetype:'//*[@id="BLK_TXN_UDF_DETAILS__FLDVALRC9|input"]',
+        field:'//*[@id="CSCTFUDF_oj151|text"]',
+        savefield:'//*[@id="BTN_OK_oj8|text"]'
         
 
     
@@ -92,7 +95,7 @@ export default class ImportLCBookingPage {
     const frameElementHandle = await ILCBframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
     const AILCBframe = await frameElementHandle.contentFrame();
-    console.log("Authroize frame")
+    
 
     if (!AILCBframe) {
         throw new Error('Book Transfer frame not loaded');
@@ -106,13 +109,27 @@ export default class ImportLCBookingPage {
     const frameElementHandle = await ILCBframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
     const MILCBframe = await frameElementHandle.contentFrame();
-    console.log("Authroize frame")
+    
 
     if (!MILCBframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
     return MILCBframe;
+    }
+    async handleFieldsImportLCBookingFrame() {
+      
+      const ILCBframe = await this.handleImportLCFrame();
+    const frameElementHandle = await ILCBframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
+
+    const FILCBframe = await frameElementHandle.contentFrame();
+    
+
+    if (!FILCBframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+
+    return FILCBframe;
     }
 
     
@@ -139,6 +156,10 @@ async clickNewLCBooking() {
     await ILCBframe.waitForSelector(this.Elements.NewILC,{state: 'visible',timeout: 20000});
 
     await ILCBframe.click(this.Elements.NewILC);
+    try{
+       const frame1 = await this.handleAuthorizeImportBookingFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
     async enterproductcodei(productcodei: string) {
@@ -238,7 +259,7 @@ async selectunits() {
  
     await monthOption.waitFor({ state: 'visible' });
     await monthOption.click();
-    console.log("Enter Unit")
+   
 }
 async selectprofitmethod() {
     const frame = await this.handleMISImportBookingFrame();
@@ -253,6 +274,22 @@ async selectprofitmethod() {
     await profitOption.waitFor({ state: 'visible' });
     await profitOption.click();
 }
+async clickfields() {
+     const ILCBframe = await this.handleImportLCFrame();
+    await ILCBframe.click(this.Elements.field);
+    await ILCBframe.waitForTimeout(3000);
+    }
+    async entersecuritytype(securetype: string) {
+    const FILCBframe = await this.handleFieldsImportLCBookingFrame();
+    await FILCBframe.locator(this.Elements.securetype).fill(securetype);
+    await FILCBframe.waitForTimeout(3000);
+
+    }
+    async clicksaveField() {
+    const FILCBframe = await this.handleFieldsImportLCBookingFrame();
+    await FILCBframe.click(this.Elements.savefield);
+    await FILCBframe.waitForTimeout(3000);
+    }
      
          async clickparties() {
     const ILCBframe = await this.handleImportLCFrame();
@@ -321,9 +358,9 @@ async clickexit() {
         const AILCBframe = await this.handleAuthorizeImportBookingFrame();
        await AILCBframe.locator(this.Elements.confirm3).click()
  }
-async clickToggleByGtype() {
+async clickcreditavailable() {
     const AILCBframe = await this.handleAuthorizeImportBookingFrame();
-    await AILCBframe.locator(this.Elements.confirm2).click()
+    await AILCBframe.locator(this.Elements.confirm2).click();
 }
     
 
@@ -394,7 +431,7 @@ async entercontractamtILCB() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
     const AILCBframe = await this.handleAuthorizeImportBookingFrame();
-    console.log("Authorize frame");
+    
     await AILCBframe.waitForSelector(this.Elements.Authcurrencyilcb, {state: 'visible',timeout: 20000});
     await AILCBframe.locator(this.Elements.Authcurrencyilcb).fill(CurrencyILCB)
    }

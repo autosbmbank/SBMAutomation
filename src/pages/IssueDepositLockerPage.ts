@@ -56,6 +56,10 @@ export default class IssueDepositLockerPage {
     await IDLframe.waitForSelector(this.Elements.Newbutton,{state: 'visible',timeout: 20000});
 
     await IDLframe.click(this.Elements.Newbutton);
+    try{
+       const frame1 = await this.handleAuthorizeIssueDepositFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
    
 

@@ -73,3 +73,37 @@ When("Click on Exit btn2",async function(){
      await PreclosePage.clickexitbtn();
 });
 
+When("click on enter query in ICDREDMN",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.clickenterquery();
+});
+
+When("click on execute query in ICDREDMN",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.clickexecutequery();
+});
+
+When("enter Redemption Reference Number",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.enterredemptionnum();
+});
+
+When("click on authorize in ICDREDMN",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.clickauthorize();
+});
+
+When("click on authorize button in ICDREDMN",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.clickauthorizebtn();
+});
+
+When("click on ok in ICDREDMN",async function(){
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.clickOKbtn();
+});
+
+When("get Redemption Reference Number", async function () {
+    PreclosePage = await new PrematureClosurePage(fixture.page);
+     await PreclosePage.getRedrefNumber();
+ });

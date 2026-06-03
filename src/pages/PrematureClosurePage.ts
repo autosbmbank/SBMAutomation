@@ -2,7 +2,7 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { timeout } from "../hooks/hooks";
-let frame;
+let frame,redemprefnum;
 export default class PrematureClosurePage {
     private base: ReusableMethods;
 
@@ -26,6 +26,15 @@ export default class PrematureClosurePage {
         accept :'//*[@id="BTN_ACCEPT_oj1|text"]',
         okbtn : '//*[@id="BTN_OK_oj0|text"]',
         exit : '//*[@id="BTN_EXIT_IMG_oj89|text"]',
+        redrefNo : '//*[@id="BLK_ICTMS_TDREDMPAYOUT_MASTER__REDEM_REF_NO"]/div[1]/div/div',
+        enterquery : '//*[@id="EnterQuery_oj17|text"]',
+        redemtion : '//*[@id="BLK_ICTMS_TDREDMPAYOUT_MASTER__REDEM_REF_NO|input"]',
+        executequery : '//*[@id="ExecuteQuery_oj18|text"]',
+        
+        authorize : '//*[@id="Authorize_oj8|text"]',
+        authorizebth : '//*[@id="BLK_REDEMPTION_MASSTER__BTN_AUTH_oj12|text"]',
+        okbutton : '//*[@id="BTN_OK_oj0|text"]',
+
      }
 // redemption input
  async handleREDMFrame() {
@@ -71,11 +80,38 @@ async handleoverrideFrame() {
     throw err;
   }
 }
+
+// authorize frame 
+async getauthorizeFrame() {
+    const frame = await this.handleREDMFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
   
+//  authorizeok frame
+async getSubScreenFrame() {
+    const frame = await this.handleREDMFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
 async clickNew(){
         const frame = await this.handleREDMFrame()
         await frame.waitForSelector(this.Elements.new, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.new);
+      try{
+       const frame1 = await this.getauthorizeFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
      }
 
      async enterTDaccountnum(accountnum){
@@ -156,7 +192,7 @@ async enterOffaccountnum(offaccountnum){
      }
 
      async clickokbtn(){
-        const frame = await this.handleREDMFrame()
+        const frame = await this.handleinformationMessageFrame()
         await frame.waitForSelector(this.Elements.okbtn, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.okbtn);
      }
@@ -167,4 +203,57 @@ async enterOffaccountnum(offaccountnum){
       await frame.click(this.Elements.exit);
      }
 
+     async getRedrefNumber(){
+         const frame = await this.handleREDMFrame()
+         redemprefnum=await frame.innerText(this.Elements.redrefNo)
+        console.log("Redemption Reference Number "+redemprefnum)
+    }
+
+    async clickenterquery(){
+      const frame = await this.handleREDMFrame()
+        await frame.waitForSelector(this.Elements.enterquery, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.enterquery);
+    }
+
+    async clickexecutequery(){
+      const frame = await this.handleREDMFrame()
+        await frame.waitForSelector(this.Elements.executequery, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.executequery);
+    }
+
+    async enterredemptionnum(){
+      const frame = await this.handleREDMFrame()
+        await frame.waitForSelector(this.Elements.redemtion, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.redemtion);
+      await frame.locator(this.Elements.redemtion).fill(redemprefnum)
+    }
+
+    async clickauthorize(){
+      const frame = await this.handleREDMFrame()
+        await frame.waitForSelector(this.Elements.authorize, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.authorize);
+    }
+
+    async clickauthorizebtn(){
+      const frame = await this.getauthorizeFrame()
+        await frame.waitForSelector(this.Elements.authorizebth, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.authorizebth);
+    }
+
+    async clickOKbtn(){
+      const frame = await this.getSubScreenFrame();
+
+    const frameElementHandle2 = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    const successframe = await frameElementHandle2.contentFrame();
+
+    //const message = successframe.locator('//span[contains(text(),"Successfully Saved")]');
+
+    // await expect(message).toContainText('Successfully Saved');
+
+    await successframe.click(this.Elements.okbutton);
+    }
     }

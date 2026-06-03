@@ -14,6 +14,9 @@ export default class ForeignExchangePage {
         new : '//*[@id="New_oj0|text"]',
         refnumber : '//*[@id="BLK_PAYMENT_DETAIL__REFNO|input"]',
         Default : '//*[@id="BLK_PAYMENT_DETAIL__BTN_DEFAULT_oj75|text"]',
+        boughtamount : '//*[@id="BLK_PAYMENT_DETAIL__BOTAMT|input"]',
+        soldamount : '//*[@id="BLK_PAYMENT_DETAIL__SOLDAMT|input"]',
+        recalculate : '//*[@id="BLK_PAYMENT_DETAIL__BTN_RECALC_oj76|text"]', 
         save : '//*[@id="Save_oj7|text"]',
         ok : '//*[@id="BTN_OK_oj0|text"]',
         exit : '//*[@id="BTN_EXIT_IMG_oj91|text"]',
@@ -69,6 +72,10 @@ async clickNewTab(){
         const frame = await this.handleFEIFrame()
         await frame.waitForSelector(this.Elements.new, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.new);
+      try{
+       const frame1 = await this.getAuthorizeframe()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
      }
      
      async enterRefNum(refnum){
@@ -81,6 +88,24 @@ async clickNewTab(){
         const frame = await this.handleFEIFrame()
         await frame.waitForSelector(this.Elements.Default, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.Default);
+     }
+     
+     async enterboughtamount(boughtamnt){
+        const frame = await this.handleFEIFrame()
+       await frame.locator(this.Elements.boughtamount).clear()
+       await frame.locator(this.Elements.boughtamount).fill(boughtamnt)
+     }
+
+     async entersoldamount(soldamnt){
+        const frame = await this.handleFEIFrame()
+       await frame.locator(this.Elements.soldamount).clear()
+       await frame.locator(this.Elements.soldamount).fill(soldamnt)
+     }
+
+     async clickrecalculate(){
+        const frame = await this.handleFEIFrame()
+        await frame.waitForSelector(this.Elements.recalculate, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.recalculate);
      }
 
      async clicksave(){

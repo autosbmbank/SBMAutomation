@@ -100,6 +100,15 @@ When("user enters party id of APP in Parties as {string}",
     await Guarantee.entertermandcond(termandcond);
 
   });
+  When("user click on Fields tab GS", async function () {
+      await Guarantee.clickfields();
+    });
+    When("user enter security type GS as {string}",
+    async function (securitytype: string) {
+      Guarantee = new GuaranteePage(fixture.page);
+      await Guarantee.entersecuritytype(securitytype);
+  
+    });
     
   When("clicks on save btn in GS", async function () {
     await Guarantee.clicksaveguarantee();
@@ -107,6 +116,9 @@ When("user enters party id of APP in Parties as {string}",
   When("clicks on accept in GS", async function () {
     await Guarantee.clickacceptgs();
   });
+  When("user click on save field GS", async function () {
+      await Guarantee.clicksaveField();
+    });
  
 
   Then("clicks on OK btn in GS", async function () {
@@ -134,22 +146,37 @@ When("user enters party id of APP in Parties as {string}",
       //await bookTransfer.handledeleteBookTransferFrame();
       await Guarantee.entercontractrefrn();
   });
-  When('user enters currency in GS as {string}', async function (currencygs: string) {
+  When("user get currency GS", async function () {
+     Guarantee = new GSPage(fixture.page);
+       fixture.logger.info("Fetch Currency");
+    await Guarantee.getcurrencygs();
+});
+When("user get Customer GS", async function () {
+     Guarantee = new GSPage(fixture.page);
+       fixture.logger.info("Fetch Customer");
+    await Guarantee.getcustomergs();
+});
+When("user get Contract Amount GS", async function () {
+     Guarantee = new GSPage(fixture.page);
+       fixture.logger.info("Fetch Contract Amount");
+    await Guarantee.getcontractamountgs();
+});
+  When('user enters currecy in GS', async function () {
     fixture.logger.info("Entering currency in Guarantee Page");
       Guarantee = new GSPage(fixture.page);
-      await Guarantee.entercurrencygs(currencygs);
+      await Guarantee.entercurrencygs();
   });
-  When('user enters contract amount in GS as {string}', async function (contractamountgs: string) {
+  When('user enters contract amt in GS', async function () {
     fixture.logger.info("Entering contract amount in Guarantee Page");
       Guarantee = new GSPage(fixture.page);
       //await bookTransfer.handledeleteBookTransferFrame();
-      await Guarantee.entercontractamountgs(contractamountgs);
+      await Guarantee.entercontractamountgs();
   });
-  When('user enters customer in GS as {string}', async function (customeridgs: string) {
+  When('user enters customer A in GS', async function () {
     fixture.logger.info("Entering customer in Guarantee Page");
       Guarantee = new GSPage(fixture.page);
       //await bookTransfer.handledeleteBookTransferFrame();
-      await Guarantee.entercustomeridgs(customeridgs);
+      await Guarantee.entercustomeridgs();
   });
   
   

@@ -27,15 +27,16 @@ export default class LCAvailmentPage {
         okButton:"//span[@id='BTN_OK_oj0|text']",
         exitavail:'//*[@id="BTN_EXIT_IMG_oj85|text"]',        
         Authorizedla: "//span[@id='Authorize_oj8|text']",
-        Authorizebutonla: "//*[@id='BLK_BOOK_TXN__AUTHORIZATION_oj14|text']", 
+        Authorizebutonla: "//*[@id='BLK_AUTH_DETAILS__BTN_AUTH_oj24|text']", 
         instructedCurrencyIndicator: "//select[@id='BLK_BOOK_TXN__INSTRUCTED_CCY_IND']",
         getcurrecyLCA:'//*[@id="BLK_AVAILMENTS__CONTCCY"]/div[1]/div/div/div',
-        currencyLCA:'//*[@id="BLK_AVAILMENTS__CONTCCY|input"]',
+        currencyLCA:'//*[@id="BLK_REYKEY_DETAILS__CONTCCY|input"]',
         getcontractamttLCA:'//*[@id="BLK_AVAILMENTS__AVLAMT|input"]',
-        contractamountLCA:'//*[@id="BLK_AVAILMENTS__AVLAMT|input"]',
+        contractamountLCA:'//*[@id="BLK_REYKEY_DETAILS__CONTAMT|input"]',
         getcustomrLCA:'//*[@id="BLK_AVAILMENTS__CNTRPRTY"]/div[1]/div/div/div',
-        customerLCA:'//*[@id="BLK_AVAILMENTS__CNTRPRTY|input"]',
+        customerLCA:'//*[@id="BLK_REYKEY_DETAILS__CIFID|input"]',
         exitathr:'//*[@id="BTN_EXIT_IMG_oj85|text"]',
+        
     
     }
 
@@ -75,6 +76,10 @@ export default class LCAvailmentPage {
     await LAframe.waitForSelector(this.Elements.Newavail,{state: 'visible',timeout: 20000});
 
     await LAframe.click(this.Elements.Newavail);
+    try{
+       const frame1 = await this.handleAuthorizeLCAvailmentFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
    
 
@@ -112,6 +117,7 @@ export default class LCAvailmentPage {
     await LAframe.click(this.Elements.exitavail);
     await LAframe.waitForTimeout(3000);
     }
+    
     async clickexitathr() {
     const LAframe = await this.handleLCAvailmentsFrame();
     await LAframe.click(this.Elements.exitathr);
@@ -127,7 +133,7 @@ async handleAuthorizeLCAvailmentFrame() {
     const frameElementHandle = await frame.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
     const ALCframe = await frameElementHandle.contentFrame();
-    console.log("Authroize frame")
+    
 
     if (!ALCframe) {
         throw new Error('Book Transfer frame not loaded');
@@ -162,7 +168,7 @@ async getcurrencyLCA() {
     async entercurrencyLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const ALCframe = await this.handleLCAvailmentsFrame();
+    const ALCframe = await this.handleAuthorizeLCAvailmentFrame();
     await ALCframe.waitForSelector(this.Elements.currencyLCA, {state: 'visible',timeout: 20000});
     await ALCframe.locator(this.Elements.currencyLCA).fill(CurrecyLCA)
    }
@@ -176,8 +182,8 @@ async getcurrencyLCA() {
     async entercontractamountLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const ALCframe = await this.handleLCAvailmentsFrame();
-    ContractamtLCA = await ALCframe.waitForSelector(this.Elements.contractamountLCA, {state: 'visible',timeout: 20000});
+    const ALCframe = await this.handleAuthorizeLCAvailmentFrame();
+    await ALCframe.waitForSelector(this.Elements.contractamountLCA, {state: 'visible',timeout: 20000});
     await ALCframe.locator(this.Elements.contractamountLCA).fill(ContractamtLCA)
    }
    async getcustomerLCA() {       
@@ -190,7 +196,7 @@ async getcurrencyLCA() {
     async entercustomerLCA() {
     
     //const frame = await this.handleAuthorizeBookTransferFrame();
-    const ALCframe = await this.handleLCAvailmentsFrame();
+    const ALCframe = await this.handleAuthorizeLCAvailmentFrame();
     await ALCframe.waitForSelector(this.Elements.customerLCA, {state: 'visible',timeout: 20000});
     await ALCframe.locator(this.Elements.customerLCA).fill(CustomrLCA)
    }

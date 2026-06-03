@@ -83,6 +83,11 @@ When('User enters the Instructing Agent BICFI as {string}', async function (IAco
     await RtgsOutbound.enterInstructingAgentBICFI(IAcode);
 });
 
+When("click on Search button in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clicksearch();
+});
+
 When("click on first row in PSDORTBT",async function(){
     RtgsOutbound = await new RTGSOutboundPage(fixture.page);
      await RtgsOutbound.clicksfirstrow();
@@ -98,9 +103,15 @@ When('User clicks on save button', async function () {
     // fixture.logger.info(`Clicking on save button: ${Save}`);
     await RtgsOutbound.saveTransaction();
 });
-When('User clicks on Ok button as {string}', async function (Ok) {
+// When('User clicks on Ok button as {string}', async function (Ok) {
+//     RtgsOutbound = new RTGSOutboundPage(fixture.page);
+//     fixture.logger.info(`Clicking on Ok button: ${Ok}`);
+//     await RtgsOutbound.clickOk();
+// });
+
+When('User clicks on Ok button in PSDORTBT', async function () {
     RtgsOutbound = new RTGSOutboundPage(fixture.page);
-    fixture.logger.info(`Clicking on Ok button: ${Ok}`);
+    // fixture.logger.info(`Clicking on save button: ${Save}`);
     await RtgsOutbound.clickOk();
 });
 

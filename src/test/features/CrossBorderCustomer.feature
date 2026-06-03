@@ -34,7 +34,7 @@ Scenario Outline: Cross Border Transaction Booking Customer Transfer
              When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-            #  And enter the Branch number as "001"
+            #   And enter the Branch number as "001"
              When user enters the function name as "<FunctionName>" and click search button
              And click on enter Query tab in PSDOCBCT
              And enter Transaction Reference No in PSDOCBCT

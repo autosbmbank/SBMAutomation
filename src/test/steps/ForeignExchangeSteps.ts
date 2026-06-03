@@ -18,6 +18,21 @@ When("click on Default Button", async function(){
      await ForeignPage.clickdefault();
 });
 
+When("enter bought amount {string}", async function(boughtamnt : string){
+   ForeignPage = await new ForeignExchangePage(fixture.page);
+     await ForeignPage.enterboughtamount(boughtamnt);
+});
+
+When("enter sold amount {string}", async function(soldamnt : string){
+   ForeignPage = await new ForeignExchangePage(fixture.page);
+     await ForeignPage.entersoldamount(soldamnt);
+});
+
+When("click on recalculate button", async function(){
+  ForeignPage = await new ForeignExchangePage(fixture.page);
+     await ForeignPage.clickrecalculate();
+});
+
 When("click on Save in FXDTRPAY", async function(){
   ForeignPage = await new ForeignExchangePage(fixture.page);
      await ForeignPage.clicksave();

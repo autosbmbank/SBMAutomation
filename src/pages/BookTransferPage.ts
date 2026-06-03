@@ -76,6 +76,10 @@ export default class BookTransferPage {
     });
 
     await BTframe.click(this.Elements.New);
+    try{
+       const frame1 = await this.handleAuthorizeBookTransferFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
 
@@ -138,11 +142,11 @@ export default class BookTransferPage {
    
      async handleAuthorizeBookTransferFrame() {
       
-      const frame = await this.handleBookTransferFrame();
-    const frameElementHandle = await frame.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
+      const BTframe = await this.handleBookTransferFrame();
+    const frameElementHandle = await BTframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
     const ABframe = await frameElementHandle.contentFrame();
-    console.log("Authroize frame")
+    
 
     if (!ABframe) {
         throw new Error('Book Transfer frame not loaded');
@@ -169,7 +173,7 @@ async clickEnterQuery() {
             const BTframe = await this.handleBookTransferFrame();
                //await GSframe.click(this.Elements.fetchcontrrfn);
       Transctionrefrn = await BTframe.innerText(this.Elements.gettransactionrefn)
-    console.log("Contract Reference:"+Transctionrefrn)
+    console.log("Reference:"+Transctionrefrn)
        
     }  
 

@@ -58,7 +58,43 @@ When("click on preference tab", async function () {
 When("uncheck the Auto liquidation", async function () {
  await bookLoan.clickAutoliquidation();
 });
+When("click on LinkageDetails", async function () {
+ await bookLoan.clicklinkage();
+});
+When("click on add row in CLDACCNT", async function () {
+ await bookLoan.clickrow();
+});
+When("select Linkage Type as Facility", async function () {
+ await bookLoan.selectlinkagetype();
+});
+When("click on search option in Linkage", async function () {
+ await bookLoan.clicksearchoptn();
+});
 
+When("click on fetch btn in CLDACCNT", async function () {
+ await bookLoan.clickfetchbtn();
+});
+When('enter Linked percent {string}', async function (percent) {
+ await bookLoan.enterpercent(percent);
+});
+When('enter utilization order no {string}', async function (order) {
+ await bookLoan.enterorder(order);
+});
+When("Click on Fields tab in CLDACCNT", async function () {
+ await bookLoan.clickfields();
+});
+When("click on search option at scheme name field", async function () {
+ await bookLoan.clicksearch();
+});
+When("click on fetch button in CLDACCNT", async function () {
+ await bookLoan.clickfetch();
+});
+When("select first record in CLDACCNT", async function () {
+ await bookLoan.selectfirstrecord();
+});
+When("click on exit in CLDACCNT", async function () {
+ await bookLoan.clickexit();
+});
 
 When("clicks on Save button", async function () {
     await bookLoan.clickSave();
@@ -86,9 +122,9 @@ When("click on Enter Query", async function (){
 })
 
 
-         When('enter loan account number {string}', async function (accountNumber) {
+         When('enter loan account number', async function () {
            // Write code here that turns the phrase above into concrete actions
-        await bookLoan.enterAccountNmbr(accountNumber); 
+        await bookLoan.enterAccountNmbr(); 
          });
 
 When('Click on Execute Query', async function () {

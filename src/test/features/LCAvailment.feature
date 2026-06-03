@@ -1,5 +1,5 @@
-@CAvailment
-Feature: BookTransfer Account Transaction
+@LCAvailment
+Feature: LCAvailment Transaction
 
 @LCAvailmentscreen @SBM @TDAccount
     Scenario Outline: LC Availment Transaction using Credit by MAK and Authorise by CHE
@@ -28,10 +28,10 @@ Feature: BookTransfer Account Transaction
       And user clicks on Enter Query in LCA
       And user enters Contract Reference LCA as "<Contract Reference>"
       And user clicks on Execute Query in LCA
+       And user clicks on Authorize tab in LCA
       And user enters Currency LCA
       And user enters Contract amount LCA
-      And user customer LCA      
-      And user clicks on Authorize tab in LCA
+      And user enters customer LCA   
       And user clicks on Authorize button in LCA
       Then clicks on OK button in LCA
 
@@ -40,4 +40,4 @@ Feature: BookTransfer Account Transaction
     Examples:
       
                   | HomePageTitle                                       | BranchNumber | FunctionName     | Contract Reference | Availment amount | 
-                  | Oracle Financial Services - ENG - Transaction Input | 000          | LCDAVMNT         | 000SBLC253280001   |  100       |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          | LCDAVMNT         | 000UELC261500003   |  100       |

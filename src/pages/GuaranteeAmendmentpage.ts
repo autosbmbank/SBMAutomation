@@ -25,7 +25,7 @@ export default class GuaranteeAmendmentpage {
         acceptamend: "//span[@id='BTN_ACCEPT_oj1|text']",
         getamendnumbr:'//*[@id="BLK_AMEND_DETAILS__AMENDMENT_NO"]/div[1]/div/div/div',
         getcurrecyga:'//*[@id="BLK_AMEND_DETAILS__CCY"]/div[1]/div/div/div',
-        getcustomrga:'//*[@id="BLK_PARTY_DETAILS__CIFIDRC0|input"]',
+        getcustomrga:'//*[@id="BLK_PARTY_DETAILS__CIFIDRC1|input"]',
         getcontractamtga:'//*[@id="BLK_AMEND_DETAILS__CONAMT|input"]',
         AMnumber:"//input[@id='BLK_AMEND_DETAILS__AMENDMENT_NO|input']",
         okamend : "//span[@id='BTN_OK_oj0|text']",
@@ -35,7 +35,7 @@ export default class GuaranteeAmendmentpage {
         Authorizebutton: "//*[@id='BLK_AUTH_DETAILS__BTN_AUTH_oj24|text']",
         currency:"//input[@id='BLK_REYKEY_DETAILS__CONTCCY|input']",
         contractamount:"//input[@id='BLK_REYKEY_DETAILS__CONTAMT|input']",
-        customerid:'//*[@id="BLK_PARTY_DETAILS__CIFIDRC0|input"]',
+        customerid:'//*[@id="BLK_REYKEY_DETAILS__CIFID|input"]',
         okButton : "//span[@id='BTN_OK_oj0|text']",
         partiesamend:'//*[@id="TAB_PARTIES"]/span'
 
@@ -72,6 +72,10 @@ export default class GuaranteeAmendmentpage {
     await GAframe.waitForSelector(this.Elements.Newamend,{state: 'visible',timeout: 20000});
 
     await GAframe.click(this.Elements.Newamend);
+    try{
+       const frame1 = await this.handleAuthorizeAmendFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
    async handleInformationMessageFrame() {
   try {

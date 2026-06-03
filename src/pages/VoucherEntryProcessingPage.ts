@@ -293,38 +293,19 @@ AuthFrame = await FrameHandle1.contentFrame();
    console.log("Clicked on Authorize in Auth Frame")
     }
 
-//   async successMessage() {
-//      const frameElementHandle3 = await AuthFrame.locator(this.Elements.informFrame);
-//                InformFrame= await frameElementHandle3.contentFrame();
-//                 const smessage= InformFrame.locator(this.Elements.successMessage)
-//     console.log("success message is "+await smessage.textContent())
-//                expect(await smessage.textContent()).toContain("Successfully");
-//                 await InformFrame.locator(this.Elements.okBtn).click();
-//                 await JournalFrame1.locator(this.Elements.exitBtn).click();
-//                 console.log("Clicked on exit button in Journal Frame1")
-//                const frameHandle = await this.page.waitForSelector(this.Elements.outerFrame, { timeout: 10000 });
-//     JournalFrame = await frameHandle.contentFrame();
-//     console.log("Switched to Journal Frame");
-//     await JournalFrame.locator(this.Elements.exitBtn1).click();
+  async successMessage() {
+     const frameElementHandle3 = await AuthFrame.locator(this.Elements.informFrame);
+               InformFrame= await frameElementHandle3.contentFrame();
+    //             const smessage= InformFrame.locator(this.Elements.successMessage)
+    // console.log("success message is "+await smessage.textContent())
+              //  expect(await smessage.textContent()).toContain("Successfully");
+                await InformFrame.locator(this.Elements.okBtn).click();
+    //             await JournalFrame1.locator(this.Elements.exitBtn).click();
+    //             console.log("Clicked on exit button in Journal Frame1")
+    //            const frameHandle = await this.page.waitForSelector(this.Elements.outerFrame, { timeout: 10000 });
+    // JournalFrame = await frameHandle.contentFrame();
+    // console.log("Switched to Journal Frame");
+    // await JournalFrame.locator(this.Elements.exitBtn1).click();
 
-// }
-async successMessage() {
-try {
-    const okButton = this.page
-      .frameLocator('iframe[id*="ifr_LaunchWin5819879458198794"]')
-      // .frameLocator('#ifrSubScreen')
-      .frameLocator('#Div_AlertWin')
-      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
- 
-    await okButton.waitFor({ state: 'visible', timeout: 20000 });
-    await okButton.click({ force: true }); // force if masked
- 
-    console.log("Successfully clicked OK button in ALERTWIN");
- 
-  } catch (error) {
-    console.error("Failed to click OK button in ALERTWIN frame", error);
-    throw error;
-  }
- 
 }
 }

@@ -49,21 +49,21 @@ When("enter Instructed Agent Details {string}",async function(BICFI : string){
 });
 
 ;
-When("selects the charge bearer",async function(){
+When("selects the charge bearer in PSDIT2CT",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.selectchargebearer();
 })
-When("Click on Enrich",async function(){
+When("Click on Enrich in PSDIT2CT",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.clicksEnrich();
 });
 
-When("enter Debitor Details {string}",async function(name : string){
+When("enter Debitor Details {string} in PSDIT2CT",async function(name : string){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.enterName(name);
 });
 
-When("Click on Save option",async function(){
+When("Click on Save option in PSDIT2CT",async function(){
     RTGSINPage = await new RTGSIncomingPage(fixture.page);
      await RTGSINPage.clickSave();
 });

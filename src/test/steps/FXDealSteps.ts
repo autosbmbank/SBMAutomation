@@ -39,6 +39,10 @@ When("User selects FX Bought Value Date {string}", async function (boughtValueDa
     fixture.logger.info("selects FX Bought Value Date: " + boughtValueDate);
     await fxPageloc.enterBoughtValueDate(boughtValueDate);
 });
+When("User enters FXSpot Bought Value Date {string}", async function (boughtValueDate: string) {
+    fixture.logger.info("selects FX Bought Value Date: " + boughtValueDate);
+    await fxPageloc.enterSpotBoughtValueDate(boughtValueDate);
+});
 
 When("User searches FX Sold Currency {string}", async function (soldCurrency: string) {
     fixture.logger.info("searches FX Sold Currency: " + soldCurrency);
@@ -53,6 +57,11 @@ When("User enters FX Sold Amount {string}", async function (soldAmount: string) 
 When("User selects FX Sold Value Date {string}", async function (soldValueDate: string) {
     fixture.logger.info("selects FX Sold Value Date: " + soldValueDate);
     await fxPageloc.enterSoldValueDate(soldValueDate);
+});
+
+When("User enters FXspot Sold Value Date {string}", async function (soldValueDate: string) {
+    fixture.logger.info("selects FX Sold Value Date: " + soldValueDate);
+    await fxPageloc.enterSpotSoldValueDate(soldValueDate);
 });
 
 When("User clicks FX Calculate", async function () {

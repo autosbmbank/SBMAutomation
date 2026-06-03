@@ -154,6 +154,10 @@ async handleJLFrame() {
   const frame = await this.handleJLFrame();
   await frame.waitForSelector(this.Elements.NewButton, { state: 'visible', timeout: 15000 });
   await frame.click(this.Elements.NewButton);
+  try{
+       const frame1 = await this.handleBOFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
       async handleBOFrame() {

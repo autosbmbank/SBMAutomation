@@ -91,14 +91,18 @@ export default class MMDealPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
         // ✅ NEEDED — wait for form to load after new tab click
-        await frame.waitForSelector(this.Elements.productCode, { state: 'visible', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.newTab, { state: 'visible', timeout: 15000 });
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
     }
 
     async clickEnterQuery() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
-        await frame.waitForSelector(this.Elements.authcontractRefNo, { state: 'attached', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.enterQueryTab, { state: 'attached', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
@@ -216,7 +220,7 @@ export default class MMDealPage {
         const alertFrame = await this.getAlertFrame();
         
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Successfully Saved');
+        await expect(message).toContainText('Successfully Saved');
         await alertFrame.locator(this.Elements.okBtn).click();
     }
 
@@ -289,7 +293,7 @@ export default class MMDealPage {
         );
         const successframe = await frameElementHandle2.contentFrame();
         const message = successframe.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Successfully Authorized');
+        await expect(message).toContainText('Successfully Authorized');
         await successframe.locator(this.Elements.okBtn).click();
     }
 

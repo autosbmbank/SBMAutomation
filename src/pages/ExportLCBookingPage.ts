@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let ELCBframe,AELCBframe,Contractrefrn,AEBframe,MELCBframe,ContractamtELCB,CurrencyELCB,CustomerELCB
+let ELCBframe,AELCBframe,Contractrefrn,AEBframe,MELCBframe,ContractamtELCB,CurrencyELCB,CustomerELCB,FELCBframe
 // let Bframe
 export default class ExportLCBookingPage {
 
@@ -44,8 +44,8 @@ export default class ExportLCBookingPage {
         contractrefrn: "//input[@id='BLK_CONTRACT_DETAILS__CONREFNO|input']",
         Authorizedgs: "//span[@id='Authorize_oj8|text']",
         Authorizebuttongs: "//*[@id='BLK_AUTH_DETAILS__BTN_AUTH_oj24|text']",
-        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC3"]/div/div/div' ,
-        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC2"]/div/div/div',
+        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC1"]/div/div' ,
+        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC0"]/div/div',
         MISilcb:'//*[@id="MICTFMIS_oj152|text"]',
         creditavailablee:'//*[@id="BLK_CONTRACT_DETAILS__CREDITAVLWITH|input"]',
        //getcontractamtilcb:'//*[@id="BLK_CONTRACT_DETAILS__CONTAMT"]/div[1]/div/div/div',
@@ -55,6 +55,9 @@ export default class ExportLCBookingPage {
         currencyelcb:'//*[@id="BLK_CONTRACT_DETAILS__CONTCCY|input"]', 
         Authcurrencyelcb:'//*[@id="BLK_REYKEY_DETAILS__CONTCCY|input"]',               
         customerelcb:'//*[@id="BLK_REYKEY_DETAILS__CIFID|input"]',
+        securetype:'//*[@id="BLK_TXN_UDF_DETAILS__FLDVALRC9|input"]',
+        field:'//*[@id="CSCTFUDF_oj151|text"]',
+        savefield:'//*[@id="BTN_OK_oj8|text"]'
         
 
     
@@ -91,13 +94,27 @@ export default class ExportLCBookingPage {
     const frameElementHandle = await ELCBframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
 
     const AELCBframe = await frameElementHandle.contentFrame();
-    console.log("Authroize frame")
+    
 
     if (!AELCBframe) {
         throw new Error('Book Transfer frame not loaded');
     }
 
     return AELCBframe;
+    }
+    async handleFieldsExportLCBookingFrame() {
+      
+      const ELCBframe = await this.handleExportLCFrame();
+    const frameElementHandle = await ELCBframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
+
+    const FELCBframe = await frameElementHandle.contentFrame();
+    
+
+    if (!FELCBframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+
+    return FELCBframe;
     }
     
     
@@ -124,6 +141,10 @@ async clickNewExLCBooking() {
     await ELCBframe.waitForSelector(this.Elements.NewExILC,{state: 'visible',timeout: 20000});
 
     await ELCBframe.click(this.Elements.NewExILC);
+    try{
+       const frame1 = await this.handleAuthorizeExportBookingFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
     async enterproductcodee(productcodee: string) {
@@ -168,6 +189,23 @@ async clickNewExLCBooking() {
     await ELCBframe.waitForTimeout(3000);
 
     }
+    async clickfields() {
+     const ELCBframe = await this.handleExportLCFrame();
+    await ELCBframe.click(this.Elements.field);
+    await ELCBframe.waitForTimeout(3000);
+    }
+    async entersecuritytype(securetype: string) {
+    const FELCBframe = await this.handleFieldsExportLCBookingFrame();
+    await FELCBframe.locator(this.Elements.securetype).fill(securetype);
+    await FELCBframe.waitForTimeout(3000);
+
+    }
+    async clicksaveField() {
+    const FELCBframe = await this.handleFieldsExportLCBookingFrame();
+    await FELCBframe.click(this.Elements.savefield);
+    await FELCBframe.waitForTimeout(3000);
+    }
+    
     
          async clickparties() {
     const ELCBframe = await this.handleExportLCFrame();

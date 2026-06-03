@@ -1,8 +1,8 @@
 @CreditLineCreation
-Feature: BookTransfer Account Transaction
+Feature: CreditLineCreation Transaction
 
 @CreditLineCreationScreen @SBM
-    Scenario Outline: Standing Instruction Transaction using Credit by MAK and Authorise by CHE
+    Scenario Outline: CreditLineCreation Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
                When MAK user login in the application
@@ -34,4 +34,4 @@ Feature: BookTransfer Account Transaction
     Examples:
       
                   | HomePageTitle                                       | FunctionName     | Liability No | Line Code |
-                  | Oracle Financial Services - ENG - Transaction Input | GEDFACLT         | 436648      |  CAR      |
+                  | Oracle Financial Services - ENG - Transaction Input | GEDFACLT         | 041663      |  CAR      |

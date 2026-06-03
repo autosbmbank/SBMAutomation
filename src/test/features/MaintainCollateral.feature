@@ -1,8 +1,8 @@
 @MaintainCollateral
-Feature: BookTransfer Account Transaction
+Feature: MaintainCollateral Transaction
 
-@MaintainCollateralscreen @SBM @TDAccount
-    Scenario Outline: LC Availment Transaction using Credit by MAK and Authorise by CHE
+@MaintainCollateralscreen @SBM
+    Scenario Outline: MaintainCollateral Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
                When MAK user login in the application
@@ -13,7 +13,7 @@ Feature: BookTransfer Account Transaction
              And user clicks on Enter Query in MC             
              And user search liab no in MC
              And user enters Liability Number MC as "<Liability Number>"
-             And user fetch Liab No in MC
+            #  And user fetch Liab No in MC
             And user enters Collateral Code MC as "<Collateral Code>"
             And user clicks on Execute Query in MC
       

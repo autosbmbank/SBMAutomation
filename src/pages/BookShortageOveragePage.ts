@@ -289,24 +289,33 @@ export default class BookShortageOveragePage {
 //     await expect(await newPage.locator(this.elements.successmsg).textContent()
 //         ).toContain('Approval Confirmation');
 //         console.log("Book transaction — confirm");
-//         await newPage.locator('//*[@id="_oj234manualConfirmBtn_oj253|text"]').click()
+//         await newPage.locator('//*[@id="_oj190confirmAuto_oj197|text"]').click()
+//         console.log("clicked on confirm button")
 // }
     async verifySuccessMessage() {
+         await newPage.getByRole('button', { name: 'Confirm' }).click();
+             await newPage.getByRole('button', { name: 'Submit For Approval' }).click();
+           console.log('clicked on button1')
+           await newPage.waitForTimeout(2000)
+            await expect(await newPage.locator(this.elements.successmsg).textContent()).toContain('Approval')
+            console.log('sent for Approval')
+            await newPage.locator(this.elements.okButton).click()
+           await newPage.getByRole('button', { name: 'No' }).click();
        
-        await expect(
-            await newPage.locator(this.elements.successmsg).textContent()
-        ).toContain('Success');
-        console.log("Book transaction — Success");
-        try {
-            await newPage.locator(this.elements.okSuccessBtn).click();
-        } catch {
-            await newPage.locator(this.elements.okButton).click();
-        }
-        // Handle advice confirmation if appears
-        try {
-            await newPage.locator(this.elements.adviceconf).click();
-        } catch {
-            // No advice confirmation
-        }
-    }
+    //     await expect(
+    //         await newPage.locator(this.elements.successmsg).textContent()
+    //     ).toContain('Success');
+    //     console.log("Book transaction — Success");
+    //     try {
+    //         await newPage.locator(this.elements.okSuccessBtn).click();
+    //     } catch {
+    //         await newPage.locator(this.elements.okButton).click();
+    //     }
+    //     // Handle advice confirmation if appears
+    //     try {
+    //         await newPage.locator(this.elements.adviceconf).click();
+    //     } catch {
+    //         // No advice confirmation
+    //     }
+     }
 }

@@ -106,6 +106,10 @@ async clicksnewtab(){
     const frame = await this.handleRTGSCustomerFrame()
         await frame.waitForSelector(this.Elements.newtab, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.newtab);
+      try{
+       const frame1 = await this.getauthorizeFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
 }
   
 async Entersourcecode(sourcecode){

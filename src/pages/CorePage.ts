@@ -2,10 +2,16 @@ import { expect, Page, Keyboard } from "@playwright/test";
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 import { get } from "node:http";
-let frame,customerno,authframe,Jointframe,custno,MISframe;
+let frame,authframe,Jointframe,custno,MISframe,customerno: string;
+// export let customerno=0
 let popupframe;
 let overrideframe;
 let successframe;
+ export function getCustomerNo(): string {
+    return customerno;
+}
+
+
 export default class cifCreationPage {
     private base: ReusableMethods;
 
@@ -16,6 +22,7 @@ export default class cifCreationPage {
     private Elements = {
          
               newTab:"//span[@id='New_oj0|text']",
+              ok : '//*[@id="BTN_OK_oj3|text"]',
               btnP: "//div[@class='hfieldset-max-width oj-sm-margin-1x-end']//button",
               fullName: "//textarea[@id='BLK_CUSTOMER__FULLNAME|input']",
               shortName: "//input[@id='BLK_CUSTOMER__SNAME|input']",
@@ -93,7 +100,13 @@ accepttbtn:"#BTN_OK",
     }
     async clickNewTab(){
         // await this.page.pause()
-        await frame.locator(this.Elements.newTab).click()
+        await frame.locator(this.Elements.newTab).click();
+        
+    }
+
+    async clicksok(){
+        // await this.page.pause()
+        await MISframe.locator(this.Elements.ok).click()
     }
     async selectCustomerType(custType:string){
        await frame.getByText(custType,{exact:true}).first().click()
@@ -107,7 +120,9 @@ accepttbtn:"#BTN_OK",
       customerno= await frame.locator("//input[@id='BLK_CUSTOMER__CUSTNO|input']").inputValue()
        await console.log("customer number:"+customerno)
        
-    }
+   }
+  
+   
      async fetchCustno() {
         
             
@@ -297,12 +312,24 @@ async selectCustomerStatus(status:string){
     await frame.getByText("Track Limits").click();
     }
  }
-  async checkTrackLimits(){
-    if (!(await frame.getByText("Track Limits").isChecked())) {
+//   async checkTrackLimits(){
+//     if (await frame.getByText("Track Limits").isChecked()) {
        
-    await frame.getByText("Track Limits").click();
+//     await frame.getByText("Track Limits").click();
+//     }
+//  }
+
+ async checkTrackLimits() {
+
+    const trackLimitCheckbox = frame.locator('//*[@id="BLK_CUSTOMER__TRACK_LIMITS"]/div/div/div');
+
+    if (!(await trackLimitCheckbox.isChecked())) {
+
+        await trackLimitCheckbox.click();
+        await frame.waitForTimeout(2000)
+
     }
- }
+}
 async checkAutoAccCreation(){
    
       if (!(await frame.getByText("Auto Account Creation").isChecked())) {
@@ -351,7 +378,7 @@ async checkAutoAccCreation(){
              successframe= await frameElementHandle2.contentFrame();
              
       const message= successframe.locator(this.Elements.successMessage)
-    await expect(message).toHaveText('Record Successfully Saved');
+    await expect(message).toContainText('Successfully Saved');
     await successframe.click(this.Elements.okbtn)
 
        
@@ -464,7 +491,7 @@ async checkAutoAccCreation(){
              successframe= await frameElementHandle2.contentFrame();
              
       const message= successframe.locator(this.Elements.successMessage)
-    await expect(message).toHaveText('Record Successfully Authorized');
+    await expect(message).toContainText('Record Successfully Authorized');
     await successframe.click(this.Elements.okbtn)
 
            

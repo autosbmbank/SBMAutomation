@@ -1,6 +1,7 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 import { fixture } from "../../hooks/pageFixture";
-import AccountOpeningPage from "../../pages/AccountOpeningPage"; 
+import AccountOpeningPage from "../../pages/AccountOpeningPage";
+import cifCreationPage from "../../pages/CorePage"; 
 let AOPage: AccountOpeningPage;
 
 When("clicks on New tab", async function(){
@@ -8,9 +9,19 @@ When("clicks on New tab", async function(){
      await AOPage.clicknewtab();
 });
 
-When("enter Customer no {string}", async function(custmno : string){
+// When("clicks on ok in STDCUSAC", async function(){
+//   AOPage = await new AccountOpeningPage(fixture.page);
+//      await AOPage.clicksok();
+// });
+
+When("enter Customer no", async function(){
    AOPage = await new AccountOpeningPage(fixture.page);
-     await AOPage.entercustmno(custmno);
+     await AOPage.entercustmno();
+});
+
+When("enter Customer no {string}", async function(accountnumber : string ){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.entercustomernum(accountnumber);
 });
 
 When("enter Currency1 {string}", async function(curren : string){
@@ -41,6 +52,16 @@ When("enter location {string}", async function(location : string){
 When("enter media {string}", async function(media : string){
    AOPage = await new AccountOpeningPage(fixture.page);
      await AOPage.entermedia(media);
+});
+
+When("select mode of Operation", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.selectmodeofoperation();
+});
+
+When("uncheck ATM checkbox", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.Clickatm();
 });
 
 When("click on MIS tab in STDCUSAC", async function(){
@@ -185,6 +206,11 @@ When("Click on Execute Query in STDCUSAC", async function () {
  When("click on first record", async function(){
    AOPage = await new AccountOpeningPage(fixture.page);
      await AOPage.clickfirstrecord();
+ });
+
+ When("click on search in STDCUSAC", async function(){
+   AOPage = await new AccountOpeningPage(fixture.page);
+     await AOPage.clicksearch();
  });
 
  When("click on search in signature id", async function(){

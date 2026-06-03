@@ -34,10 +34,10 @@ export default class RTGSInboundPage {
         DebitorAgentBICFI: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG__DTA_FINID_BICFI|input']",
         InstructingAgentBICFI: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG_DTL__ING_FINID_BICFI|input']",
         Enrich: "//span[@id='BLK_BRN_RTGS_IN_ISO_TXN__BTN_ENRICH_oj123|text']",
-        // OtherCreditorDetails: "//span[@id='BLK_BRN_RTGS_IN_FICT_MSG__BTN_CR_OTHR_DTLS_oj132|text']", 
-        // Department: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG__CDTR_FINID_PSTLADR_DEPT|input']",
-        // Floor: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG__CDTR_FINID_PSTLADR_FLR|input']",
-        // save: "//span[@id='BTN_OK_oj37|text']",
+         OtherCreditorDetails: "//span[@id='BLK_BRN_RTGS_IN_FICT_MSG__BTN_CR_OTHR_DTLS_oj132|text']", 
+         Department: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG__CDTR_FINID_PSTLADR_DEPT|input']",
+         Floor: "//input[@id='BLK_BRN_RTGS_IN_FICT_MSG__CDTR_FINID_PSTLADR_FLR|input']",
+         save: "//span[@id='BTN_OK_oj37|text']",
         savebutton: '//*[@id="Save_oj7|text"]',
         OKbtn : "//span[@id='BTN_OK_oj0|text']",
         okButton: "//span[@id='BTN_OK_oj0|text']",
@@ -92,7 +92,7 @@ export default class RTGSInboundPage {
     throw err;
   }
 }
-   /*async handleCreditorDetails() {
+   async handleCreditorDetails() {
     const frame = await this.handleRTGSInboundFrame();
     const frameElementHandles = await frame.waitForSelector("//iframe[@id='ifrSubScreen']", { timeout: 5000 });
 
@@ -104,12 +104,16 @@ export default class RTGSInboundPage {
     }
 
     return Cframe;
-   }*/
+   }
 
    async clickNew() {
     const RIframe = await this.handleRTGSInboundFrame();
     await RIframe.waitForSelector(this.Elements.NewRI, {state: 'visible',timeout: 20000});
     await RIframe.click(this.Elements.NewRI);
+    try{
+       const frame1 = await this.handleAuthorizeRTGSInboundFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
 
@@ -225,7 +229,7 @@ export default class RTGSInboundPage {
   await RIframe.locator(this.Elements.InstructingAgentBICFI).fill(instructingAgentBICFI);
    
    }
-   /*async clickOtherCreditDetails() {
+   async clickOtherCreditDetails() {
     const frame = await this.handleRTGSInboundFrame();
     await frame.waitForSelector(this.Elements.OtherCreditorDetails, {state: 'visible',timeout: 2000});
     await frame.click(this.Elements.OtherCreditorDetails);
@@ -248,7 +252,7 @@ export default class RTGSInboundPage {
      const Cframe = await this.handleCreditorDetails();
     await Cframe.click(this.Elements.save);
      await this.page.waitForTimeout(2000);
-    }*/
+    }
 
    async clickEnrich() {
     const RIframe = await this.handleRTGSInboundFrame();

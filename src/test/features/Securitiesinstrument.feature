@@ -47,4 +47,4 @@ Feature: Securities Instrumention Definition
 
              Examples:
              | HomePageTitle             | SecurityID | Product | MarketOfIssue | IssuerCode | IssueDate | StartofTradingDate | RedemptionDate | SecurityCurrency | InitialFaceValue | IssuePrice | RedemptionPrice | CollateralType | MarketForRevaluation |
-             | Oracle Financial Services | 111234  | CKTB     | CBKFLTBN       | 100000    | 2/3/2026 |  03/25/2026       | 1/3/2027       |  KES              |       9           |   2000     |       9         |    SE          |      NSETRD          |
+             | Oracle Financial Services | 89654  | CKTB     | CBKFLTBN       | 100000    | 2/3/2026 |  03/25/2026       | 1/3/2027       |  KES              |       9           |   2000     |       9         |    SE          |      NSETRD          |

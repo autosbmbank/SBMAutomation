@@ -7,20 +7,23 @@ Scenario Outline: Foreign Exchange Payment Input
             When MAK user enters the username and password
             When MAK user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-             And enter the Branch number as "001"
+          #    And enter the Branch number as "001"
              When user enters the function name as "FXDTRPAY" and click search button
              And Click on New in FXDTRPAY
              And enter Reference Number "<ReferenceNumber>"
              And click on Default Button
+             And enter bought amount "<BoughtAmount>"
+             And enter sold amount "<SoldAmount>"
+             And click on recalculate button
              And click on Save in FXDTRPAY
              And click on okbtn in FXDTRPAY
              And click on exit in FXDTRPAY
-             And enter the Branch number as "000"
+          #    And enter the Branch number as "000"
              And user SignOff the application
               When CHE user enters the username and password
              When CHE user login in the application
              Then valdiate the home page tite as "- Oracle Financial Services - ENG - Transaction Input"
-             And enter the Branch number as "001"
+          #    And enter the Branch number as "001"
              When user enters the function name as "FXDTRPAY" and click search button
              And click on enter query in FXDTRPAY
              And enter Reference Number "<ReferenceNumber>"
@@ -30,6 +33,6 @@ Scenario Outline: Foreign Exchange Payment Input
              And click on ok in FXDTRPAY
 
              Examples:
-    | HomePageTitle             | ReferenceNumber |
-    | Oracle Financial Services | 001FXFD260621003 |
+    | HomePageTitle             | ReferenceNumber | BoughtAmount |  SoldAmount |
+    | Oracle Financial Services | 000FXFD260830002 | 1000  | 50000 |
     

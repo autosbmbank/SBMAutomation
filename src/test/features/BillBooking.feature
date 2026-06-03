@@ -1,5 +1,5 @@
 @BillBooking
-Feature: Guarante Transaction
+Feature: BillBooking Transaction
 
 @BillBookingscreen @SBM @TDAccount
     Scenario Outline: BillBooking Transaction using Credit by MAK and Authorise by CHE

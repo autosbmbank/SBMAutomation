@@ -1,9 +1,8 @@
   module.exports = {
      default: {
  
-        tags:"@KYC",
-       
- 
+        tags:"@GUARANTEE1",
+
           formatOptions: {
  
           snippetInterface: "async-await",

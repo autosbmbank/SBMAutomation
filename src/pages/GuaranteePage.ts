@@ -2,7 +2,7 @@
 
 import ReusableMethods from "../helper/wrapper/reusableMethods";
 
-let GSframe,AAGframe,Contractrefrn
+let GSframe,AAGframe,Contractrefrn,Currencygs,Customergs,Contractamt
 // let Bframe
 export default class GuaranteePage {
 
@@ -46,8 +46,12 @@ export default class GuaranteePage {
         currencygs:"//input[@id='BLK_REYKEY_DETAILS__CONTCCY|input']",
         contractamountgs:"//input[@id='BLK_REYKEY_DETAILS__CONTAMT|input']",
         customeridgs:"//input[@id='BLK_REYKEY_DETAILS__CIFID|input']",
-        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC3"]/div/div' ,
-        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC2"]/div/div',
+        confirm3 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC2"]/div/div' ,
+        confirm2 : '//*[@id="BLK_OVERRIDES_DETAILS__CONFIRMEDRC1"]/div/div',
+        securetype:'//*[@id="BLK_TXN_UDF_DETAILS__FLDVALRC0|input"]',
+        field:'//*[@id="CSCTFUDF_oj145|text"]',
+        savefield:'//*[@id="BTN_OK_oj8|text"]',
+        getcurrncy:'//*[@id="BLK_CONTRACT_DETAILS__CONTCCY|input"]'
         
     
     }
@@ -84,6 +88,10 @@ export default class GuaranteePage {
     await GSframe.waitForSelector(this.Elements.Newamend,{state: 'visible',timeout: 20000});
 
     await GSframe.click(this.Elements.Newamend);
+    try{
+       const frame1 = await this.handleAuthorizeGuaranteeFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
    async handleInformationMessageFrame() {
   try {
@@ -101,6 +109,20 @@ export default class GuaranteePage {
     throw err;
   }
 }
+async handleFieldsExportLCBookingFrame() {
+      
+      const GSframe = await this.handleGuaranteeFrame();
+    const frameElementHandle = await GSframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
+
+    const FGSframe = await frameElementHandle.contentFrame();
+    
+
+    if (!FGSframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+
+    return FGSframe;
+    }
    
 
 
@@ -173,6 +195,22 @@ async clicDefaulttab() {
     const GSframe = await this.handleInformationMessageFrame();
     await GSframe.click(this.Elements.okmain);
     await GSframe.waitForTimeout(3000);
+    }
+    async clickfields() {
+     const GSframe = await this.handleGuaranteeFrame();
+    await GSframe.click(this.Elements.field);
+    await GSframe.waitForTimeout(3000);
+    }
+    async entersecuritytype(securetype: string) {
+    const FGSframe = await this.handleFieldsExportLCBookingFrame();
+    await FGSframe.locator(this.Elements.securetype).fill(securetype);
+    await FGSframe.waitForTimeout(3000);
+
+    }
+    async clicksaveField() {
+    const FGSframe = await this.handleFieldsExportLCBookingFrame();
+    await FGSframe.click(this.Elements.savefield);
+    await FGSframe.waitForTimeout(3000);
     }
     async clickparties() {
     const GSframe = await this.handleGuaranteeFrame();
@@ -269,6 +307,27 @@ async entercontractrefrn() {
     console.log("Contract Reference:"+Contractrefrn)
        
     }
+    async getcurrencygs() {       
+            const GSframe = await this.handleGuaranteeFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      Currencygs = await GSframe.locator(this.Elements.getcurrncy).inputValue()
+    console.log("Currency:"+Currencygs)
+       
+    }
+    async getcustomergs() {       
+            const GSframe = await this.handleGuaranteeFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      Customergs = await GSframe.locator(this.Elements.customerg).inputValue()
+    console.log("Customer:"+Customergs)
+       
+    }
+    async getcontractamountgs() {       
+            const GSframe = await this.handleGuaranteeFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      Contractamt = await GSframe.locator(this.Elements.contractamountg).inputValue()
+    console.log("Contract Amount:"+Contractamt)
+       
+    }
    
 
     async clickExecuteQuery() {
@@ -295,25 +354,36 @@ async clickAuthorizebtngs() {
     await AAGframe.waitForTimeout(3000);
     }
 
-async entercurrencygs(currencygs: string) {
+async entercurrecygs(currencygs: string) {
     const AAGframe = await this.handleAuthorizeGuaranteeFrame();
     await AAGframe.locator(this.Elements.currencygs).fill(currencygs);
     await AAGframe.waitForTimeout(3000);
 
     }
+    async entercontractamountgs() {
     
-async entercontractamountgs(contractamountgs: string) {
+    //const frame = await this.handleAuthorizeBookTransferFrame();
     const AAGframe = await this.handleAuthorizeGuaranteeFrame();
-    await AAGframe.locator(this.Elements.contractamountgs).fill(contractamountgs);
-    await AAGframe.waitForTimeout(3000);
-
-    }
-    async entercustomeridgs(customeridgs: string) {
+    await AAGframe.waitForSelector(this.Elements.contractamountgs, {state: 'visible',timeout: 20000});
+    await AAGframe.locator(this.Elements.contractamountgs).fill(Contractamt)
+   }
+   async entercustomeridgs() {
+    
+    //const frame = await this.handleAuthorizeBookTransferFrame();
     const AAGframe = await this.handleAuthorizeGuaranteeFrame();
-    await AAGframe.locator(this.Elements.customeridgs).fill(customeridgs);
-    await AAGframe.waitForTimeout(3000);
+    await AAGframe.waitForSelector(this.Elements.customeridgs, {state: 'visible',timeout: 20000});
+    await AAGframe.locator(this.Elements.customeridgs).fill(Customergs)
+   }
+   async entercurrencygs() {
+    
+    //const frame = await this.handleAuthorizeBookTransferFrame();
+    const AAGframe = await this.handleAuthorizeGuaranteeFrame();
+    await AAGframe.waitForSelector(this.Elements.currencygs, {state: 'visible',timeout: 20000});
+    await AAGframe.locator(this.Elements.currencygs).fill(Currencygs)
+   }
+    
 
-    }
+    
     async clickToggleByNolimit() {
         const AAGframe = await this.handleAuthorizeGuaranteeFrame();
        await AAGframe.locator(this.Elements.confirm3).click()

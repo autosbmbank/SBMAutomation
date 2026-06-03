@@ -1,5 +1,5 @@
 @LiabilityCreation
-Feature: BookTransfer Account Transaction
+Feature: LiabilityCreation Transaction
 
 @LiabilityCreationscreen @SBM @TDAccount
     Scenario Outline: Liability Creation using Credit by MAK and Authorise by CHE
@@ -34,4 +34,4 @@ Feature: BookTransfer Account Transaction
     Examples:
       
                   | HomePageTitle                                       | BranchNumber | FunctionName     | Liability No |  Liability Name| 
-                  | Oracle Financial Services - ENG - Transaction Input | 000          |    GEDMLIAB      | 78339922        |  Rhagu         |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          |    GEDMLIAB      | 78665551        |  Rhagu         |

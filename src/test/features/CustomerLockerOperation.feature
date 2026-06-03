@@ -1,8 +1,8 @@
 @CustomerLockerOperation
-Feature: BookTransfer Account Transaction
+Feature: CustomerLockerOperation Transaction
 
-@CustomerLockerOperationscreen @SBM @TDAccount
-    Scenario Outline: LC Availment Transaction using Credit by MAK and Authorise by CHE
+@CustomerLockerOperationscreen @SBM 
+    Scenario Outline: CustomerLockerOperation Transaction using Credit by MAK and Authorise by CHE
       Given User navigates to the application
               When MAK user enters the username and password
                When MAK user login in the application
@@ -36,4 +36,4 @@ Feature: BookTransfer Account Transaction
       Examples:
       
                   | HomePageTitle                                       | BranchNumber | FunctionName     | Box Type    |Branch Code    | Name  |Address    | Phone Number|
-                  | Oracle Financial Services - ENG - Transaction Input | 000          | DLDCUSWL         | LARGE       | 000           | Bill  | Hyd       | 9967895678  |
+                  | Oracle Financial Services - ENG - Transaction Input | 000          | DLDCUSWL         | LARGE1       | 000           | Bill  | Hyd       | 9967895678  |

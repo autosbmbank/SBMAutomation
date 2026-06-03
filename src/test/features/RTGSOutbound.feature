@@ -21,6 +21,7 @@ Feature: RTGS OUTBOUND Feature
             And User enters the Debitor Agent BICFI as "<DebitorAgentBICFI>" 
             And User enters the Creditor BICFI as "<CreditorBICFI>"
             And User enters the Instructing Agent BICFI as "<BICFI>"
+            And click on Search button in PSDORTBT
             And click on first row in PSDORTBT
              And get the transaction reference number in PSDORTBT
             And User clicks on enrich button

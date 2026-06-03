@@ -1,0 +1,217 @@
+import { expect, Page, Keyboard } from "@playwright/test";
+ 
+import ReusableMethods from "../helper/wrapper/reusableMethods";
+ 
+let LRUSframe,ALRUSframe,TotalAmount
+// let Bframe
+export default class LRUncheduledPage {
+ 
+    private base: ReusableMethods;
+ 
+ 
+    constructor(private page: Page) {
+ 
+        this.base = new ReusableMethods(page);
+ 
+    }
+ 
+    private Elements = {
+        Newtab: "//span[@id='New_oj0|text']",
+        EntrQuery: "//span[@id='EnterQuery_oj17|text']",
+        ExectQuery: "//span[@id='ExecuteQuery_oj18|text']",  
+        Accountnumber: "//input[@id='BLK_LIQ__ACCNO|input']",
+        clickPopulate: "//span[@id='BLK_LIQ__BTN_POPDUE_oj70|text']",
+         clickallocate:'//span[@id="BLK_LIQ__BTN_ALLOCATE_oj72|text"]',      
+        exitplr:'//span[@id="BTN_EXIT_IMG_oj91|text"]',
+        save:"//span[@id='Save_oj7|text']",
+        OKbtn : "//span[@id='BTN_OK_oj0|text']",
+        Authorized: "//span[@id='Authorize_oj8|text']",
+        Authorizebutton: "//*[@id='BLK_ACC__BTN_AUTH_oj20|text']",
+        okButton : "//span[@id='BTN_OK_oj0|text']",
+        gettotalamt:'//*[@id="BLK_TOTAL__TOTALRC0|input"]',
+        totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]',
+        acceptlrus:"//span[@id='BTN_ACCEPT_oj1|text']"
+       
+       
+   
+    }  
+ 
+    async handleLRUnscheduledFrame() {
+    const frameElementHandle = await this.page.waitForSelector('//iframe[contains(@id,"ifr_LaunchWin")]',{ timeout: 30000 });
+ 
+    const LRUSframe = await frameElementHandle.contentFrame();
+ 
+    if (!LRUSframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+ 
+    return LRUSframe;
+   }
+ 
+   async handleAuthorizeLRUSFrame() {
+     
+      const LRUSframe = await this.handleLRUnscheduledFrame();
+    const frameElementHandle = await LRUSframe.waitForSelector('iframe[id="ifrSubScreen"]', { timeout: 10000 });
+ 
+    const ALRUSframe = await frameElementHandle.contentFrame();
+    console.log("Authroize frame")
+ 
+    if (!ALRUSframe) {
+        throw new Error('Authorize frame not loaded');
+    }
+ 
+    return ALRUSframe;
+    }
+    async handleAcceptLRUnScheduledFrame() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    const frameElementHandle = await LRUSframe.waitForSelector('iframe[id="ifr_AlertWin"]',{ timeout: 30000 });
+
+    const AccLRUSframe = await frameElementHandle.contentFrame();
+
+    if (!AccLRUSframe) {
+        throw new Error('Frame not loaded');
+    }
+
+    return AccLRUSframe;
+   }
+   
+    async handleInformationMessageFrame() {
+  try {
+        const outerFrameHandle = await this.page.waitForSelector(
+  '//iframe[contains(@title, "CL Payments")]', { timeout: 30000 }
+);
+    const outerFrame = await outerFrameHandle.contentFrame();
+    const innerFrameHandle = await outerFrame.waitForSelector(
+      'iframe[id="ifr_AlertWin"]', { timeout: 50000 }
+    );
+    const innerFrame = await innerFrameHandle.contentFrame();
+    return innerFrame;
+  } catch (err) {
+    console.log("handleInformationMessageFrame failed:", err);
+    throw err;
+  }
+}
+ 
+ 
+    async clickNewtab() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+ 
+    await LRUSframe.waitForSelector(this.Elements.Newtab, {
+        state: 'visible',
+        timeout: 20000
+    });
+ 
+    await LRUSframe.click(this.Elements.Newtab);
+    try{
+       const frame1 = await this.handleAuthorizeLRUSFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
+   }
+
+   async clickacceptelrus() {
+    const AccLRUSframe = await this.handleAcceptLRUnScheduledFrame();
+    await AccLRUSframe.click(this.Elements.acceptlrus);
+    await AccLRUSframe.waitForTimeout(3000);
+    }
+ 
+ 
+    async enterAccountnumber(Accountnumber: string) {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.locator(this.Elements.Accountnumber).fill(Accountnumber);
+    await LRUSframe.waitForTimeout(3000);
+ 
+    }
+    async clickPopulate() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.click(this.Elements.clickPopulate);
+    await LRUSframe.waitForTimeout(3000);
+    }
+    async clickAllocate() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.click(this.Elements.clickallocate);
+    await LRUSframe.waitForTimeout(3000);
+    }
+   
+    async entertotalamount() {
+   
+    //const frame = await this.handleAuthorizeBookTransferFrame();
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.waitForSelector(this.Elements.totalamt, {state: 'visible',timeout: 20000});
+    await LRUSframe.locator(this.Elements.totalamt).fill(TotalAmount)
+   }
+  async gettotalamount() {      
+            const LRUSframe = await this.handleLRUnscheduledFrame();
+               //await GSframe.click(this.Elements.fetchcontrrfn);
+      TotalAmount = await LRUSframe.locator(this.Elements.gettotalamt).inputValue()
+    console.log("Contract Reference:"+TotalAmount)
+       
+    }  
+   
+    async clickexit() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.click(this.Elements.exitplr);
+    await LRUSframe.waitForTimeout(3000);
+    }
+   
+    async clicksave() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.click(this.Elements.save);
+    await LRUSframe.waitForTimeout(2000);
+    }
+    async clickokbtn() {
+    const LRUSframe = await this.handleInformationMessageFrame();
+    await LRUSframe.click(this.Elements.OKbtn);
+    await LRUSframe.waitForTimeout(3000);
+    }
+    async clickEnterQuery() {
+   
+        const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.waitForSelector(this.Elements.EntrQuery, {state: 'visible',timeout: 20000});
+    await LRUSframe.click(this.Elements.EntrQuery);
+   }
+ 
+ 
+    async clickExecuteQuery() {
+   
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.waitForSelector(this.Elements.ExectQuery, {state: 'visible',timeout: 15000,});
+    await LRUSframe.click(this.Elements.ExectQuery);
+    }
+ 
+    async clickAuthorizetabgs() {
+        const LRUSframe = await this.handleLRUnscheduledFrame();
+    await LRUSframe.click(this.Elements.Authorized);
+    await LRUSframe.waitForTimeout(2000);
+      }
+ 
+     
+     
+async clickAuthorizebtngs() {
+   
+    const ALRUSframe = await this.handleAuthorizeLRUSFrame();
+    await ALRUSframe.click(this.Elements.Authorizebutton);
+    await ALRUSframe.waitForTimeout(3000);
+    }
+    async clickOK() {
+  try {
+    const okButton = this.page
+      .frameLocator('iframe[id*="ifr_LaunchWin"]')
+      .frameLocator('#ifrSubScreen')
+      .frameLocator('#ifr_AlertWin')
+      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
+ 
+    await okButton.waitFor({ state: 'visible', timeout: 20000 });
+    await okButton.click({ force: true }); // force if masked
+ 
+    console.log("Successfully clicked OK button in ALERTWIN");
+ 
+  } catch (error) {
+    console.error("Failed to click OK button in ALERTWIN frame", error);
+    throw error;
+  }
+ 
+}
+ 
+ 
+   
+}

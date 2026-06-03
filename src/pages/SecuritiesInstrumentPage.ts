@@ -143,6 +143,10 @@ async clicknewtab(){
         const frame = await this.handleSIDFrame()
         await frame.waitForSelector(this.Elements.new, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.new);
+      try{
+       const frame1 = await this.getAuthorizeFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
      }
 
      async entersecurityid(id){

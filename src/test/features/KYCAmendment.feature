@@ -53,6 +53,7 @@ Feature: KYC Maintenance Feature
     And User selects KYC Customer Type as "<KYCCustomerType>"
     And User selects KYC Risk Level as "<RiskLevel>"
     And User selects Customer Type at bottom "<KYCCustomerType>"
+    And User selects KYC Risk Level as "<RiskLevel>"
     And User enters Parent Company Country of Incorporation as "<Country>"
     And User clicks Save in Corporate Tab
     And User clicks Save in Main Tab and clicks Ok

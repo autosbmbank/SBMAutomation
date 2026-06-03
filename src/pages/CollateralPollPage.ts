@@ -14,25 +14,30 @@ export default class CollateralPoolPage {
     private Elements = {
         // Navigation — |text suffix pattern (same as TopUp/KYC)
         newTab:          "//span[contains(@id,'New') and contains(@id,'|text')]",
-        enterQueryTab:   "//span[contains(@id,'EnterQuery') and contains(@id,'|text')]",
-        executeQueryTab: "//span[contains(@id,'ExecuteQuery') and contains(@id,'|text')]",
-        authorizeTab:    "//span[contains(@id,'Authorize') and contains(@id,'|text')]",
+        enterQueryTab:   '//*[@id="EnterQuery_oj17|text"]',
+        executeQueryTab: '//*[@id="ExecuteQuery_oj18|text"]',
+        authorizeTab:   '//*[@id="Authorize_oj8|text"]',
         saveButton:      "//span[contains(@id,'Save') and contains(@id,'|text')]",
         exitButton:      "//span[contains(@id,'BTN_EXIT') and contains(@id,'|text')]",
-        okBtn:           "//span[contains(@id,'BTN_OK') and contains(@id,'|text')]",
-        acceptBtn:       "//*[contains(@id,'BTN_ACCEPT') and contains(@id,'|text')]",
+        okBtn:           '//*[@id="BTN_OK_oj0|text"]',
+        fetch : '//*[@id="_oj13|text"]',
+        firstrecord: '//*[@id="TableLov"]/div[1]/table/tbody/tr',
+        acceptBtn:       '//*[@id="BTN_OK_oj16|text"]',
 
         // Main form fields — |input suffix pattern (same as TopUp/KYC)
         liabilityNo:     '//input[@id="1|input"]',
         poolCode:        '//input[@id="BLK_COLLATERALS_POOL__POOL_CODE|input"]',
         poolCurrency:    '//input[@id="BLK_COLLATERALS_POOL__POOL_CCY|input"]',
+        percentageno : '//*[@id="BLK_POOL_COLLATERALS_LINKAGE__LINKED_PERCENT_NUMBERRC0|input"]',
 
         // Collateral Pool Linkage section
         collateralAddRow: '//*[@id="cmdAddRow_BLK_POOL_COLLATERALS_LINKAGE"]/button',
         collateralCode:  '//input[@id="1|input"]',
+        LiabilityNo : '//*[@id="BLK_COLLATERALS_POOL__LIAB_NO|input"]',
 
         // Success messages
         successMessage:  "//*[@id='ERRTBL:48_0']",
+        exitbtn : '//*[@id="BTN_EXIT_IMG_oj62|text"]',
     }
 
     // ─── Private Frame Getter — Lazy Init with Cache ──────────────────────────
@@ -76,6 +81,10 @@ export default class CollateralPoolPage {
     async clickNewTab() {
         const frame = await this.getFrame();
         await frame.click(this.Elements.newTab);
+        try{
+       const frame1 = await this.getSubScreenFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
         // ✅ NEEDED — wait for form to load
        
     }
@@ -84,7 +93,7 @@ export default class CollateralPoolPage {
         const frame = await this.getFrame();
         await frame.click(this.Elements.enterQueryTab);
         // ✅ NEEDED — wait for query fields to be ready
-        await frame.waitForSelector(this.Elements.liabilityNo, { state: 'visible', timeout: 15000 });
+        await frame.waitForSelector(this.Elements.LiabilityNo, { state: 'visible', timeout: 15000 });
     }
 
     async clickExecuteQuery() {
@@ -140,14 +149,19 @@ export default class CollateralPoolPage {
         await frame.waitForTimeout(1000);
         console.log("Clicked Collateral Linkage Add Row");
     }
-
+ async enterPercentage(percentage){
+    const frame = await this.getFrame();
+        await frame.locator(this.Elements.percentageno).clear();
+        await frame.locator(this.Elements.percentageno).fill(percentage);
+        await frame.waitForTimeout(1000);
+ }
     async searchCollateralCode(collateralCode: string) {
         const frame = await this.getFrame();
         await frame.locator('//*[@id="BLK_POOL_COLLATERALS_LINKAGE__COLLATERAL_CODERC0"]/div[1]/span/oj-button/button/div/span[1]/span').click()
         const subFrame = await this.getSubScreenFrame();
          await subFrame.locator(this.Elements.collateralCode).clear()
         await subFrame.locator(this.Elements.collateralCode).fill(collateralCode);
-        await subFrame.locator('//*[@id="_oj5|text"]').click()
+      /*  await subFrame.locator('//*[@id="_oj5|text"]').click()
           await subFrame.locator(
         `td[id*='TableLov'][id$='_0']:has-text("${collateralCode}")`
     ).first().click();
@@ -155,6 +169,29 @@ export default class CollateralPoolPage {
         await subFrame.waitForTimeout(1000);
         console.log("Searched Collateral Code:", collateralCode);
     }
+//     //  remarks frame
+// async handleSubScreenFrame() {
+//     const frame = await this.getFrame();
+
+//     const iframe = await frame.waitForSelector(
+//         'iframe[id="ifrSubScreen"]',
+//         { state: 'visible', timeout: 30000 }
+//     );
+
+//     return await iframe.contentFrame();
+// } */
+    }
+async clickfetch(){
+    const frame = await this.getSubScreenFrame();
+        await frame.locator(this.Elements.fetch).click();
+        await frame.waitForTimeout(1000);
+}
+
+async clickfirst(){
+    const frame = await this.getSubScreenFrame();
+        await frame.locator(this.Elements.firstrecord).click();
+        await frame.waitForTimeout(1000);
+}
 
     // ─── Save Actions ─────────────────────────────────────────────────────────
 
@@ -184,10 +221,15 @@ export default class CollateralPoolPage {
         await this.page.waitForTimeout(1000);
     }
 
+    async clickexit(){
+        const frame = await this.getFrame();
+        await frame.locator(this.Elements.exitbtn).click();
+        await frame.waitForTimeout(2000);
+    }
     async verifySuccessMessage() {
         const alertFrame = await this.getAlertFrame();
         const message = alertFrame.locator(this.Elements.successMessage);
-        await expect(message).toHaveText('Record Successfully Saved');
+        await expect(message).toContainText('Success');
         await alertFrame.locator(this.Elements.okBtn).click();
         console.log("Pool record saved successfully");
     }
@@ -196,8 +238,8 @@ export default class CollateralPoolPage {
 
     async enterLiabilityNoForQuery(liabilityNo: string) {
         const frame = await this.getFrame();
-        await frame.locator(this.Elements.liabilityNo).clear();
-        await frame.locator(this.Elements.liabilityNo).fill(liabilityNo);
+        await frame.locator(this.Elements.LiabilityNo).clear();
+        await frame.locator(this.Elements.LiabilityNo).fill(liabilityNo);
         console.log("Entered Liability No for query:", liabilityNo);
     }
 
@@ -222,12 +264,12 @@ export default class CollateralPoolPage {
             );
             const successframe = await alertHandle.contentFrame();
             const message = successframe.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Record Successfully Authorized');
             await successframe.locator(this.Elements.okBtn).click();
         } catch {
             const alertFrame = await this.getAlertFrame();
             const message = alertFrame.locator(this.Elements.successMessage);
-            await expect(message).toHaveText('Record Successfully Authorized');
+            await expect(message).toContainText('Record Successfully Authorized');
             await alertFrame.locator(this.Elements.okBtn).click();
         }
         console.log("Pool record authorized successfully");

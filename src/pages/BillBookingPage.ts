@@ -113,6 +113,10 @@ async clickNewExLCBooking() {
     await BBframe.waitForSelector(this.Elements.NewBB,{state: 'visible',timeout: 20000});
 
     await BBframe.click(this.Elements.NewBB);
+    try{
+       const frame1 = await this.handleAuthorizeBillBookingFrame()
+       await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
+        }catch{}
    }
 
     async enterproductcodeb(productcodeb: string) {

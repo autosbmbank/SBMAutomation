@@ -1,19 +1,19 @@
 import { expect, Page, Keyboard } from "@playwright/test";
 import ReusableMethods from "../helper/wrapper/reusableMethods";
-
+ 
 let page2Promise,pagePromise;
 let targetPage;
 let globalacno
 let GLCodevar,GLdescvar,option1var,option2var,option3var,option4var,option5var,option6var,parentGLvar;
 //let frame: any; // typed to avoid TS1128 due to implicit any/global
-
+ 
 export default class WithdrawalsPage {
   private base: ReusableMethods;
-
+ 
   constructor(private page: Page) {
     this.base = new ReusableMethods(page);
   }
-
+ 
   private Elements = {
     NextGenUItab: "//a[@id='DBoardNextGenUI']",
     Tellertab: "//span[normalize-space(text())='Teller']",
@@ -26,7 +26,7 @@ export default class WithdrawalsPage {
     branchbtchokbtn:"//oj-dialog[.//div[contains(@class,'oj-dialog-content')]//*[normalize-space(.)='Branch batch is already open for the current date']]//button[.//span[contains(@class,'oj-button-text') and normalize-space(.)='OK']]",
      //oj-dialog[.//div[contains(@class,'oj-dialog-content')]             //*[normalize-space(.)='Branch batch is already open for the current date']]           //button[.//span[contains(@class,'oj-button-text')              and normalize-space(.)='OK']]
     OpenTellerBtch: "//div[@class='oj-flex-item oj-sm-padding-2x-horizontal']//a//span[normalize-space(text())='Open Teller Batch']",
-
+ 
     TellerBatchError: "//div[@class='oj-button-label']//span[@id='okBtn _oj56|text']",
     Cashwithdrawal: "//span[normalize-space()='1001-Cash Withdrawal']",
     CashDeposit: "//span[normalize-space(text())='Cash Deposit']",
@@ -34,7 +34,7 @@ export default class WithdrawalsPage {
     // DAccountNumber: "//input[@id='txnAcc|input']",
     TxnAmt: "//label[normalize-space()='Transaction Amount']   /following::input[contains(@class,'oj-inputtext-input')][1]",
     chargedetails: "//span[normalize-space(.)='Charge Details']/ancestor::*[@role='button' or contains(@class,'oj-collapsible-header')][1]",
-    
+   
     NoDataText: "//span[normalize-space()='Charge Details']/ancestor::oj-collapsible//td[normalize-space()='No data to display.']",
   successmsg:"(//div[@class='oj-message-summary oj-message-title'])[1]",
 //   selectBtn:"(//label[@class='LBLmenustd'])[6]",
@@ -51,11 +51,11 @@ export default class WithdrawalsPage {
   adviceconf: "(//span[@data-bind='text: labels.no'][normalize-space()='No'])[1]",
     NoBtn: "(//span[@id='_oj82|text'])[1]",
     NextGenFrame: '//iframe[contains(@title, "Next Gen UI Dashboard")]',
-  
+ 
   };
-
+ 
 //Next Gen UI Dashboard
-
+ 
   async handleNextGenUIDashboard() {
     try {
       // Wait for the iframe to appear in the DOM
@@ -69,12 +69,12 @@ export default class WithdrawalsPage {
      console.log("handleAMFrame() failed:", message);
     }
   }
-
+ 
 async clickNextGentab(){
    await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
      console.log("Clicked on NextGen UI Dashboard");
      
-        
+       
      try {
          const frameElementHandle = await this.page.waitForSelector(this.Elements.NextGenFrame, { timeout: 40000 });
         const nextgenframe = await frameElementHandle.contentFrame();
@@ -94,7 +94,7 @@ async clickNextGentab(){
      // Wait for the new page to open
      try {
         targetPage = await pagePromise;
-      
+     
       } catch {
         targetPage = this.page;
       }
@@ -113,13 +113,13 @@ async clickNextGentab(){
       }
       await targetPage.waitForLoadState('networkidle').catch(() => {});
       await targetPage.waitForTimeout(600);
-      
+     
     const currentURL = targetPage.url();
     await targetPage.goto(currentURL, { waitUntil: 'networkidle' });
     await targetPage.waitForTimeout(5000);
  
 }
-
+ 
 async clickchangebranch(code: string) {
  await targetPage.waitForSelector(this.Elements.BranchFilterInput, {state : 'visible', timeout : 15000});
  await targetPage.locator(this.Elements.BranchFilterInput).clear();
@@ -130,9 +130,9 @@ async clickchangebranch(code: string) {
  await targetPage.locator(this.Elements.confirmbrcodebtn).click();
  await targetPage.waitForTimeout(20000);
 }
-
-
-
+ 
+ 
+ 
 async clickCashWithdrawal(){
 //  await targetPage.waitForSelector(this.Elements.Tellertab, {state : 'visible', timeout : 15000});
  await targetPage.locator(this.Elements.Tellertab).click();
@@ -142,13 +142,13 @@ async clickCashWithdrawal(){
  await targetPage.locator(this.Elements.Cashwithdrawal).click();
 console.log("withdrawal Tab")
 }
-
+ 
 async beforechargedetails(){
 await targetPage.waitForSelector(this.Elements.chargedetails, {state : 'visible', timeout : 15000});
  await targetPage.locator(this.Elements.chargedetails).click();
  await targetPage.waitForTimeout(20000);
 }
-
+ 
 async afterchargedetails(){
 await targetPage.waitForSelector(this.Elements.chargedetails, {state : 'visible', timeout : 15000});
 if (!(await targetPage.locator(this.Elements.chargedetails).getAttribute('aria-expanded'))){await targetPage.locator(this.Elements.chargedetails).click();}
@@ -156,7 +156,7 @@ if (!(await targetPage.locator(this.Elements.chargedetails).getAttribute('aria-e
  await expect(targetPage.locator("text=Cash Withdrawal Fee")).toBeVisible();
  await targetPage.waitForTimeout(20000);
 }
-
+ 
 async validatesuccessmsg() {
   const timeout = 15000;
   const summaryLocator = targetPage.locator(
@@ -178,11 +178,11 @@ async validatesuccessmsg() {
   await advicebtn.click();
   await targetPage.waitForTimeout(300);
 }
-
+ 
 async verifyNoDataDisplayed() {
  await expect(targetPage.locator(this.Elements.NoDataText)).toBeVisible();
 }
-
+ 
 async enterACNum(acno){
     globalacno = acno
  await targetPage.waitForSelector(this.Elements.AccountNumber, {state : 'visible', timeout : 15000});
@@ -190,7 +190,7 @@ async enterACNum(acno){
  await targetPage.locator(this.Elements.AccountNumber).fill(acno);
  await targetPage.waitForTimeout(2000);
 }
-
+ 
 async enterTxnAmt(txnamt:string,currency: string){
  await targetPage.locator(
         '//*[@id="oj-select-choice-tfpm_ob_cmn_fd_currency"]/span/a'
@@ -203,39 +203,39 @@ async enterTxnAmt(txnamt:string,currency: string){
 const txnAmountInput = targetPage.locator(
   "fsgbu-ob-cmn-fd-amount input[data-oj-internal=''][aria-required='true']:not([disabled]):not([readonly])"
 );
-
+ 
 await txnAmountInput.waitFor({ state: 'visible', timeout: 15000 });
 await txnAmountInput.clear();
 await txnAmountInput.fill(txnamt);
 await txnAmountInput.press('Tab');
 await targetPage.getByText("Denomination",{exact:true}).click()
 }
-
+ 
  //Adding UDF AND ELECTRONIC-JOURNAL
 a
 async wdfillDenominationQty(denomination: string, qty: string) {
-
+ 
   // Step 1: Find _1 cell by matching title attribute on oj-input-text in _0 cell
   const qtyCellId = await targetPage.evaluate((denom) => {
     const cells = Array.from(
       document.querySelectorAll("td[id*='tablegrid-table'][id$='_0']")
     );
-
+ 
     for (const cell of cells) {
       const ojInput = cell.querySelector("oj-input-text");
       const title = ojInput?.getAttribute("title")?.trim();
       console.log(`Cell ${cell.id} title: "${title}"`);
-
+ 
       if (title === denom) {
         return cell.id.replace(/_0$/, '_1');
       }
     }
     return null;
   }, denomination);
-
+ 
   if (!qtyCellId) throw new Error(`Denomination row "${denomination}" not found`);
   console.log("Target qty cell:", qtyCellId);
-
+ 
   // Step 2: Click + dblclick to activate edit mode
   await targetPage.evaluate((cellId) => {
     const cell = document.getElementById(cellId!);
@@ -243,24 +243,24 @@ async wdfillDenominationQty(denomination: string, qty: string) {
     cell.dispatchEvent(new MouseEvent('click',   { bubbles: true, cancelable: true }));
     cell.dispatchEvent(new MouseEvent('dblclick',{ bubbles: true, cancelable: true }));
   }, qtyCellId);
-
+ 
   await targetPage.waitForTimeout(1500);
-
+ 
   // Step 3: Fill the input inside the qty cell
   await targetPage.evaluate(({ cellId, value }) => {
     const cell = document.getElementById(cellId!);
     const input = (cell?.querySelector("input[id*='unitbills']")
                 || cell?.querySelector("input")) as HTMLInputElement;
-
+ 
     if (!input) throw new Error(`No input found in cell ${cellId}`);
-
+ 
     input.removeAttribute('readonly');
     input.focus();
     input.value = value;
     input.dispatchEvent(new Event('input',  { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
   }, { cellId: qtyCellId, value: qty });
-
+ 
   await targetPage.keyboard.press('Tab');
 }
 async txnsave(){
@@ -273,7 +273,7 @@ async txnsave(){
   await targetPage.getByRole('button', { name: 'Submit For Approval' }).click();
   await targetPage.waitForTimeout(2000);
 }
-
+ 
 async normaltxnsave(){
   await targetPage.getByRole('button', { name: 'Submit' }).click();
   await targetPage.waitForTimeout(5000);
@@ -289,37 +289,37 @@ async validatemsg(){
   await targetPage.getByRole('button', { name: 'No' }).click();
   await targetPage.waitForTimeout(30000);
 }
-
+ 
 async validatetillmsg() {
   await targetPage.waitForSelector('li.message-content', { state: 'attached', timeout: 5000 });
-
+ 
   const message = targetPage
       .locator('li.message-content')
       .filter({ hasText: 'Till minimum balance breached' })
       .first();   // add .first() to avoid strict errors
-
+ 
   const errorText = await message.innerText();
   expect(errorText).toContain('Till minimum balance breached');
-
+ 
   await targetPage.getByRole('button', { name: /^ok$/i }).click();
   await targetPage.waitForTimeout(20000);
 }
-
+ 
 async applogout(){
   await targetPage.click("//div[@class='oj-flex-item']//span[@id='user-info-name']");
   await targetPage.getByText("Log Out").click()
   await targetPage.waitForTimeout(3000);
 }
-
+ 
 async clickElectronicJournal(){
  await targetPage.waitForSelector(this.Elements.Tellertab, {state : 'visible', timeout : 15000});
  await targetPage.locator(this.Elements.Tellertab).click();
  await targetPage.waitForTimeout(20000);
  await targetPage.waitForSelector(this.Elements.ElecJrnl, {state : 'visible', timeout : 15000});
  await targetPage.locator(this.Elements.ElecJrnl).click();
- await targetPage.waitForTimeout(30000); 
+ await targetPage.waitForTimeout(30000);
 }
-  
+ 
 async clickPendingApproval(){
  await targetPage.locator(this.Elements.dropdown).click();
  await targetPage.waitForTimeout(2000)
@@ -328,7 +328,7 @@ async clickPendingApproval(){
  await targetPage.locator(this.Elements.fetchbtn1).click();
  await targetPage.waitForTimeout(3000);
 }
-
+ 
  async clickSentBack(){
     await targetPage.locator(this.Elements.dropdown).click();
     console.log('clicked on dropdown')
@@ -344,7 +344,7 @@ async clickPendingApproval(){
     console.log('Successfully Saved')
     await targetPage.locator(this.Elements.okButton).click()
   }
-
+ 
 async approvetxn(){
   await targetPage.locator(this.Elements.approveBtn).click()
    await targetPage.waitForTimeout(3000);
@@ -360,20 +360,20 @@ async approvetxn(){
    await targetPage.waitForTimeout(3000);
 }
    
-
+ 
 async Errormessage() {
   // validate the message (pick the specific message item)
   await expect(
     targetPage.locator("li.message-content").filter({ hasText: "Available Amount for Account" }).first()
   ).toContainText("Available Amount for Account");
-
+ 
   // scope to the dialog that contains that message, then click its Ok button
   const dialog = targetPage.locator(
     "oj-dialog:has(li.message-content:has-text('Available Amount for Account'))"
   ).first();
-
+ 
   await dialog.locator("button:has-text('Ok')").first().click();
 }
-
+ 
 }
  

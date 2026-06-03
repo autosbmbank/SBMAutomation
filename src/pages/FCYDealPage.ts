@@ -1,36 +1,36 @@
 import { expect, Page } from "@playwright/test";
 import ReusableMethods from "../helper/wrapper/reusableMethods";
-
+ 
 // Module-level newPage — own instance for FCYDealPage
 let newPage;
 let pagePromise;
-
+ 
 export default class FCYDealPage {
     private base: ReusableMethods;
-
+ 
     constructor(private page: Page) {
         this.base = new ReusableMethods(page);
     }
-
+ 
     private elements = {
         // NextGen Navigation — same as RetailDepositPage
         proceedBtn:      '//span[normalize-space()="Proceed"]/ancestor::*[self::button or self::a or @role="button" or self::input]',
         NextGenFrame:    '//iframe[contains(@title, "Next Gen UI Dashboard")]',
         maintab:         "//span[normalize-space()='Teller']",
-
+ 
         // FCY screens
         purchaseFCYBtn:  "//span[contains(normalize-space(),'FX Purchase - Account')]",
         sellFCYBtn:      "//span[contains(normalize-space(),'FX Sale - Account')]",
-
+ 
         // Main form fields
         accountNumber:   "//input[@id='txnAcc|input']",
         saleaccountNumber:'(//input[@id="accNo|input"])[2]',
         boughtCurrency:  "//input[contains(@id,'currency') and contains(@id,'|input')]",
         boughtAmount:    "fsgbu-ob-cmn-fd-amount input[aria-required='true']:not([disabled]):not([readonly])",
-
+ 
         // Denomination
         denominationTab: "//span[normalize-space()='Denomination']",
-
+ 
         // Buttons
         submitButton:    "(//span[normalize-space()='Submit'])[1]",
         okButton:        "(//span[text()='Ok'])[1]",
@@ -42,40 +42,40 @@ export default class FCYDealPage {
         successmsg:      "(//div[@class='oj-message-summary oj-message-title'])[1]",
         adviceconf: "(//span[@data-bind='text: labels.no'][normalize-space()='No'])[1]",
     }
-
+ 
     // ─── NextGen Fun — own copy same as RetailDepositPage ────────────────────
-
+ 
     async NextGenFun() {
         await this.base.jsClick('//*[@id="DBoardNextGenUI"]/span/span');
         console.log("Clicked on NextGen UI Dashboard");
-
+ 
         try {
             const frameElementHandle = await this.page.waitForSelector(
                 this.elements.NextGenFrame, { timeout: 40000 }
             );
             const nextgenframe = await frameElementHandle.contentFrame();
             console.log("Switched to NextGen UI Dashboard Frame");
-
+ 
             pagePromise = this.page.context().waitForEvent('page');
-
+ 
             await nextgenframe.getByText("Retail Operations").click();
             console.log("Clicked on Retail Operations");
-
+ 
         } catch (error) {
             console.log("Frame not found:", error.message);
             throw error;
         }
-
+ 
         // Wait for new page
         try {
             newPage = await pagePromise;
         } catch {
             newPage = this.page;
         }
-
+ 
         await newPage.bringToFront().catch(() => {});
         await newPage.waitForFunction(() => document.body && document.body.innerText.length > 50);
-
+ 
         const proceed = newPage.locator(this.elements.proceedBtn).first();
         if (await proceed.count()) {
             try {
@@ -87,22 +87,22 @@ export default class FCYDealPage {
         } else {
             console.log("Proceed not found");
         }
-
+ 
         await newPage.waitForLoadState('networkidle').catch(() => {});
         await newPage.waitForTimeout(600);
-
+ 
         const currentURL = newPage.url();
         await newPage.goto(currentURL, { waitUntil: 'networkidle' });
         await newPage.waitForTimeout(5000);
     }
-
+ 
     // ─── Screen Navigation ────────────────────────────────────────────────────
-
+ 
     async searchFCYScreen(screenCode: string) {
         await newPage.locator(this.elements.maintab).click();
         console.log("Clicked on Teller tab");
         await newPage.waitForTimeout(1000);
-
+ 
         if (screenCode === '8207') {
             await newPage.locator(this.elements.purchaseFCYBtn).click();
             console.log("Clicked on Purchase FCY 8207");
@@ -115,11 +115,11 @@ export default class FCYDealPage {
         }
         await newPage.waitForTimeout(2000);
     }
-
+ 
    
-
+ 
     // ─── Main Form Fields ─────────────────────────────────────────────────────
-
+ 
     async enterAccountNumber(accountNumber: string) {
         await newPage.locator(this.elements.accountNumber).fill(accountNumber);
         await newPage.locator(this.elements.accountNumber).press('Tab');
@@ -140,9 +140,9 @@ async enterSaleAccountNumber(accountNumber: string) {
     await newPage.waitForTimeout(500);
     //  await newPage.locator(this.elements.accountNumber).press('Tab');
     }
-
+ 
     async enterBoughtAmount(boughtAmount: string) {
-      
+     
          await newPage.locator(this.elements.boughtAmount).clear();
          await newPage.locator(this.elements.boughtAmount).fill(boughtAmount);
        
@@ -158,9 +158,9 @@ async enterSaleAccountNumber(accountNumber: string) {
         console.log("Entered sold Amount:", soldAmount);
         // await newPage.locator(this.elements.accountNumber).press('Tab');
     }
-
+ 
     // ─── Denomination Section ─────────────────────────────────────────────────
-
+ 
   async expandDenomination() {
    await newPage.evaluate(() => {
         const wrappers = Array.from(
@@ -179,20 +179,20 @@ async enterSaleAccountNumber(accountNumber: string) {
     await newPage.waitForTimeout(2000);
     console.log("Expanded Denomination section");
 }
-
+ 
 async enterDenominationUnitsFromBoughtAmount(boughtAmount: string) {
     const cleanAmount = parseFloat(boughtAmount.replace(/[^0-9.]/g, ''));
     console.log("Bought Amount for denomination:", cleanAmount);
-
+ 
     if (!cleanAmount || isNaN(cleanAmount)) {
         throw new Error(`Bought Amount is invalid — got: "${boughtAmount}"`);
     }
-
+ 
     // ✅ USD denominations — matches table on screen (100,50,20,10,5,2,1)
-    const denominations = [100, 50, 20, 10, 5, 2, 1];
+    const denominations = [100, 50, 20, 5, 2, 1];
     let remaining = cleanAmount;
     const unitsOrdered: Array<[string, number]> = [];
-
+ 
     for (const denom of denominations) {
         if (remaining >= denom) {
             const qty = Math.floor(remaining / denom);
@@ -200,10 +200,10 @@ async enterDenominationUnitsFromBoughtAmount(boughtAmount: string) {
             remaining = parseFloat((remaining % denom).toFixed(2));
         }
     }
-
+ 
     console.log("Denomination plan:", unitsOrdered);
     console.log("Remaining after calculation:", remaining);
-
+ 
     for (const [denom, qty] of unitsOrdered) {
         if (qty > 0) {
             await this.fillSingleDenominationQty(denom, qty.toString());
@@ -211,7 +211,7 @@ async enterDenominationUnitsFromBoughtAmount(boughtAmount: string) {
         }
     }
 }
-
+ 
 private async fillSingleDenominationQty(denomination: string, qty: string) {
     const qtyCellId = await newPage.evaluate((denom) => {
         const allCells = Array.from(
@@ -247,24 +247,24 @@ private async fillSingleDenominationQty(denomination: string, qty: string) {
         }
         return null;
     }, denomination);
-
+ 
     if (!qtyCellId) {
         console.log(`Denomination "${denomination}" not found — skipping`);
         return;
     }
     console.log(`Filling denomination ${denomination} → ${qtyCellId}`);
-
+ 
     const cellLocator = newPage.locator(`td[id="${qtyCellId}"]`);
     await cellLocator.scrollIntoViewIfNeeded();
     await cellLocator.click();
     await newPage.waitForTimeout(500);
     await cellLocator.dblclick();
     await newPage.waitForTimeout(2000);
-
+ 
     const inputLocator = cellLocator.locator("input").first();
     const isVisible = await inputLocator.isVisible().catch(() => false);
     console.log(`Input visible after dblclick: ${isVisible}`);
-
+ 
     if (isVisible) {
         // ✅ Playwright fill — preferred
         await newPage.evaluate((cellId) => {
@@ -293,9 +293,9 @@ private async fillSingleDenominationQty(denomination: string, qty: string) {
         }, { cellId: qtyCellId, value: qty });
         await newPage.keyboard.press('Tab');
     }
-
+ 
     await newPage.waitForTimeout(2000);
-
+ 
     const verified = await newPage.evaluate((cellId) => {
         const cell = document.getElementById(cellId!);
         const input = cell?.querySelector("input") as HTMLInputElement;
@@ -304,25 +304,33 @@ private async fillSingleDenominationQty(denomination: string, qty: string) {
     console.log(`✅ Filled ${denomination} with ${qty} — verified: ${verified}`);
 }
     // ─── Submit & Confirmations ───────────────────────────────────────────────
-
+ 
     async clickSubmitAndOk() {
         await newPage.locator(this.elements.submitButton).click();
         console.log("Clicked on Submit");
-        await newPage.waitForTimeout(2000);
-      
+        await newPage.waitForTimeout(5000);
+     
     }
 async approvalconfirm(){
-        await newPage.locator('(//span[text()="Confirm"])[1]').click()
-        await newPage.waitForTimeout(2000);
-        // await newPage.pause()
-         await newPage.locator(
-        "oj-checkboxset.oj-checkboxset-single"
-    ).first().click();
-    
-    console.log("Selected first approver");
-    await newPage.waitForTimeout(500);
-        await newPage.locator('(//span[text()="Submit For Approval"])[1]').click()
-        await newPage.waitForTimeout(2000);
+       try {
+        await newPage.locator(
+            "//span[contains(@id,'confirmAuto') and contains(@id,'|text')]"
+        ).click();
+        console.log("Clicked Confirm button");
+    } catch {
+        // Fallback — by text
+        await newPage.locator(
+            "(//span[normalize-space()='Confirm'])[1]"
+        ).click();
+        console.log("Clicked Confirm by text");
+    }
+    await newPage.waitForTimeout(2000);
+              await newPage.locator('(//span[text()="Submit For Approval"])[1]').click();
+              await newPage.waitForTimeout(2000);
+               await expect(await newPage.locator(this.elements.successmsg).textContent()).toContain('Approval')
+                          console.log('sent for Approval')
+                          await newPage.locator(this.elements.okButton).click()
+                         await newPage.getByRole('button', { name: 'No' }).click();
     }
     async verifySuccessMessage() {
             await expect(
@@ -346,15 +354,15 @@ async approvalconfirm(){
         }
         await newPage.waitForTimeout(1000);
     }
-
+ 
     // ─── Print Actions ────────────────────────────────────────────────────────
-
+ 
     async clickPrintButton() {
         await newPage.locator(this.elements.printBtn).first().click();
         console.log("Clicked on Print button");
         await newPage.waitForTimeout(2000);
     }
-
+ 
     async saveFileWithName(fileName: string) {
         try {
             await newPage.waitForTimeout(2000);
@@ -365,13 +373,13 @@ async approvalconfirm(){
             console.log("File save dialog:", error.message);
         }
     }
-
+ 
     async clickCloseButton() {
         await newPage.locator(this.elements.closeBtn).first().click();
         console.log("Clicked on Close button");
         await newPage.waitForTimeout(1000);
     }
-
+ 
     async clickNoInStayOnSameScreen() {
         try {
             await newPage.getByRole('button', { name: 'No' }).click();
@@ -383,3 +391,4 @@ async approvalconfirm(){
         await newPage.waitForTimeout(1000);
     }
 }
+ 

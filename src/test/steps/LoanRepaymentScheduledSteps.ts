@@ -19,6 +19,10 @@ When("user clicks on Newtab LRS",async function () {
         await LRscheduled.clickNewtab();
   }
 );
+
+When("clicks on accept in LRS", async function () {
+    await LRscheduled.clickacceptelrs();
+  });
  
 When("user enters Account Number LRS as {string}",
   async function (accountno: string) {

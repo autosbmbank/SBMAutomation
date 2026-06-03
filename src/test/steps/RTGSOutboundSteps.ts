@@ -83,6 +83,11 @@ When('User enters the Instructing Agent BICFI as {string}', async function (IAco
     await RtgsOutbound.enterInstructingAgentBICFI(IAcode);
 });
 
+When("click on Search button in PSDORTBT",async function(){
+    RtgsOutbound = await new RTGSOutboundPage(fixture.page);
+     await RtgsOutbound.clicksearch();
+});
+
 When("click on first row in PSDORTBT",async function(){
     RtgsOutbound = await new RTGSOutboundPage(fixture.page);
      await RtgsOutbound.clicksfirstrow();

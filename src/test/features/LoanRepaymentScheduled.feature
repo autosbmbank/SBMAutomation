@@ -17,6 +17,7 @@ Feature: LoanRepaymentScheduled Transaction
       And user get Total amount Due LRS
       And user enter Total amount Due LRS
       And user click on Allocate button LRS
+      And clicks on accept in LRS
       And clicks on save button LRS
       Then clicks on OK btn LRS
       When user exits LoanRepaymentScheduled LRS

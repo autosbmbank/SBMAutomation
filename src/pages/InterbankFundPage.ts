@@ -21,6 +21,7 @@ export default class InterbankFundPage {
            creditacc : '//*[@id="toAccountNumber|input"]',
           //  creditacc: "//oj-label-value[.//label[normalize-space()='Credit Account']]//input",
            submit : "(//span[normalize-space()='Submit'])[1]",
+           confirmbtn : "(//button[@class='oj-button-button'])[1]",
            ok : "(//span[text()='Ok'])[1]",
            No : "(//span[@data-bind='text: labels.no'][normalize-space()='No'])[1]",
            noOptn : "//button[normalize-space()='No']",
@@ -100,11 +101,22 @@ async entercreditaccount(credaccnum) {
     await field.fill(credaccnum);
 }
 
+// async clicksubmit() {
+//     const btn = NewPage.locator(this.Elements.submit);
+//     await btn.waitFor({ state: 'visible' });
+//     await btn.click();
+// }
+
 async clicksubmit() {
-    const btn = NewPage.locator(this.Elements.submit);
-    await btn.waitFor({ state: 'visible' });
-    await btn.click();
-}
+        await NewPage.locator(this.Elements.submit).click();
+        console.log("Clicked on Submit");
+        await NewPage.waitForTimeout(2000);
+    }
+  async clickconfirm(){
+    await NewPage.locator(this.Elements.confirmbtn).click();
+        console.log("Clicked on Submit");
+        await NewPage.waitForTimeout(2000);
+  }
   // async enteramount(amount){
   //   await NewPage.locator(this.Elements.Amount).fill(amount)
   //   await NewPage.waitForTimeout(2000);

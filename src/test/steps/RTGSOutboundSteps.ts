@@ -103,9 +103,15 @@ When('User clicks on save button', async function () {
     // fixture.logger.info(`Clicking on save button: ${Save}`);
     await RtgsOutbound.saveTransaction();
 });
-When('User clicks on Ok button as {string}', async function (Ok) {
+// When('User clicks on Ok button as {string}', async function (Ok) {
+//     RtgsOutbound = new RTGSOutboundPage(fixture.page);
+//     fixture.logger.info(`Clicking on Ok button: ${Ok}`);
+//     await RtgsOutbound.clickOk();
+// });
+
+When('User clicks on Ok button in PSDORTBT', async function () {
     RtgsOutbound = new RTGSOutboundPage(fixture.page);
-    fixture.logger.info(`Clicking on Ok button: ${Ok}`);
+    // fixture.logger.info(`Clicking on save button: ${Save}`);
     await RtgsOutbound.clickOk();
 });
 

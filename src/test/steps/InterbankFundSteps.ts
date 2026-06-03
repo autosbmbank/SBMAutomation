@@ -39,6 +39,11 @@ When("click on Submit", async function(){
   Fundtransfer = await new InterbankFundPage(fixture.page);
      await Fundtransfer.clicksubmit();
 });
+When("click on Confirm button", async function(){
+  Fundtransfer = await new InterbankFundPage(fixture.page);
+     await Fundtransfer.clickconfirm();
+});
+
 
 When("Click on OK in bankfund", async function(){
   Fundtransfer = await new InterbankFundPage(fixture.page);

@@ -13,7 +13,7 @@ Feature: MaintainCollateral Transaction
              And user clicks on Enter Query in MC             
              And user search liab no in MC
              And user enters Liability Number MC as "<Liability Number>"
-             And user fetch Liab No in MC
+            #  And user fetch Liab No in MC
             And user enters Collateral Code MC as "<Collateral Code>"
             And user clicks on Execute Query in MC
       

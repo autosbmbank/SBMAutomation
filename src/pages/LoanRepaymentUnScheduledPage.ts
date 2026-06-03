@@ -29,7 +29,8 @@ export default class LRUncheduledPage {
         Authorizebutton: "//*[@id='BLK_ACC__BTN_AUTH_oj20|text']",
         okButton : "//span[@id='BTN_OK_oj0|text']",
         gettotalamt:'//*[@id="BLK_TOTAL__TOTALRC0|input"]',
-        totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]'
+        totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]',
+        acceptlrus:"//span[@id='BTN_ACCEPT_oj1|text']"
        
        
    
@@ -61,6 +62,18 @@ export default class LRUncheduledPage {
  
     return ALRUSframe;
     }
+    async handleAcceptLRUnScheduledFrame() {
+    const LRUSframe = await this.handleLRUnscheduledFrame();
+    const frameElementHandle = await LRUSframe.waitForSelector('iframe[id="ifr_AlertWin"]',{ timeout: 30000 });
+
+    const AccLRUSframe = await frameElementHandle.contentFrame();
+
+    if (!AccLRUSframe) {
+        throw new Error('Frame not loaded');
+    }
+
+    return AccLRUSframe;
+   }
    
     async handleInformationMessageFrame() {
   try {
@@ -94,6 +107,12 @@ export default class LRUncheduledPage {
        await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
         }catch{}
    }
+
+   async clickacceptelrus() {
+    const AccLRUSframe = await this.handleAcceptLRUnScheduledFrame();
+    await AccLRUSframe.click(this.Elements.acceptlrus);
+    await AccLRUSframe.waitForTimeout(3000);
+    }
  
  
     async enterAccountnumber(Accountnumber: string) {

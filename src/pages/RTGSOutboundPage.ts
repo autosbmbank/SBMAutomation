@@ -33,7 +33,7 @@ export default class RTGSOutboundPage {
                 okButton: '//*[@id="BTN_OK_oj0|text"]',
                 exit : '//*[@id="BTN_EXIT_IMG_oj165|text"]',
         enterquery : '//*[@id="EnterQuery_oj17|text"]',
-        TransactionReferenceNo : '//*[@id="BLK_BRN_RTGS_OUT_ISO_DRIVER__TXN_REF_NO|input|input"]',
+        TransactionReferenceNo : '//*[@id="BLK_BRN_RTGS_OUT_ISO_DRIVER__TXN_REF_NO|input"]',
         executequery : '//*[@id="ExecuteQuery_oj18|text"]',
         authorize : '//*[@id="Authorize_oj8|text"]',
         authorizebtn : '//*[@id="BLK_BRN_RTGS_OUT_ISO_DRIVER__BTN_AUTH_oj21|text"]',
@@ -70,7 +70,23 @@ async getauthorizeFrame() {
 
     return await iframe.contentFrame();
 }
-
+// information message
+async handleInformationMessageFrame() {
+  try {
+        const outerFrameHandle = await this.page.waitForSelector(
+  "//iframe[contains(@id,'ifr_LaunchWin') and not(contains(@style,'display: none'))]", { timeout: 30000 }
+);
+    const outerFrame = await outerFrameHandle.contentFrame();
+    const innerFrameHandle = await outerFrame.waitForSelector(
+      'iframe[id="ifr_AlertWin"]', { timeout: 50000 }
+    );
+    const innerFrame = await innerFrameHandle.contentFrame();
+    return innerFrame;
+  } catch (err) {
+    console.log("handleInformationMessageFrame failed:", err);
+    throw err;
+  }
+}
 // firstrow
 async getrowframe(){
      const frame = await this.handleRTGSOutboundFrame();
@@ -205,22 +221,9 @@ async enterDebitorBICFI(DBcode: string) {
      await this.page.waitForTimeout(2000);
     }
     async clickOk() {
-    try{
-     const outerFrameHandle1 = await this.page.waitForSelector("//iframe[@id='ifr_LaunchWin6115556561155565']", { timeout: 10000 });
-     const outerFrame = await outerFrameHandle1.contentFrame();
-     // Wait for the Override Message frame inside it
-     const innerframehandle1 = await outerFrame.waitForSelector("//iframe[@id='ifr_AlertWin']", { timeout: 10000 });
-     const overrideFrame = await innerframehandle1.contentFrame();
-     //const message = successframe.locator(this.Elements.successmsg);
-     //await message.waitFor({ state: 'visible', timeout: 15000 });
-     // await expect(message).toHaveText('Successfully Saved', {timeout: 15000});
-     const okButton = overrideFrame.locator(this.Elements.okButton);
-     await okButton.waitFor({state: 'visible', timeout: 10000 });
-     await okButton.click();
-     console.log("Successfully clicked on OK button")
-     } catch (error) {
-      console.log("Override or Alert frame not found");
-     }
+      const frame = await this.handleInformationMessageFrame()
+        await frame.waitForSelector(this.Elements.okButton, { state: 'visible', timeout: 15000 });
+      await frame.click(this.Elements.okButton);
     }
 async clickexitbtn(){
   const frame = await this.handleRTGSOutboundFrame()
@@ -253,24 +256,31 @@ async clickauthorizebutton(){
   await frame.waitForSelector(this.Elements.authorizebtn, { state: 'visible', timeout: 15000 });
       await frame.click(this.Elements.authorizebtn);
 }
+//  remarks frame
+async getSubScreenFrame() {
+    const frame = await this.handleRTGSOutboundFrame();
+
+    const iframe = await frame.waitForSelector(
+        'iframe[id="ifrSubScreen"]',
+        { state: 'visible', timeout: 30000 }
+    );
+
+    return await iframe.contentFrame();
+}
 async clickokbtn() {
-  try {
-    const okButton = this.page
-      .frameLocator('iframe[id*="ifr_LaunchWin"]')
-      .frameLocator('#ifrSubScreen')
-      .frameLocator('#ifr_AlertWin')
-      .getByRole('button', { name: 'OK' }); // using ARIA role for safety
- 
-    await okButton.waitFor({ state: 'visible', timeout: 20000 });
-    await okButton.click({ force: true }); // force if masked
- 
-    console.log("Successfully clicked OK button in ALERTWIN");
- 
-  } catch (error) {
-    console.error("Failed to click OK button in ALERTWIN frame", error);
-    throw error;
-  }
+  const frame = await this.getSubScreenFrame();
 
+    const frameElementHandle2 = await frame.waitForSelector(
+        'iframe[id="ifr_AlertWin"]',
+        { state: 'visible', timeout: 30000 }
+    );
 
+    const successframe = await frameElementHandle2.contentFrame();
+
+    //const message = successframe.locator('//span[contains(text(),"Successfully Saved")]');
+
+    // await expect(message).toContainText('Successfully Saved');
+
+    await successframe.click(this.Elements.ok);
 }
 }

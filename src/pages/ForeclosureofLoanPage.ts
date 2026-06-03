@@ -30,7 +30,8 @@ export default class LoanForeclosurePage {
         okButton : "//span[@id='BTN_OK_oj0|text']",
         gettotalamt:'//*[@id="BLK_TOTAL__TOTALRC0|input"]',
         totalamt:'//*[@id="BLK_SETTELMENTS__STLAMTRC0|input"]',
-        preclosure:'//*[@id="BLK_LIQ__CLOSE_RVLNG_LOAN"]/div/div/div'
+        preclosure:'//*[@id="BLK_LIQ__CLOSE_RVLNG_LOAN"]/div/div/div',
+        acceptfl:"//span[@id='BTN_ACCEPT_oj1|text']"
        
        
    
@@ -79,6 +80,18 @@ export default class LoanForeclosurePage {
     throw err;
   }
 }
+async handleAcceptLForeclosureFrame() {
+    const LFframe = await this.handleLoanForeclosureFrame();
+    const frameElementHandle = await LFframe.waitForSelector('iframe[id="ifr_AlertWin"]',{ timeout: 30000 });
+
+    const AccLFframe = await frameElementHandle.contentFrame();
+
+    if (!AccLFframe) {
+        throw new Error('Book Transfer frame not loaded');
+    }
+
+    return AccLFframe;
+   }
  
  
     async clickNewtab() {
@@ -95,6 +108,12 @@ export default class LoanForeclosurePage {
        await frame1.locator('//span[@id="BTN_OK_oj3|text"]').click()
         }catch{}
    }
+
+   async clickacceptefl() {
+    const AccLFframe = await this.handleAcceptLForeclosureFrame();
+    await AccLFframe.click(this.Elements.acceptfl);
+    await AccLFframe.waitForTimeout(3000);
+    }
  
  
     async enterAccountnumber(Accountnumber: string) {

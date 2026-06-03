@@ -19,6 +19,7 @@ Feature: LoanForclosure Transaction
       And user get Total amount Due FOL
       And user enter Total amount Due FOL
       And user click on Allocate button FOL
+      And clicks on accept in FOL
       And user get Total amount Due FOL
       And user enter Total amount Due FOL
       And clicks on save button FOL

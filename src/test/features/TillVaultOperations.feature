@@ -60,7 +60,7 @@ Feature: Branch Operations Feature
 
     Examples:
       | HomePageTitle             | ScreenName         | TotalCash |
-      | Oracle Financial Services | Sell cash to Vault | 2000      |
+      | Oracle Financial Services | Sell cash to Vault | 1000      |
 
   @BRANCH5 @SBM @TransferTillToVault
   Scenario Outline: Validate Transfer Funds from Till to Vault - 9007

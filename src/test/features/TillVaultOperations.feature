@@ -16,7 +16,7 @@ Feature: Branch Operations Feature
       | Oracle Financial Services | Open Vault Batch |
 
   @BRANCH2 @SBM @CloseVault
-  Scenario Outline: Validate Close Vault Batch
+  Scenario Outline: Validate  Close Vault Batch
 
     Given User navigates to the application
     When MAK user enters the username and password
@@ -27,7 +27,7 @@ Feature: Branch Operations Feature
 
     Examples:
       | HomePageTitle             | ScreenName       |
-      | Oracle Financial Services | Close Vault Batch |
+      | Oracle Financial Services  | Close Vault Batch |
 
   @BRANCH3 @SBM @OpenTill
   Scenario Outline: Validate Open Till
@@ -60,7 +60,7 @@ Feature: Branch Operations Feature
 
     Examples:
       | HomePageTitle             | ScreenName         | TotalCash |
-      | Oracle Financial Services | Sell cash to Vault | 1000      |
+      | Oracle Financial Services | Sell cash to Vault | 2000      |
 
   @BRANCH5 @SBM @TransferTillToVault
   Scenario Outline: Validate Transfer Funds from Till to Vault - 9007
